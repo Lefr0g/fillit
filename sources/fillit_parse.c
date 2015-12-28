@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/28 16:49:29 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/28 20:21:52 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,19 @@ int	fillit_line_check(t_tmp *tmp)
 
 int	fillit_input_check(t_env *e, int fd)
 {
-	int	blocks;
+	int		blocks;
+	int		tet_siz;
+	t_list	*list_ptr;
+	t_tetri	*tetri_ptr;
 
+	tet_siz = sizeof(t_tetri);
 	blocks = 0;
 	e->tmp->jump = 0;
 	e->tmp->i = 0;
+//	Get pointers to t_terti and the first list element :
+	list_ptr = e->first;
+	tetri_ptr = (t_tetri*)(list_ptr->content);
+
 	while ((e->tmp->gnl_ret = get_next_line(fd, &e->tmp->line)) != 0)
 	{
 		if (e->tmp->gnl_ret == -1)
@@ -53,13 +61,25 @@ int	fillit_input_check(t_env *e, int fd)
 			if ((e->tmp->linecheck_ret = fillit_line_check(e->tmp)) < 0)
 				return (e->tmp->linecheck_ret);
 			else
+			{
 				blocks += e->tmp->linecheck_ret;
+//				Then concatenate 'line' to t_tetri 'raw' string :
+				ft_strcat(tetri_ptr->raw, e->tmp->line);
+			}
 		}
 		else
 		{
 			e->tmp->jump++;
 			if (blocks != 4 && e->tmp->jump == 1)
 				return (fillit_error("not enough / too many blocks in tetri"));
+			else
+			{
+//				TODO : check validity of current tetrimino (search isolated blocks);
+//				Then create a new t_tetri (list element) :
+				ft_lstappend(&(e->first), ft_lstnew(malloc(tet_siz), tet_siz));
+				list_ptr = list_ptr->next;
+				tetri_ptr = (t_tetri*)(list_ptr->content);
+			}
 			blocks = 0;
 		}
 		if (e->tmp->jump && e->tmp->i != 4)
@@ -80,12 +100,12 @@ int	fillit_parse(t_env *e, char *filename)
 {
 	int	ret;
 
-	printf("pre-open check, filename = %s\n", filename);
+	ft_putstr("pre-open check, filename = ");
+	ft_putendl(filename);
 	e->tmp->fd = open(filename, O_RDONLY);
-	printf("open = %d\n", e->tmp->fd);
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
 		return (fillit_error("open() failed"));
-	printf("open OK\n");
+	ft_putendl("open OK");
 	ret = fillit_input_check(e, e->tmp->fd);
 	while (get_next_line(e->tmp->fd, &e->tmp->line))
 		(void)e;

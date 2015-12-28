@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/28 16:49:44 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/28 20:00:00 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct		s_tmp
 typedef struct		s_tetri
 {
 	char			letter;
-	char			*raw;
+	char			raw[17];
 	int				x[4];
 	int				y[4];
 }					t_tetri;
@@ -55,5 +55,15 @@ void	fillit_free_all(t_env *e);
 int		fillit_parse(t_env *e, char *filename);
 int		fillit_input_check(t_env *e, int fd);
 int		fillit_line_check(t_tmp *tmp);
+
+/*
+** calc.c
+*/
+int		fillit_calc(t_env *start);
+
+/*
+** fillit_print.c
+*/
+void	fillit_print_raw(t_env *e);
 
 #endif
