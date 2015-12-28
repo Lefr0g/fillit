@@ -1,0 +1,55 @@
+
+NAME = fillit
+
+CC = clang
+
+FLAGS = -Wall -Werror -Wextra -g
+
+SRCS = main.c fillit_parse.c
+
+SRCSDIR = sources/
+
+SOURCES = $(addprefix $(SRCSDIR), $(SRCS))
+
+OBJECTS = $(subst .c,.o, $(SRCS))
+
+HDRS = fillit.h
+
+HEADIR = includes/
+
+HEADERS = $(addprefix $(HEADIR), $(HDRS))
+
+INCLUDES = -I $(HEADIR)
+
+LIBFLAG = -lft
+
+LIBHDRS = includes/
+
+LIBDIR = libft/
+
+LIBDIRFLAG = -L $(LIBDIR)
+
+LIBHEADIR = $(addprefix $(LIBDIR), $(LIBHDRS))
+
+LIBINCLUDES = -I $(LIBHEADIR)
+
+.PHONY: all, clean, fclean, re
+
+all : lib $(NAME)
+	
+$(NAME) : $(SOURCES) $(HEADERS)
+	$(CC) $(FLAGS) $(SOURCES) $(INCLUDES) $(LIBINCLUDES) $(LIBDIRFLAG) \
+		$(LIBFLAG) -o $(NAME)
+
+lib :
+	make -C libft/
+
+clean :
+	make -C libft/ clean
+#	rm $(OBJECTS)
+
+fclean : clean
+	make -C libft/ fclean
+	rm -f $(NAME)
+
+re : fclean all
