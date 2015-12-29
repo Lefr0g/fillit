@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/29 17:10:39 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/29 17:24:19 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,13 @@ int	fillit_blocks_check(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	e->tmp->jump++;
 	if (e->tmp->blocks != 4 && e->tmp->jump == 1)
 		return (fillit_error("not enough / too many blocks in tetri"));
 	else
 	{
-		while (i < 17)
-		{
+		while (++i < 17)
 			if ((*tetri_ptr)->raw[i] == '#')
 			{
 				if (!((i - 1 > 0 && (*tetri_ptr)->raw[i - 1] == '#')
@@ -59,8 +58,6 @@ int	fillit_blocks_check(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr)
 						|| (i + 4 < 17 && (*tetri_ptr)->raw[i + 4] == '#')))
 					return (fillit_error("invalid block placement in tetri"));
 			}
-			i++;
-		}
 		ft_lstappend(&(e->first), ft_lstnew(malloc(e->tmp->tet_siz),
 				e->tmp->tet_siz));
 		*list_ptr = (*list_ptr)->next;
@@ -120,13 +117,12 @@ int	fillit_input_check(t_env *e)
 			return (fillit_error("gnl fail"));
 		if (e->tmp->line[0])
 		{
-			if ((e->tmp->layercheck_ret =
-						fillit_layer_check(e->tmp, tetri_ptr)) < 0)
-				return (e->tmp->layercheck_ret);
+			if ((fillit_layer_check(e->tmp, tetri_ptr)) < 0)
+				return (-1);
 		}
 		else
 		{
-			if (fillit_blocks_check(e, &list_ptr, &tetri_ptr) == -1)
+			if (fillit_blocks_check(e, &list_ptr, &tetri_ptr) < 0)
 				return (-1);
 		}
 		if (e->tmp->jump && e->tmp->layers != 4)
