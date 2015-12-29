@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/28 20:00:00 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/29 14:46:01 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	fillit_free_all(t_env *e);
 int		fillit_parse(t_env *e, char *filename);
 int		fillit_input_check(t_env *e, int fd);
 int		fillit_line_check(t_tmp *tmp);
+int		fillit_blocks_check(char *raw);
 
 /*
 ** calc.c

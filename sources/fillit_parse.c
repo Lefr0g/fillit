@@ -6,11 +6,35 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/28 20:21:52 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/29 14:56:30 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+int	fillit_blocks_check(char *raw)
+{
+	int	i;
+	int	blocks;
+
+	i = 0;
+	blocks = 0;
+	while (i < 17)
+	{
+		if (raw[i] == '#')
+		{
+			if ((i - 1 > 0 && raw[i - 1] == '#')
+					|| (i + 1 < 17 && raw[i + 1] == '#')
+					|| (i - 4 > 0 && raw[i - 4] == '#')
+					|| (i + 4 < 17 && raw[i + 4] == '#'))
+			blocks++;
+		else
+			return (-1);
+		}
+		i++;
+	}
+	return (blocks);
+}
 
 int	fillit_line_check(t_tmp *tmp)
 {
@@ -74,7 +98,9 @@ int	fillit_input_check(t_env *e, int fd)
 				return (fillit_error("not enough / too many blocks in tetri"));
 			else
 			{
-//				TODO : check validity of current tetrimino (search isolated blocks);
+//				Check validity current tetrimino (search isolated blocks) :
+				if (fillit_blocks_check(tetri_ptr->raw) == -1)
+					return (fillit_error("invalid block placement within tetri"));
 //				Then create a new t_tetri (list element) :
 				ft_lstappend(&(e->first), ft_lstnew(malloc(tet_siz), tet_siz));
 				list_ptr = list_ptr->next;

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/28 20:22:44 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/29 14:54:49 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		main(int argc, char **argv)
 		if (!fillit_parse(e, argv[1]))
 			fillit_run();
 		else
-			fillit_error("parse failed");
+			fillit_error("parsing detected an error in the input");
 	}
 	else
 		fillit_error("main error exit");
