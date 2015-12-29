@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/29 15:54:54 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/29 17:53:45 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,26 @@ int		fillit_init(t_env **e)
 	return (0);
 }
 
+/*
+void	fillit_del_tetri(void *content, size_t size)
+{
+	t_tetri	*ptr;
+
+	(void)size;
+	ptr = (t_tetri*)content;
+	free(ptr->raw);
+	free(ptr->x);
+	free(ptr->y);
+}
+*/
+
 void	fillit_free_all(t_env *e)
 {
 	ft_strdel(&(e->tmp->line));
 	free(e->tmp);
 	free(e);
 //	TODO : free list;
+//	ft_lstdel(&e->first, &fillit_del_tetri);
 }
 
 int		main(int argc, char **argv)
