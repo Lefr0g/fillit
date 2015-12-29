@@ -6,12 +6,31 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/29 14:56:30 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/29 15:44:56 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
+/*
+** This function checks that the tetrimino blocks are correctly placed.
+** A one-line representation of the full tetrimino is used.
+** For example, this:
+**  ......#..##..#..
+** is a correct tetrimino, corresponding to
+**  ....
+**  ..#.
+**  .##.
+**  .#..
+**
+** But this one:
+**  ..#..##......#..
+** is incorrect since one of its blocks is isolated form the others.
+**  ..#.
+**  .##.
+**  ....
+**  .#..
+*/
 int	fillit_blocks_check(char *raw)
 {
 	int	i;
@@ -36,6 +55,12 @@ int	fillit_blocks_check(char *raw)
 	return (blocks);
 }
 
+/*
+** This function simply checks that the current 1/4 of tetrimino only contains
+** allowed characters, and that the length is correct.
+** At the begining the 'jump' and 'layers' variables are reset in case we are
+** starting to parse a new tetrimino.
+*/
 int	fillit_line_check(t_tmp *tmp)
 {
 	int	blocks;
@@ -44,20 +69,20 @@ int	fillit_line_check(t_tmp *tmp)
 	if (tmp->jump)
 	{
 		tmp->jump = 0;
-		tmp->i = 0;
+		tmp->layers = 0;
 	}
-	tmp->j = 0;
-	while (tmp->line[tmp->j])
+	tmp->i = 0;
+	while (tmp->line[tmp->i])
 	{
-		if (tmp->line[tmp->j] != '.' && tmp->line[tmp->j] != '#')
+		if (tmp->line[tmp->i] != '.' && tmp->line[tmp->i] != '#')
 			return (fillit_error("forbidden character"));
-		else if (tmp->line[tmp->j] == '#')
+		else if (tmp->line[tmp->i] == '#')
 			blocks++;
-		(tmp->j)++;
+		(tmp->i)++;
 	}
-	if (tmp->j != 4)
+	if (tmp->i != 4)
 		return (fillit_error("wrong line size"));
-	(tmp->i)++;
+	(tmp->layers)++;
 	return (blocks);
 }
 
@@ -71,7 +96,7 @@ int	fillit_input_check(t_env *e, int fd)
 	tet_siz = sizeof(t_tetri);
 	blocks = 0;
 	e->tmp->jump = 0;
-	e->tmp->i = 0;
+	e->tmp->layers = 0;
 //	Get pointers to t_terti and the first list element :
 	list_ptr = e->first;
 	tetri_ptr = (t_tetri*)(list_ptr->content);
@@ -88,7 +113,8 @@ int	fillit_input_check(t_env *e, int fd)
 			{
 				blocks += e->tmp->linecheck_ret;
 //				Then concatenate 'line' to t_tetri 'raw' string :
-				ft_strcat(tetri_ptr->raw, e->tmp->line);
+				if (ft_strlen(tetri_ptr->raw) <= 12)
+					ft_strncat(tetri_ptr->raw, e->tmp->line, 4);
 			}
 		}
 		else
@@ -108,7 +134,7 @@ int	fillit_input_check(t_env *e, int fd)
 			}
 			blocks = 0;
 		}
-		if (e->tmp->jump && e->tmp->i != 4)
+		if (e->tmp->jump && e->tmp->layers != 4)
 			return (fillit_error("wrong tetri height"));
 		if (e->tmp->jump > 1)
 			return (fillit_error("more than one empty line"));
@@ -126,17 +152,15 @@ int	fillit_parse(t_env *e, char *filename)
 {
 	int	ret;
 
-	ft_putstr("pre-open check, filename = ");
-	ft_putendl(filename);
+//	ft_putstr("pre-open check, filename = ");
+//	ft_putendl(filename);
 	e->tmp->fd = open(filename, O_RDONLY);
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
 		return (fillit_error("open() failed"));
-	ft_putendl("open OK");
+//	ft_putendl("open OK");
 	ret = fillit_input_check(e, e->tmp->fd);
 	while (get_next_line(e->tmp->fd, &e->tmp->line))
 		(void)e;
 	close(e->tmp->fd);
 	return (ret);
 }
-
-

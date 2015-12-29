@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/29 14:46:01 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/29 15:42:13 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ typedef struct		s_tmp
 {
 	int				fd;
 	int				i;
-	int				j;
+	int				layers;
 	int				gnl_ret;
 	int				linecheck_ret;
 	int				jump;
