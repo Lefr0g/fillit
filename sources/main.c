@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/29 14:54:49 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/29 15:54:54 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ int		fillit_init(t_env **e)
 		return (-1);
 	if (!((*e)->tmp->line = ft_strnew(10)))
 		return (-1);
+	(*e)->tmp->tet_siz = sizeof(t_tetri);
+	(*e)->tmp->blocks = 0;
+	(*e)->tmp->jump = 0;
+	(*e)->tmp->layers = 0;
 	if (!((*e)->first = ft_lstnew((void*)elem, sizeof(t_tetri))))
 		return (-1);
 	return (0);

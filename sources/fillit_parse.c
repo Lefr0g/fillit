@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/29 15:44:56 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/29 17:10:39 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,44 @@
 **  .##.
 **  ....
 **  .#..
+**
+** How it works :
+** At the beginning, we know that an empty line has just been encountered.
+** First we count how many layers the previous tetrimino has.
+** Then we use the raw char* data to check that the blocks are correctly
+** positioned.
+** Finally, we add a new t_tetri within a new t_list element for the next
+** tetrimino. Then we reset the block counter.
 */
-int	fillit_blocks_check(char *raw)
+int	fillit_blocks_check(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr)
 {
 	int	i;
-	int	blocks;
 
 	i = 0;
-	blocks = 0;
-	while (i < 17)
+	e->tmp->jump++;
+	if (e->tmp->blocks != 4 && e->tmp->jump == 1)
+		return (fillit_error("not enough / too many blocks in tetri"));
+	else
 	{
-		if (raw[i] == '#')
+		while (i < 17)
 		{
-			if ((i - 1 > 0 && raw[i - 1] == '#')
-					|| (i + 1 < 17 && raw[i + 1] == '#')
-					|| (i - 4 > 0 && raw[i - 4] == '#')
-					|| (i + 4 < 17 && raw[i + 4] == '#'))
-			blocks++;
-		else
-			return (-1);
+			if ((*tetri_ptr)->raw[i] == '#')
+			{
+				if (!((i - 1 > 0 && (*tetri_ptr)->raw[i - 1] == '#')
+						|| (i + 1 < 17 && (*tetri_ptr)->raw[i + 1] == '#')
+						|| (i - 4 > 0 && (*tetri_ptr)->raw[i - 4] == '#')
+						|| (i + 4 < 17 && (*tetri_ptr)->raw[i + 4] == '#')))
+					return (fillit_error("invalid block placement in tetri"));
+			}
+			i++;
 		}
-		i++;
+		ft_lstappend(&(e->first), ft_lstnew(malloc(e->tmp->tet_siz),
+				e->tmp->tet_siz));
+		*list_ptr = (*list_ptr)->next;
+		*tetri_ptr = (t_tetri*)((*list_ptr)->content);
 	}
-	return (blocks);
+	e->tmp->blocks = 0;
+	return (0);
 }
 
 /*
@@ -61,7 +76,7 @@ int	fillit_blocks_check(char *raw)
 ** At the begining the 'jump' and 'layers' variables are reset in case we are
 ** starting to parse a new tetrimino.
 */
-int	fillit_line_check(t_tmp *tmp)
+int	fillit_layer_check(t_tmp *tmp, t_tetri *tetri_ptr)
 {
 	int	blocks;
 
@@ -83,62 +98,41 @@ int	fillit_line_check(t_tmp *tmp)
 	if (tmp->i != 4)
 		return (fillit_error("wrong line size"));
 	(tmp->layers)++;
+	(tmp->blocks) += blocks;
+	if (ft_strlen(tetri_ptr->raw) <= 12)
+		ft_strncat(tetri_ptr->raw, tmp->line, 4);
 	return (blocks);
 }
-
-int	fillit_input_check(t_env *e, int fd)
+/*
+** list_ptr and tetri_ptr are simple shortcuts to env substructures.
+**
+*/
+int	fillit_input_check(t_env *e)
 {
-	int		blocks;
-	int		tet_siz;
 	t_list	*list_ptr;
 	t_tetri	*tetri_ptr;
 
-	tet_siz = sizeof(t_tetri);
-	blocks = 0;
-	e->tmp->jump = 0;
-	e->tmp->layers = 0;
-//	Get pointers to t_terti and the first list element :
 	list_ptr = e->first;
 	tetri_ptr = (t_tetri*)(list_ptr->content);
-
-	while ((e->tmp->gnl_ret = get_next_line(fd, &e->tmp->line)) != 0)
+	while ((e->tmp->gnl_ret = get_next_line(e->tmp->fd, &e->tmp->line)) != 0)
 	{
 		if (e->tmp->gnl_ret == -1)
 			return (fillit_error("gnl fail"));
 		if (e->tmp->line[0])
 		{
-			if ((e->tmp->linecheck_ret = fillit_line_check(e->tmp)) < 0)
-				return (e->tmp->linecheck_ret);
-			else
-			{
-				blocks += e->tmp->linecheck_ret;
-//				Then concatenate 'line' to t_tetri 'raw' string :
-				if (ft_strlen(tetri_ptr->raw) <= 12)
-					ft_strncat(tetri_ptr->raw, e->tmp->line, 4);
-			}
+			if ((e->tmp->layercheck_ret =
+						fillit_layer_check(e->tmp, tetri_ptr)) < 0)
+				return (e->tmp->layercheck_ret);
 		}
 		else
 		{
-			e->tmp->jump++;
-			if (blocks != 4 && e->tmp->jump == 1)
-				return (fillit_error("not enough / too many blocks in tetri"));
-			else
-			{
-//				Check validity current tetrimino (search isolated blocks) :
-				if (fillit_blocks_check(tetri_ptr->raw) == -1)
-					return (fillit_error("invalid block placement within tetri"));
-//				Then create a new t_tetri (list element) :
-				ft_lstappend(&(e->first), ft_lstnew(malloc(tet_siz), tet_siz));
-				list_ptr = list_ptr->next;
-				tetri_ptr = (t_tetri*)(list_ptr->content);
-			}
-			blocks = 0;
+			if (fillit_blocks_check(e, &list_ptr, &tetri_ptr) == -1)
+				return (-1);
 		}
 		if (e->tmp->jump && e->tmp->layers != 4)
 			return (fillit_error("wrong tetri height"));
 		if (e->tmp->jump > 1)
 			return (fillit_error("more than one empty line"));
-//		ft_putendl(tmp->line);
 	}
 	return (0);
 }
@@ -158,7 +152,7 @@ int	fillit_parse(t_env *e, char *filename)
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
 		return (fillit_error("open() failed"));
 //	ft_putendl("open OK");
-	ret = fillit_input_check(e, e->tmp->fd);
+	ret = fillit_input_check(e);
 	while (get_next_line(e->tmp->fd, &e->tmp->line))
 		(void)e;
 	close(e->tmp->fd);
