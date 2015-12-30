@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/29 17:24:19 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/30 14:50:02 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 **  ..#.
 **  .##.
 **  .#..
-**
 ** But this one:
 **  ..#..##......#..
 ** is incorrect since one of its blocks is isolated form the others.
@@ -30,7 +29,6 @@
 **  .##.
 **  ....
 **  .#..
-**
 ** How it works :
 ** At the beginning, we know that an empty line has just been encountered.
 ** First we count how many layers the previous tetrimino has.
@@ -39,6 +37,7 @@
 ** Finally, we add a new t_tetri within a new t_list element for the next
 ** tetrimino. Then we reset the block counter.
 */
+
 int	fillit_blocks_check(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr)
 {
 	int	i;
@@ -73,6 +72,7 @@ int	fillit_blocks_check(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr)
 ** At the begining the 'jump' and 'layers' variables are reset in case we are
 ** starting to parse a new tetrimino.
 */
+
 int	fillit_layer_check(t_tmp *tmp, t_tetri *tetri_ptr)
 {
 	int	blocks;
@@ -100,10 +100,11 @@ int	fillit_layer_check(t_tmp *tmp, t_tetri *tetri_ptr)
 		ft_strncat(tetri_ptr->raw, tmp->line, 4);
 	return (blocks);
 }
+
 /*
 ** list_ptr and tetri_ptr are simple shortcuts to env substructures.
-**
 */
+
 int	fillit_input_check(t_env *e)
 {
 	t_list	*list_ptr;
@@ -134,20 +135,18 @@ int	fillit_input_check(t_env *e)
 }
 
 /*
-** Notice that the get_next_line() loop call below is used to free the static 
-** 'keep' string variable within gnl() in cases where an error is found in the 
+** Notice that the get_next_line() loop call below is used to free the static
+** 'keep' string variable within gnl() in cases where an error is found in the
 ** input file and fillit_input_check() stops prematurely.
 */
+
 int	fillit_parse(t_env *e, char *filename)
 {
 	int	ret;
 
-//	ft_putstr("pre-open check, filename = ");
-//	ft_putendl(filename);
 	e->tmp->fd = open(filename, O_RDONLY);
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
 		return (fillit_error("open() failed"));
-//	ft_putendl("open OK");
 	ret = fillit_input_check(e);
 	while (get_next_line(e->tmp->fd, &e->tmp->line))
 		(void)e;
