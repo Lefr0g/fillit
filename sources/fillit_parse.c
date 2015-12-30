@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/30 16:36:07 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/30 18:09:58 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,11 +177,14 @@ int	fillit_parse(t_env *e, char *filename)
 		return (fillit_error("open() failed"));
 	ret = fillit_input_check(e);
 	if (ret == -1)
+	{
 		e->tmp->jump = 0;
-	while (get_next_line(e->tmp->fd, &e->tmp->line))
-		(void)e;
+		while (get_next_line(e->tmp->fd, &e->tmp->line))
+			(void)ret;
+	}
 	if (e->tmp->jump)
 		return (fillit_error("empty line at the end of the file"));
+	fillit_load_xy(e);
 	close(e->tmp->fd);
 	return (ret);
 }

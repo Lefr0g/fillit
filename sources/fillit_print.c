@@ -6,29 +6,58 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/28 20:25:18 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/30 18:37:20 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
+void	fillit_print_xy(t_tetri *ptr)
+{
+	int	i;
+	
+	i = 0;
+	ft_putstr("\t\t     x -> |");
+	while (i < 4)
+	{
+		if (ptr->x[i] >= 0)
+			ft_putchar(' ');
+		ft_putnbr(ptr->x[i]);
+		ft_putchar('|');
+		i++;
+	}
+	ft_putchar('\n');
+	i = 0;
+	ft_putstr("\t\t     y -> |");
+	while (i < 4)
+	{
+		if (ptr->y[i] >= 0)
+			ft_putchar(' ');
+		ft_putnbr(ptr->y[i]);
+		ft_putchar('|');
+		i++;
+	}
+	ft_putchar('\n');
+}
+
 void	fillit_print_raw(t_env *e)
 {
 	int		i;
-	t_list	*ptr;
-	t_tetri	*tetptr;
+	t_list	*l_ptr;
+	t_tetri	*t_ptr;
 
-	ptr = e->first;
+	l_ptr = e->first;
 	i = 0;
 	ft_putendl("\n================ DEBUG ================");
-	while (ptr)
+	while (l_ptr)
 	{
-		tetptr = (t_tetri*)ptr->content;
+		t_ptr = (t_tetri*)l_ptr->content;
 		ft_putstr("Tetrimino ");
 		ft_putnbr(i);
 		ft_putstr(" contains : ");
-		ft_putendl(tetptr->raw);
-		ptr = ptr->next;
+		ft_putendl(t_ptr->raw);
+		l_ptr = l_ptr->next;
 		i++;
+		fillit_print_xy(t_ptr);
 	}
 }
