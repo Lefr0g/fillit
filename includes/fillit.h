@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/29 16:46:25 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/30 15:57:16 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct		s_tmp
 	int				layers;
 	int				layercheck_ret;
 	int				blocks;
-	int				tet_siz;
 	char			*line;
 }					t_tmp;
 
@@ -56,8 +55,9 @@ void	fillit_free_all(t_env *e);
 */
 int		fillit_parse(t_env *e, char *filename);
 int		fillit_input_check(t_env *e);
-int		fillit_layer_check(t_tmp *tmp, t_tetri *tetri_ptr);
-int		fillit_blocks_check(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr);
+int		fillit_layer_check(t_tmp *tmp, t_list **list_ptr, t_tetri **tetri_ptr);
+int		fillit_blocks_check(t_env *e, t_tetri *tetri_ptr);
+int		fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr);
 
 /*
 ** calc.c

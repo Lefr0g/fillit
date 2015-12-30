@@ -6,11 +6,28 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/30 14:50:02 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/30 15:55:31 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+/*
+** This function adds a new element to the list, containing the t_tetri
+** structure of a tetrimino.
+*/
+
+int	fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr)
+{
+	t_tetri *tmp;
+
+	if (!(tmp = malloc(sizeof(t_tetri))))
+		return (fillit_error("t_tetri malloc failed"));
+	ft_lstappend(list_ptr, ft_lstnew(tmp, sizeof(t_tetri)));
+	*list_ptr = (*list_ptr)->next;
+	*tetri_ptr = (t_tetri*)((*list_ptr)->content);
+	return (0);
+}
 
 /*
 ** This function checks that the tetrimino blocks are correctly placed.
@@ -38,7 +55,7 @@
 ** tetrimino. Then we reset the block counter.
 */
 
-int	fillit_blocks_check(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr)
+int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 {
 	int	i;
 
@@ -49,18 +66,14 @@ int	fillit_blocks_check(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr)
 	else
 	{
 		while (++i < 17)
-			if ((*tetri_ptr)->raw[i] == '#')
+			if (tetri_ptr->raw[i] == '#')
 			{
-				if (!((i - 1 > 0 && (*tetri_ptr)->raw[i - 1] == '#')
-						|| (i + 1 < 17 && (*tetri_ptr)->raw[i + 1] == '#')
-						|| (i - 4 > 0 && (*tetri_ptr)->raw[i - 4] == '#')
-						|| (i + 4 < 17 && (*tetri_ptr)->raw[i + 4] == '#')))
+				if (!((i - 1 > 0 && tetri_ptr->raw[i - 1] == '#')
+						|| (i + 1 < 17 && tetri_ptr->raw[i + 1] == '#')
+						|| (i - 4 > 0 && tetri_ptr->raw[i - 4] == '#')
+						|| (i + 4 < 17 && tetri_ptr->raw[i + 4] == '#')))
 					return (fillit_error("invalid block placement in tetri"));
 			}
-		ft_lstappend(&(e->first), ft_lstnew(malloc(e->tmp->tet_siz),
-				e->tmp->tet_siz));
-		*list_ptr = (*list_ptr)->next;
-		*tetri_ptr = (t_tetri*)((*list_ptr)->content);
 	}
 	e->tmp->blocks = 0;
 	return (0);
@@ -73,7 +86,7 @@ int	fillit_blocks_check(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr)
 ** starting to parse a new tetrimino.
 */
 
-int	fillit_layer_check(t_tmp *tmp, t_tetri *tetri_ptr)
+int	fillit_layer_check(t_tmp *tmp, t_list **list_ptr, t_tetri **tetri_ptr)
 {
 	int	blocks;
 
@@ -82,6 +95,7 @@ int	fillit_layer_check(t_tmp *tmp, t_tetri *tetri_ptr)
 	{
 		tmp->jump = 0;
 		tmp->layers = 0;
+		fillit_new_tetri(list_ptr, tetri_ptr);
 	}
 	tmp->i = 0;
 	while (tmp->line[tmp->i])
@@ -96,12 +110,22 @@ int	fillit_layer_check(t_tmp *tmp, t_tetri *tetri_ptr)
 		return (fillit_error("wrong line size"));
 	(tmp->layers)++;
 	(tmp->blocks) += blocks;
-	if (ft_strlen(tetri_ptr->raw) <= 12)
-		ft_strncat(tetri_ptr->raw, tmp->line, 4);
+	if (ft_strlen((*tetri_ptr)->raw) <= 12)
+		ft_strncat((*tetri_ptr)->raw, tmp->line, 4);
 	return (blocks);
 }
 
 /*
+** A loop call to gnl() is made until the end of the file read. It can be
+** interrupted if any issue is detected in this file, as defined in the project
+** specifications.
+** When a non-empty line is read, fillit_layer_check() is called.
+** If the line is empty, it sould mean that a tetrimino has been fully read. In
+** this case the fillit_block_check function is called to verify that the '#'
+** blocks are placed correctly, ensuring a valid tetrimino.
+** The two last checks ensure that only 4-layers high tetriminos are accepted,
+** and that two tetriminos can only be separated by one empty line.
+** This function returns 0 or -1 to fillit_parse().
 ** list_ptr and tetri_ptr are simple shortcuts to env substructures.
 */
 
@@ -118,12 +142,12 @@ int	fillit_input_check(t_env *e)
 			return (fillit_error("gnl fail"));
 		if (e->tmp->line[0])
 		{
-			if ((fillit_layer_check(e->tmp, tetri_ptr)) < 0)
+			if ((fillit_layer_check(e->tmp, &list_ptr, &tetri_ptr)) < 0)
 				return (-1);
 		}
 		else
 		{
-			if (fillit_blocks_check(e, &list_ptr, &tetri_ptr) < 0)
+			if (fillit_blocks_check(e, tetri_ptr) < 0)
 				return (-1);
 		}
 		if (e->tmp->jump && e->tmp->layers != 4)
@@ -135,9 +159,14 @@ int	fillit_input_check(t_env *e)
 }
 
 /*
+** This is the parsing function called by main.
+** It opens the file and then calls the fillit_input_check() function.
 ** Notice that the get_next_line() loop call below is used to free the static
 ** 'keep' string variable within gnl() in cases where an error is found in the
 ** input file and fillit_input_check() stops prematurely.
+** The error detection for empty line at the end of the input file is done at
+** this stage. If an error is detected during fillit_input_check(), the 'jump'
+** variable is reset to avoid false positive / double errors.
 */
 
 int	fillit_parse(t_env *e, char *filename)
@@ -148,8 +177,12 @@ int	fillit_parse(t_env *e, char *filename)
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
 		return (fillit_error("open() failed"));
 	ret = fillit_input_check(e);
+	if (ret == -1)
+		e->tmp->jump = 0;
 	while (get_next_line(e->tmp->fd, &e->tmp->line))
 		(void)e;
+	if (e->tmp->jump)
+		return (fillit_error("empty line at the end of the file"));
 	close(e->tmp->fd);
 	return (ret);
 }
