@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/30 15:57:46 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/30 16:37:21 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ int		fillit_run(void)
 
 int		fillit_init(t_env **e)
 {
-	t_tetri		*elem;
+	t_tetri		tmp;
 
-	if (!(elem = (t_tetri*)malloc(sizeof(t_tetri))))
-		return (-1);
-	elem->letter = '\0';
-	ft_bzero(elem->raw, 17);
+	tmp.letter = '\0';
+	ft_bzero(tmp.raw, 17);
 
 	if (!(*e = (t_env*)malloc(sizeof(t_env))))
 		return (-1);
@@ -49,31 +47,26 @@ int		fillit_init(t_env **e)
 	(*e)->tmp->blocks = 0;
 	(*e)->tmp->jump = 0;
 	(*e)->tmp->layers = 0;
-	if (!((*e)->first = ft_lstnew((void*)elem, sizeof(t_tetri))))
+	if (!((*e)->first = ft_lstnew(&tmp, sizeof(t_tetri))))
 		return (-1);
 	return (0);
 }
 
-/*
+
 void	fillit_del_tetri(void *content, size_t size)
 {
-	t_tetri	*ptr;
-
-	(void)size;
-	ptr = (t_tetri*)content;
-	free(ptr->raw);
-	free(ptr->x);
-	free(ptr->y);
+	ft_bzero(content, size);
+	free((t_tetri*)content);
 }
-*/
+
 
 void	fillit_free_all(t_env *e)
 {
 	ft_strdel(&(e->tmp->line));
 	free(e->tmp);
-	free(e);
 //	TODO : free list;
-//	ft_lstdel(&e->first, &fillit_del_tetri);
+	ft_lstdel(&e->first, &fillit_del_tetri);
+	free(e);
 }
 
 int		main(int argc, char **argv)

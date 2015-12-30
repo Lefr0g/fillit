@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/30 15:55:31 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/30 16:36:07 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@
 
 int	fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr)
 {
-	t_tetri *tmp;
+	t_tetri tmp;
 
-	if (!(tmp = malloc(sizeof(t_tetri))))
-		return (fillit_error("t_tetri malloc failed"));
-	ft_lstappend(list_ptr, ft_lstnew(tmp, sizeof(t_tetri)));
+	ft_lstappend(list_ptr, ft_lstnew(&tmp, sizeof(t_tetri)));
 	*list_ptr = (*list_ptr)->next;
 	*tetri_ptr = (t_tetri*)((*list_ptr)->content);
+	ft_bzero((*tetri_ptr)->raw, 17);
 	return (0);
 }
 
