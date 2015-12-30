@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/30 16:39:44 by amulin           ###   ########.fr       */
+/*   Updated: 2015/12/30 19:10:55 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@ int		fillit_init(t_env **e)
 	return (0);
 }
 
+void	fillit_reset_quickvars(t_env *e)
+{
+	e->block = 0;
+	e->i = 0;
+	e->j = 0;
+	e->x = 0;
+	e->y = 0;
+}
 
 void	fillit_del_tetri(void *content, size_t size)
 {
