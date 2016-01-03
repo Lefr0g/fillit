@@ -6,11 +6,43 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/30 19:03:22 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/03 19:28:22 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+/*
+** This function prints the tetrimino passed as parameter on stdout, based on
+** its xy coordinates, NOT on the raw string.
+*/
+void	fillit_print_single_tetri(t_tetri *ptr)
+{
+	int	i;
+	int	x;
+	int	y;
+
+	i = 0;
+	x = 0;
+	y = 0;
+	while (i < 4)
+	{
+		while (x < ptr->x[i])
+		{
+			ft_putchar(' ');
+			x++;
+		}
+		ft_putchar(ptr->letter);
+		x++;
+		if (y != ptr->y[i + 1])
+		{
+			ft_putchar('\n');
+			x = 0;
+			y++;
+		}
+		i++;
+	}
+}
 
 void	fillit_print_xy(t_tetri *ptr)
 {
@@ -56,6 +88,7 @@ void	fillit_print_raw(t_env *e)
 		ft_putendl(t_ptr->raw);
 		l_ptr = l_ptr->next;
 		fillit_print_xy(t_ptr);
+		fillit_print_single_tetri(t_ptr);
 		ft_putchar('\n');
 	}
 }

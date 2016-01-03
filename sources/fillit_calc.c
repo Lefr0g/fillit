@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2015/12/30 19:22:07 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/03 19:02:27 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,43 @@ int		calc(t_env *start)
 	}
 	return (0);
 }
+
+/*
+** This function ensures all the x coordinates are positive by changing the x
+** reference if needed.
+*/
+
+void	fillit_x_correct(t_tetri *ptr)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < 4)
+	{
+		if (ptr->x[i] < j)
+			j = ptr->x[i];
+		i++;
+	}
+	if (j < 0)
+	{
+		i = 0;
+		while (i < 4)
+		{
+			ptr->x[i] += -j;
+			i++;
+		}
+	}
+}
+
+/*
+** In this function, e->i is the position of the current block within the raw
+** string, and e->j is the position of the previous block.
+** Based on the fact that all tetrimino have known shape limitations, this
+** function translates the current block position into xy coordinates, based on
+** the know data on the previous block and the spacing witch separates them.
+*/
 
 void	fillit_xy_get(t_env *e, t_tetri *t_ptr)
 {
@@ -63,7 +100,7 @@ void	fillit_load_xy(t_env *e)
 	fillit_reset_quickvars(e);
 	l_ptr = e->first;
 	t_ptr = (t_tetri*)l_ptr->content;
-	while (l_ptr)
+	while (l_ptr && e->letter <= 'Z')
 	{
 		t_ptr->letter = e->letter;
 		while (t_ptr->raw[e->i] && e->block < 4)
@@ -76,6 +113,7 @@ void	fillit_load_xy(t_env *e)
 			}
 			e->i++;
 		}
+		fillit_x_correct(t_ptr);
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri*)l_ptr->content;
 		e->letter++;

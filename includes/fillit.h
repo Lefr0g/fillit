@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2015/12/30 19:22:16 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/03 18:50:06 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,13 @@ int		fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr);
 int		fillit_calc(t_env *start);
 void	fillit_load_xy(t_env *e);
 void	fillit_xy_get(t_env *e, t_tetri *t_ptr);
+void	fillit_x_correct(t_tetri *ptr);
 
 /*
 ** fillit_print.c
 */
 void	fillit_print_raw(t_env *e);
 void	fillit_print_xy(t_tetri *ptr);
+void	fillit_print_single_tetri(t_tetri *ptr);
 
 #endif
