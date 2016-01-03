@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/03 19:28:22 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/03 19:39:33 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 /*
 ** This function prints the tetrimino passed as parameter on stdout, based on
 ** its xy coordinates, NOT on the raw string.
+** The two last conditions of the main loop avoid printing unallocated
+** coordinate tables when debugging.
 */
+
 void	fillit_print_single_tetri(t_tetri *ptr)
 {
 	int	i;
@@ -25,7 +28,7 @@ void	fillit_print_single_tetri(t_tetri *ptr)
 	i = 0;
 	x = 0;
 	y = 0;
-	while (i < 4)
+	while (i < 4 && ptr->x[i] < 4 && ptr->y[i] < 4)
 	{
 		while (x < ptr->x[i])
 		{
@@ -43,6 +46,10 @@ void	fillit_print_single_tetri(t_tetri *ptr)
 		i++;
 	}
 }
+
+/*
+** Printing debug subfunction.
+*/
 
 void	fillit_print_xy(t_tetri *ptr)
 {
@@ -71,6 +78,10 @@ void	fillit_print_xy(t_tetri *ptr)
 	}
 	ft_putchar('\n');
 }
+
+/*
+** Parent printing debug function.
+*/
 
 void	fillit_print_raw(t_env *e)
 {

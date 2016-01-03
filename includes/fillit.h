@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/03 18:50:06 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/03 23:30:43 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct		s_tetri
 	char			raw[17];
 	int				x[4];
 	int				y[4];
+	int				x_offset;
+	int				y_offset;
 }					t_tetri;
 
 typedef struct		s_env
@@ -46,6 +48,10 @@ typedef struct		s_env
 	int				j;
 	int				x;
 	int				y;
+	int				smallest_size; // cote du plus petit carre
+	size_t			tcount; // nombre de tetris dans la liste
+	char			set[25]; // Stockage des lettres a ne pas deplacer
+	char			*result; // Map de sortie
 	int				block;
 	int				letter;
 }					t_env;

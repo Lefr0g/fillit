@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/03 19:02:27 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/03 23:25:13 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	fillit_load_xy(t_env *e)
 	while (l_ptr && e->letter <= 'Z')
 	{
 		t_ptr->letter = e->letter;
+		e->tcount++;
 		while (t_ptr->raw[e->i] && e->block < 4)
 		{
 			if (t_ptr->raw[e->i] == '#')
