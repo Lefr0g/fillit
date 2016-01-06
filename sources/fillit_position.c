@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 15:36:18 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 15:43:31 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,20 @@ int	fillit_check_position(t_env *e, t_tetri *moving)
 		if (fixed->set)
 		{
 			// Do the check
-			while (i < 4)
+			while (e->i < 4)
 			{
-				if (moving->x[i] + moving->x_offset == fixed->x[i] + 
-						fixed->x_offset && moving->y[i] + moving->y_offset ==
-						fixed->y[i] + fixed->y_offset)
-					return (1);
+				e->j = 0;
+				while (e->j < 4)
+				{
+					if (moving->x[e->i] + moving->x_offset == fixed->x[e->i] + 
+							fixed->x_offset && moving->y[e->j] +
+							moving->y_offset == fixed->y[e->j] + fixed->y_offset)
+						return (1);
+					else
+						e->j++;
+				}
 				else
-					i++;
+					e->i++;
 			}
 		}
 		lst_ptr = lst_ptr->next;
