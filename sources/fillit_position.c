@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 21:40:47 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 21:45:14 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 				return (1);
 			e->i++;
 		}
-		lst_ptr = lst_ptr->next;
-		fixed = lst_ptr->content;
+		if ((lst_ptr = lst_ptr->next))
+			fixed = lst_ptr->content;
 	}
 	return (0);
 }
@@ -63,8 +63,8 @@ int	fillit_check_contact(t_env *e, t_tetri *moving)
 				return (1);
 			e->i++;
 		}
-		lst_ptr = lst_ptr->next;
-		fixed = lst_ptr->content;
+		if ((lst_ptr = lst_ptr->next))
+			fixed = lst_ptr->content;
 	}
 	return (0);
 }
