@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 21:28:21 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/06 21:49:28 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 				return (1);
 			e->i++;
 		}
-		lst_ptr = lst_ptr->next;
-		fixed = lst_ptr->content;
+		if ((lst_ptr = lst_ptr->next))
+			fixed = lst_ptr->content;
 	}
 	return (0);
 }
@@ -60,15 +60,15 @@ int	fillit_check_contact(t_env *e, t_tetri *moving)
 		{
 			e->x = fixed->x[e->i] + fixed->x_offset;
 			e->y = fixed->y[e->i] + fixed->y_offset;
-			if (fillit_xy_collision(e->x + 1, e->y, moving) || 
+			if (fillit_xy_collision(e->x + 1, e->y, moving) ||
 					fillit_xy_collision(e->x - 1, e->y, moving) ||
 					fillit_xy_collision(e->x, e->y + 1, moving) ||
 					fillit_xy_collision(e->x, e->y - 1, moving))
 				return (1);
 			e->i++;
 		}
-		lst_ptr = lst_ptr->next;
-		fixed = lst_ptr->content;
+		if ((lst_ptr = lst_ptr->next))
+			fixed = lst_ptr->content;
 	}
 	return (0);
 }
