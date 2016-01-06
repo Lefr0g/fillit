@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_position.c                                  :+:      :+:    :+:   */
+/*   sources/fillit_position.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 18:55:44 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 20:57:45 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,3 +50,34 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 	}
 	return (0);
 }
+
+/*
+** Function to calc size of the square containing all fixed tretriminos plus
+** the one which is moving.
+** Calc is done simply by : (max x) * (max y)
+*/
+int fillit_square_size(t_env *e, t_tetri *moving)
+{
+	int		m_x;
+	int		m_y;
+	t_list	*lst_ptr;
+	t_tetri	*fixed;
+
+	lst_ptr = e->first;
+	fixed = (t_tetri *)lst_ptr->content;
+	m_x = ft_tabmax(moving->x, 4);
+	m_y = ft_tabmax(moving->y, 4);
+	while (lst_ptr)
+	{
+		if (fixed->set)
+		{
+			if (ft_tabmax(fixed->x, 4) > m_x)
+				m_x = ft_tabmax(fixed->x, 4);
+			if (ft_tabmax(fixed->y, 4) > m_y)
+				m_y = ft_tabmax(fixed->y, 4);
+		}
+		if ((lst_ptr = lst_ptr->next))
+			fixed = (t_tetri *)lst_ptr->content;
+	}
+	return (m_x * m_y);
+
