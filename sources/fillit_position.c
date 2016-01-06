@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 20:48:51 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 20:58:02 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	fillit_check_contact(t_env *e, t_tetri *moving)
 		{
 			e->x = fixed->x[e->i] + fixed->x_offset;
 			e->y = fixed->y[e->i] + fixed->y_offset;
-			if (fillit_xy_collision(e->x + 1, e->y, moving) || 
+			if (fillit_xy_collision(e->x + 1, e->y, moving) ||
 					fillit_xy_collision(e->x - 1, e->y, moving) ||
 					fillit_xy_collision(e->x, e->y + 1, moving) ||
 					fillit_xy_collision(e->x, e->y - 1, moving))
