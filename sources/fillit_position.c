@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 15:43:31 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 18:55:44 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 ** tetri which position has been set. In case of a collision, 1 is returned.
 */
 
-int	fillit_check_position(t_env *e, t_tetri *moving)
+int	fillit_check_collision(t_env *e, t_tetri *moving)
 {
 	t_list	*lst_ptr;
 	t_tetri	*fixed;
 
 	lst_ptr = e->first;
-	fixed = list_ptr->content;
+	fixed = lst_ptr->content;
 	while (lst_ptr)
 	{
 		fillit_reset_quickvars(e);
@@ -42,8 +42,7 @@ int	fillit_check_position(t_env *e, t_tetri *moving)
 					else
 						e->j++;
 				}
-				else
-					e->i++;
+				e->i++;
 			}
 		}
 		lst_ptr = lst_ptr->next;

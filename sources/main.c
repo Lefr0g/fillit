@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/03 23:56:53 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 18:54:35 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		fillit_run(t_env *e)
 		// Check collision
 		// Check contact
 		// Calculer taille carre
-		//   
+		// Screenshot carre
 //	}
 	
 	return (0);
@@ -84,12 +84,12 @@ int		fillit_run(t_env *e)
 
 int		fillit_init(t_env **e)
 {
-	t_tetri		tmp;
+	t_tetri		tet_ptr;
 
-	tmp.letter = '\0';
-	tmp.x_offset = 0;
-	tmp.y_offset = 0;
-	ft_bzero(tmp.raw, 17);
+	tet_ptr.letter = '\0';
+	tet_ptr.x_offset = 0;
+	tet_ptr.y_offset = 0;
+	ft_bzero(tet_ptr.raw, 17);
 
 	if (!(*e = (t_env*)malloc(sizeof(t_env))))
 		return (-1);
@@ -102,7 +102,7 @@ int		fillit_init(t_env **e)
 	(*e)->tmp->layers = 0;
 	(*e)->tcount = 0;
 	ft_bzero((*e)->set, 25);
-	if (!((*e)->first = ft_lstnew(&tmp, sizeof(t_tetri))))
+	if (!((*e)->first = ft_lstnew(&tet_ptr, sizeof(t_tetri))))
 		return (-1);
 	return (0);
 }
