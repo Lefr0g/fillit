@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/03 23:30:43 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 15:25:19 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct		s_tetri
 	int				y[4];
 	int				x_offset;
 	int				y_offset;
+	int				set;
 }					t_tetri;
 
 typedef struct		s_env
@@ -73,7 +74,7 @@ int		fillit_blocks_check(t_env *e, t_tetri *tetri_ptr);
 int		fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr);
 
 /*
-** calc.c
+** fillit_calc.c
 */
 int		fillit_calc(t_env *start);
 void	fillit_load_xy(t_env *e);
@@ -86,5 +87,10 @@ void	fillit_x_correct(t_tetri *ptr);
 void	fillit_print_raw(t_env *e);
 void	fillit_print_xy(t_tetri *ptr);
 void	fillit_print_single_tetri(t_tetri *ptr);
+
+/*
+** fillit_position.c
+*/
+int		fillit_check_collision(t_env *e, t_tetri *moving);
 
 #endif
