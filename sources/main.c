@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sources/main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 18:59:14 by amulin           ###   ########.fr       */
+/*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
+/*   Updated: 2016/01/06 21:10:44 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "fillit.h"
 
-int 	fillit_error(char *str)
+int		fillit_error(char *str)
 {
 	if (!str)
 		ft_putstr_fd("error", 2);
@@ -28,36 +29,42 @@ int 	fillit_error(char *str)
 /*
 ** Algo (draft, a optimiser) :
 **
-**  1/ L'element A est la reference. Il ne bougera pas. L'element B sera place
-**     contre lui et deplace progressivement dans le sens des aiguilles d'une
-**     montre.
-**  2/ On considere le block de A le plus en haut et a gauche. 
-**  3/ On ajoute 1 en x afin d'obtenir les coodonnees du premier block de B, 
-**     le plus en haut de B.
-**  4/ On verifie l'absence de collision entre les 2 tetriminos.
-**     4.1/ Si collision, on incremente l'offset de B en x et on revient a 3/.
-**  5/ On verifie que les 2 tetriminos sont en contact.
-**     5.1/ Si non, on incremente y de 1, on cherche la valeur de x correspondante
-**          sur A. On revient ensuite a 3/.
-**  6/ Si le positionnement est correct, on compare la taille du carre resultant
-**     avec le plus petit trouve jusqu'a present.
-**     6.1/ Si le nouveau carre est plus petit, on retient sa valeur, et on
-**          enregistre la map resultante sous forme d'une chaine.
-**  7/ On continue ce processus jusqu'a ce que B ait fait un tour complet de A.
-**  8/ On affiche sur stdout la derniere chaine de caractere enregistree.
+**	1/ L'element A est la reference. Il ne bougera pas. L'element B sera place
+**	   contre lui et deplace progressivement dans le sens des aiguilles d'une
+**	   montre.
+**	2/ On considere le block de A le plus en haut et a gauche. 
+**	3/ On ajoute 1 en x afin d'obtenir les coodonnees du premier block de B, 
+**	   le plus en haut de B.
+**	4/ On verifie l'absence de collision entre les 2 tetriminos.
+**	   4.1/ Si collision, on incremente l'offset de B en x et on revient a 3/.
+**	5/ On verifie que les 2 tetriminos sont en contact.
+**	   5.1/ Si non, on incremente y de 1, on cherche la valeur de x correspondante
+**			sur A. On revient ensuite a 3/.
+**	6/ Si le positionnement est correct, on compare la taille du carre resultant
+**	   avec le plus petit trouve jusqu'a present.
+**	   6.1/ Si le nouveau carre est plus petit, on retient sa valeur, et on
+**			enregistre la map resultante sous forme d'une chaine.
+**	7/ On continue ce processus jusqu'a ce que B ait fait un tour complet de A.
+**	8/ On affiche sur stdout la derniere chaine de caractere enregistree.
 **
 ** Note : Pour ajouter un element C, on fait appel a la recursivite avant 6/
-**        en considerant l'assemblage de A et B comme un tetrimino A geant.
-**        Puis une fois la boucle de B autour de A finie, on recommence en
-**        deplacant cette fois C autour de A.
+**		  en considerant l'assemblage de A et B comme un tetrimino A geant.
+**		  Puis une fois la boucle de B autour de A finie, on recommence en
+**		  deplacant cette fois C autour de A.
 */
 
 int		fillit_run(t_env *e)
 {
+	int		siz_square;
+//	int		i;
+//	int		x;
+//	int		y;
 	t_list	*li_ptr;
 	t_tetri	*te_ptr;
 
 	ft_putendl("Input map is valid, running rest of the program");
+
+	siz_square = 0;
 
 	// Les pointeurs suivants feront reference au second tetri (B)
 	li_ptr = e->first->next;
@@ -66,16 +73,24 @@ int		fillit_run(t_env *e)
 	// On positionne B par rapport a A
 	te_ptr->x_offset = ((t_tetri*)(e->first->content))->x[0] + 1;
 	te_ptr->y_offset = ((t_tetri*)(e->first->content))->y[0];
-	
+
 	// On boucle jusqu'a ce que tous les tetris aient fini de bouger
-//	while (ft_strlen(e->set) < e->tcount)
-//	{
+	while (ft_strlen(e->set) < e->tcount)
+	{
 		// Check collision
-		// Check contact
-		// Calculer taille carre
-		// Screenshot carre
-//	}
-	
+		if (fillit_check_collision(e, te_ptr))
+			ft_putendl("Collision");
+		else
+		{
+			// Check contact
+			fillit_check_contact(e, te_ptr);
+			// Calculer taille carre
+			siz_square = fillit_square_size(e, te_ptr);
+			if (siz_square < e->smallest_size)
+				e->smallest_size = siz_square;
+			// Screenshot carre
+		}
+	}
 	return (0);
 }
 
@@ -149,6 +164,7 @@ int		main(int argc, char **argv)
 	fillit_print_raw(e);
 	printf("There are %lu tetriminos\n", e->tcount);	
 	fillit_free_all(e);
+	ft_putstr("Square size : "); ft_putnbr(e->smallest_size); ft_putchar('\n');
 	ft_putendl("============ End of program ===========");
 	return (0);
 }

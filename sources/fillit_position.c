@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_position.c                                  :+:      :+:    :+:   */
+/*   sources/fillit_position.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 20:58:02 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 21:40:47 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,6 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 
 int	fillit_check_contact(t_env *e, t_tetri *moving)
 {
-	t_list	*lst_ptr;
-	t_tetri	*fixed;
-
-	lst_ptr = e->first;
 	fixed = lst_ptr->content;
 	while (lst_ptr)
 	{
@@ -71,6 +67,37 @@ int	fillit_check_contact(t_env *e, t_tetri *moving)
 		fixed = lst_ptr->content;
 	}
 	return (0);
+}
+
+/*
+** Function to calc size of the square containing all fixed tretriminos plus
+** the one which is moving.
+** Calc is done simply by : (max x) * (max y)
+*/
+
+int fillit_square_size(t_env *e, t_tetri *moving)
+{
+	int		m_x;
+	int		m_y;
+
+	t_list	*lst_ptr;
+	t_tetri	*fixed;
+
+	lst_ptr = e->first;
+	fixed = (t_tetri *)lst_ptr->content;
+	m_x = moving->x_offset;
+	m_y = moving->y_offset;
+	while (lst_ptr)
+	{
+		if (fixed->set)
+		{
+			m_x += fixed->x_offset;
+			m_y += fixed->y_offset;
+		}
+		if ((lst_ptr = lst_ptr->next))
+			fixed = (t_tetri *)lst_ptr->content;
+	}
+	return (m_x * m_y);
 }
 
 /*

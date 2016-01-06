@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_calc.c                                      :+:      :+:    :+:   */
+/*   sources/fillit_calc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/03 23:25:13 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 19:09:45 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-int		calc(t_env *start)
-{
-	t_list	*p;
-
-	p = start->first;
-	while (p)
-	{
-		//solve;
-		p = p->next;
-	}
-	return (0);
-}
 
 /*
 ** This function ensures all the x coordinates are positive by changing the x
