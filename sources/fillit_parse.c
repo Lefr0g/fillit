@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_parse.c                                     :+:      :+:    :+:   */
+/*   sources/fillit_parse.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/03 23:18:14 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 21:32:46 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr)
 	ft_bzero((*tetri_ptr)->raw, 17);
 	(*tetri_ptr)->x_offset = 0;
 	(*tetri_ptr)->y_offset = 0;
+	(*tetri_ptr)->set = 0;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/06 21:10:44 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/06 21:39:19 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,22 @@ int		fillit_run(t_env *e)
 	te_ptr->y_offset = ((t_tetri*)(e->first->content))->y[0];
 
 	// On boucle jusqu'a ce que tous les tetris aient fini de bouger
-	while (ft_strlen(e->set) < e->tcount)
-	{
+//	while (ft_strlen(e->set) < e->tcount)
+//	{
 		// Check collision
 		if (fillit_check_collision(e, te_ptr))
 			ft_putendl("Collision");
 		else
 		{
 			// Check contact
-			fillit_check_contact(e, te_ptr);
+		//	fillit_check_contact(e, te_ptr);
 			// Calculer taille carre
-			siz_square = fillit_square_size(e, te_ptr);
+			//siz_square = fillit_square_size(e, te_ptr);
 			if (siz_square < e->smallest_size)
 				e->smallest_size = siz_square;
 			// Screenshot carre
 		}
-	}
+//	}
 	return (0);
 }
 

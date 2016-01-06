@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 21:20:05 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/06 21:28:21 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 
 int	fillit_check_contact(t_env *e, t_tetri *moving)
 {
+	t_list	*lst_ptr;
+	t_tetri	*fixed;
+
+	lst_ptr = e->first;
 	fixed = lst_ptr->content;
 	while (lst_ptr)
 	{
