@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 18:54:35 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 18:59:14 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ int 	fillit_error(char *str)
 
 int		fillit_run(t_env *e)
 {
-//	int		i;
-//	int		x;
-//	int		y;
 	t_list	*li_ptr;
 	t_tetri	*te_ptr;
 

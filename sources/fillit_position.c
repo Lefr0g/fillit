@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 18:55:44 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/06 20:48:51 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,67 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 	while (lst_ptr)
 	{
 		fillit_reset_quickvars(e);
-		if (fixed->set)
+		while (fixed->set && e->i < 4)
 		{
-			// Do the check
-			while (e->i < 4)
-			{
-				e->j = 0;
-				while (e->j < 4)
-				{
-					if (moving->x[e->i] + moving->x_offset == fixed->x[e->i] + 
-							fixed->x_offset && moving->y[e->j] +
-							moving->y_offset == fixed->y[e->j] + fixed->y_offset)
-						return (1);
-					else
-						e->j++;
-				}
-				e->i++;
-			}
+			e->j = 0;
+			if (fillit_xy_collision(fixed->x[e->i] + fixed->x_offset,
+						fixed->y[e->i] + fixed->y_offset, moving))
+				return (1);
+			e->i++;
 		}
 		lst_ptr = lst_ptr->next;
 		fixed = lst_ptr->content;
+	}
+	return (0);
+}
+
+/*
+** This function checks if the currently moving tetri is in contact with any
+** tetri which position has been set. In case of contact, 1 is returned.
+*/
+
+int	fillit_check_contact(t_env *e, t_tetri *moving)
+{
+	t_list	*lst_ptr;
+	t_tetri	*fixed;
+
+	lst_ptr = e->first;
+	fixed = lst_ptr->content;
+	while (lst_ptr)
+	{
+		fillit_reset_quickvars(e);
+		while (fixed->set && e->i < 4)
+		{
+			e->x = fixed->x[e->i] + fixed->x_offset;
+			e->y = fixed->y[e->i] + fixed->y_offset;
+			if (fillit_xy_collision(e->x + 1, e->y, moving) || 
+					fillit_xy_collision(e->x - 1, e->y, moving) ||
+					fillit_xy_collision(e->x, e->y + 1, moving) ||
+					fillit_xy_collision(e->x, e->y - 1, moving))
+				return (1);
+			e->i++;
+		}
+		lst_ptr = lst_ptr->next;
+		fixed = lst_ptr->content;
+	}
+	return (0);
+}
+
+/*
+** This function returns 1 if the point at coordinates x,y collides with any
+** block within the tetri represented by ptr.
+*/
+
+int	fillit_xy_collision(int x, int y, t_tetri *ptr)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (ptr->x[i] + ptr->x_offset == x && ptr->y[i] + ptr->y_offset == y)
+			return (1);
+		i++;
 	}
 	return (0);
 }
