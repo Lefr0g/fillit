@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_print.c                                     :+:      :+:    :+:   */
+/*   sources/fillit_print.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/03 19:39:33 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/07 23:26:11 by liums            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,49 @@ void	fillit_print_raw(t_env *e)
 		fillit_print_single_tetri(t_ptr);
 		ft_putchar('\n');
 	}
+}
+
+/*
+** save actual env (e) agencement ( fixed tetriminos ) to a printable str
+*/
+
+char	*fillit_save_printable(t_env *e)
+{
+	char	*ret;
+	char	*here;
+	int		c;
+	t_list	*l_ptr;
+	t_tetri	*t_ptr;
+
+	l_ptr = e->first;
+	t_ptr = (t_tetri *)l_ptr->content;
+	ret = (char *)malloc(e->smallest_size * (e->smallest_size + 1) + 1);
+	ft_memset(ret, '.', e->smallest_size * (e->smallest_size + 1));
+	ret[e->smallest_size * (e->smallest_size + 1) + 1] = 0;
+	ft_putnbr(e->smallest_size * (e->smallest_size + 1) + 1); ft_putchar('\n');
+	c = 0;
+	int tp = e->smallest_size;
+	while (tp--)
+	{
+		c += e->smallest_size;
+		ret[c] = '\n';
+	}
+	c = 0;
+	while (l_ptr)
+	{
+		if (t_ptr->fixed)
+		{
+			here = ret + t_ptr->x_offset + 4 * t_ptr->y_offset;
+			while (t_ptr->raw[c])
+			{
+				if (t_ptr->raw[c] == '#')
+					*here = t_ptr->letter;
+				here++;
+				c++;
+			}
+		}
+		if ((l_ptr = l_ptr->next))
+			t_ptr = (t_tetri *)l_ptr->content;
+	}
+	return (ret);
 }

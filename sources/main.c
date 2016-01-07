@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/07 17:06:08 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/07 23:29:08 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,18 @@ int		fillit_run(t_env *e)
 	siz_square = 0;
 
 	// Les pointeurs suivants feront reference au second tetri (B)
-	li_ptr = e->first->next;
+	li_ptr = e->first;
+	te_ptr = li_ptr->content;
+	te_ptr->fixed = 1;
+
+	li_ptr = li_ptr->next;
 	te_ptr = li_ptr->content;
 
 	// On positionne B par rapport a A
 	te_ptr->x_offset = ((t_tetri*)(e->first->content))->x[0] + 1;
 	te_ptr->y_offset = ((t_tetri*)(e->first->content))->y[0];
+
+	te_ptr->fixed = 1;
 
 	// On boucle jusqu'a ce que tous les tetris aient fini de bouger
 //	while (ft_strlen(e->set) < e->tcount)
@@ -80,17 +86,12 @@ int		fillit_run(t_env *e)
 		// Check collision
 		if (fillit_check_collision(e, te_ptr))
 			ft_putendl("Collision");
-		else
-		{
-			// Check contact
-		//	fillit_check_contact(e, te_ptr);
-			// Calculer taille carre
-			//siz_square = fillit_square_size(e, te_ptr);
-			if (siz_square < e->smallest_size)
-				e->smallest_size = siz_square;
-			// Screenshot carre
-		}
-//	}
+		// Calculer taille carre
+		siz_square = fillit_square_size(e, te_ptr);
+		e->smallest_size = siz_square;
+		// Screenshot carre
+		fillit_save_printable(e);
+		//	}
 	return (0);
 }
 
@@ -164,8 +165,10 @@ int		main(int argc, char **argv)
 
 	fillit_print_raw(e);
 	printf("There are %lu tetriminos\n", e->tcount);	
-	fillit_free_all(e);
 	ft_putstr("Square size : "); ft_putnbr(e->smallest_size); ft_putchar('\n');
-	ft_putendl("============ End of program ===========");
+	ft_putendl("============ Betatest print ===========\n");
+	ft_putendl(fillit_save_printable(e));
+	fillit_free_all(e);
+	ft_putendl("\n============ End of program ===========");
 	return (0);
 }
