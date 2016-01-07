@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 21:32:46 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/07 17:06:24 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr)
 	ft_bzero((*tetri_ptr)->raw, 17);
 	(*tetri_ptr)->x_offset = 0;
 	(*tetri_ptr)->y_offset = 0;
-	(*tetri_ptr)->set = 0;
+	(*tetri_ptr)->fixed = 0;
 	return (0);
 }
 
