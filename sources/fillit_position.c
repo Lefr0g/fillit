@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/06 21:49:28 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/07 17:54:42 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,33 +75,37 @@ int	fillit_check_contact(t_env *e, t_tetri *moving)
 
 /*
 ** Function to calc size of the square containing all fixed tretriminos plus
-** the one which is moving.
-** Calc is done simply by : (max x) * (max y)
+** the one which is moving ( if there is one, else only those which are fixed )
 */
 
 int fillit_square_size(t_env *e, t_tetri *moving)
 {
-	int		m_x;
-	int		m_y;
+	int		c;
+	int		t;
 
 	t_list	*lst_ptr;
 	t_tetri	*fixed;
-
+	c = 0;
 	lst_ptr = e->first;
 	fixed = (t_tetri *)lst_ptr->content;
-	m_x = moving->x_offset;
-	m_y = moving->y_offset;
+	if (moving)
+		if ((c = moving->x_offset + 1 + ft_tabmax(moving->x, 4)) < (t = moving->y_offset + 1 + ft_tabmax (moving->y, 4)))
+			c = t;
 	while (lst_ptr)
 	{
 		if (fixed->set)
 		{
-			m_x += fixed->x_offset;
-			m_y += fixed->y_offset;
+			ft_putstr("Fixed : ");ft_putendl(&fixed->letter);
+			if ((t = fixed->x_offset + 1 + ft_tabmax(fixed->x, 4)) > c)
+				c = t;
+			t = fixed->y_offset + 1 + ft_tabmax(fixed->y, 4);
+			if ((t = fixed->y_offset + 1 + ft_tabmax(fixed->y, 4)) > c)
+				c = t;
 		}
 		if ((lst_ptr = lst_ptr->next))
 			fixed = (t_tetri *)lst_ptr->content;
 	}
-	return (m_x * m_y);
+	return (c);
 }
 
 /*
