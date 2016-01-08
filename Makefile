@@ -6,7 +6,7 @@
 #    By: amulin <amulin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/28 16:48:40 by amulin            #+#    #+#              #
-#    Updated: 2016/01/06 15:19:16 by amulin           ###   ########.fr        #
+#    Updated: 2016/01/08 16:45:48 by liumsn           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,10 +57,10 @@ lib :
 
 clean :
 	make -C libft/ clean
-#	rm $(OBJECTS)
+	-rm $(OBJECTS)
 
 fclean : clean
 	make -C libft/ fclean
-	rm -f $(NAME)
+	-rm $(NAME)
 
 re : fclean all
