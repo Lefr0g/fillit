@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/07 23:29:08 by liumsn           ###   ########.fr       */
+/*   Updated: 2016/01/08 12:23:19 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,9 @@ int		fillit_run(t_env *e)
 	te_ptr = li_ptr->content;
 
 	// On positionne B par rapport a A
-	te_ptr->x_offset = ((t_tetri*)(e->first->content))->x[0] + 1;
-	te_ptr->y_offset = ((t_tetri*)(e->first->content))->y[0];
-
-	te_ptr->fixed = 1;
+//	te_ptr->x_offset = ((t_tetri*)(e->first->content))->x[0];
+//	te_ptr->y_offset = ((t_tetri*)(e->first->content))->y[0];
+	//te_ptr->fixed = 1;
 
 	// On boucle jusqu'a ce que tous les tetris aient fini de bouger
 //	while (ft_strlen(e->set) < e->tcount)
@@ -89,8 +88,6 @@ int		fillit_run(t_env *e)
 		// Calculer taille carre
 		siz_square = fillit_square_size(e, te_ptr);
 		e->smallest_size = siz_square;
-		// Screenshot carre
-		fillit_save_printable(e);
 		//	}
 	return (0);
 }

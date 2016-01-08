@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/07 23:26:11 by liums            ###   ########.fr       */
+/*   Updated: 2016/01/08 12:12:14 by liums            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,29 +116,35 @@ char	*fillit_save_printable(t_env *e)
 	t_list	*l_ptr;
 	t_tetri	*t_ptr;
 
+	c = e->smallest_size;
 	l_ptr = e->first;
 	t_ptr = (t_tetri *)l_ptr->content;
-	ret = (char *)malloc(e->smallest_size * (e->smallest_size + 1) + 1);
-	ft_memset(ret, '.', e->smallest_size * (e->smallest_size + 1));
-	ret[e->smallest_size * (e->smallest_size + 1) + 1] = 0;
-	ft_putnbr(e->smallest_size * (e->smallest_size + 1) + 1); ft_putchar('\n');
-	c = 0;
-	int tp = e->smallest_size;
-	while (tp--)
+	ret = (char *)malloc(c * (c + 1) + 1);
+	ft_memset(ret, '.', c * (c + 1));
+	ret[c * (c + 1) + 1] = 0;
+	ft_putstr("e->smallest_size\t: ");ft_putnbr(c);ft_putchar('\n');
+	ft_putstr("total chars\t: ");ft_putnbr(c * (c + 1) + 1); ft_putchar('\n');
+	c = c * (c + 1) - 1;
+	while (c > 0)
 	{
-		c += e->smallest_size;
 		ret[c] = '\n';
+		c -= e->smallest_size + 1;
 	}
-	c = 0;
 	while (l_ptr)
 	{
 		if (t_ptr->fixed)
 		{
-			here = ret + t_ptr->x_offset + 4 * t_ptr->y_offset;
+			c = 0;
+			ft_putstr("Fixed : ");ft_putendl(&t_ptr->letter);
+			here = ret + t_ptr->x_offset + e->smallest_size+1 * t_ptr->y_offset;
 			while (t_ptr->raw[c])
 			{
 				if (t_ptr->raw[c] == '#')
+				{
+					if (*here == '\n')
+						here++;
 					*here = t_ptr->letter;
+				}
 				here++;
 				c++;
 			}

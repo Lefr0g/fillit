@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/07 19:38:02 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/08 11:24:26 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int fillit_square_size(t_env *e, t_tetri *moving)
 	{
 		if (fixed->fixed)
 		{
-			ft_putstr("Fixed : ");ft_putendl(&fixed->letter);
 			if ((t = fixed->x_offset + 1 + ft_tabmax(fixed->x, 4)) > c)
 				c = t;
 			t = fixed->y_offset + 1 + ft_tabmax(fixed->y, 4);
