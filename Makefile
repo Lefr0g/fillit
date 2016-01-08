@@ -6,7 +6,7 @@
 #    By: amulin <amulin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/28 16:48:40 by amulin            #+#    #+#              #
-#    Updated: 2016/01/08 16:45:48 by liumsn           ###   ########.fr        #
+#    Updated: 2016/01/08 20:32:27 by liums            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ LIBINCLUDES = -I $(LIBHEADIR)
 .PHONY: all, clean, fclean, re
 
 all : lib $(NAME)
-	
+
 $(NAME) : $(SOURCES) $(HEADERS)
 	$(CC) $(FLAGS) $(SOURCES) $(INCLUDES) $(LIBINCLUDES) $(LIBDIRFLAG) \
 		$(LIBFLAG) -o $(NAME)
