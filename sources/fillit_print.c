@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/08 12:12:14 by liums            ###   ########.fr       */
+/*   Updated: 2016/01/08 15:45:18 by liums            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,12 +106,17 @@ void	fillit_print_raw(t_env *e)
 
 /*
 ** save actual env (e) agencement ( fixed tetriminos ) to a printable str
+** Steps :
+**	- reserve mem space of ( map size ) * ( map size + 1: \n) + 1: \0
+**	- memset with '.'
+**	- last char to '\0'
+**	- from (last char - 1), all ( map size + 1) chars, set a '\n'
+**	- then browse the tetrimino list and for each fixed tetriminos
 */
 
 char	*fillit_save_printable(t_env *e)
 {
 	char	*ret;
-	char	*here;
 	int		c;
 	t_list	*l_ptr;
 	t_tetri	*t_ptr;
@@ -122,8 +127,6 @@ char	*fillit_save_printable(t_env *e)
 	ret = (char *)malloc(c * (c + 1) + 1);
 	ft_memset(ret, '.', c * (c + 1));
 	ret[c * (c + 1) + 1] = 0;
-	ft_putstr("e->smallest_size\t: ");ft_putnbr(c);ft_putchar('\n');
-	ft_putstr("total chars\t: ");ft_putnbr(c * (c + 1) + 1); ft_putchar('\n');
 	c = c * (c + 1) - 1;
 	while (c > 0)
 	{
@@ -135,19 +138,10 @@ char	*fillit_save_printable(t_env *e)
 		if (t_ptr->fixed)
 		{
 			c = 0;
-			ft_putstr("Fixed : ");ft_putendl(&t_ptr->letter);
-			here = ret + t_ptr->x_offset + e->smallest_size+1 * t_ptr->y_offset;
-			while (t_ptr->raw[c])
-			{
-				if (t_ptr->raw[c] == '#')
-				{
-					if (*here == '\n')
-						here++;
-					*here = t_ptr->letter;
-				}
-				here++;
-				c++;
-			}
+			while (c++ < 4)
+				ret[t_ptr->x_offset + t_ptr->x[c - 1] + \
+					((t_ptr->y[c - 1] + t_ptr->y_offset) * \
+					 (e->smallest_size + 1))] = t_ptr->letter;
 		}
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri *)l_ptr->content;

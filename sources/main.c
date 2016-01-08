@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/08 12:23:19 by liumsn           ###   ########.fr       */
+/*   Updated: 2016/01/08 15:37:24 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,13 @@ int		fillit_run(t_env *e)
 
 	li_ptr = li_ptr->next;
 	te_ptr = li_ptr->content;
+	te_ptr->fixed = 1;
+	te_ptr->x_offset = 2;
+	te_ptr->y_offset = 0;
 
 	// On positionne B par rapport a A
 //	te_ptr->x_offset = ((t_tetri*)(e->first->content))->x[0];
 //	te_ptr->y_offset = ((t_tetri*)(e->first->content))->y[0];
-	//te_ptr->fixed = 1;
 
 	// On boucle jusqu'a ce que tous les tetris aient fini de bouger
 //	while (ft_strlen(e->set) < e->tcount)
