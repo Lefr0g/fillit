@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/08 15:37:24 by liumsn           ###   ########.fr       */
+/*   Updated: 2016/01/08 16:12:15 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,42 +55,9 @@ int		fillit_error(char *str)
 
 int		fillit_run(t_env *e)
 {
-	int		siz_square;
-//	int		i;
-//	int		x;
-//	int		y;
-	t_list	*li_ptr;
-	t_tetri	*te_ptr;
 
 	ft_putendl("Input map is valid, running rest of the program");
-
-	siz_square = 0;
-
-	// Les pointeurs suivants feront reference au second tetri (B)
-	li_ptr = e->first;
-	te_ptr = li_ptr->content;
-	te_ptr->fixed = 1;
-
-	li_ptr = li_ptr->next;
-	te_ptr = li_ptr->content;
-	te_ptr->fixed = 1;
-	te_ptr->x_offset = 2;
-	te_ptr->y_offset = 0;
-
-	// On positionne B par rapport a A
-//	te_ptr->x_offset = ((t_tetri*)(e->first->content))->x[0];
-//	te_ptr->y_offset = ((t_tetri*)(e->first->content))->y[0];
-
-	// On boucle jusqu'a ce que tous les tetris aient fini de bouger
-//	while (ft_strlen(e->set) < e->tcount)
-//	{
-		// Check collision
-		if (fillit_check_collision(e, te_ptr))
-			ft_putendl("Collision");
-		// Calculer taille carre
-		siz_square = fillit_square_size(e, te_ptr);
-		e->smallest_size = siz_square;
-		//	}
+	fillit_move_around(e);
 	return (0);
 }
 
@@ -101,7 +68,7 @@ int		fillit_init(t_env **e)
 	tet_ptr.letter = '\0';
 	tet_ptr.x_offset = 0;
 	tet_ptr.y_offset = 0;
-	tet_ptr.fixed = 0;
+	tet_ptr.fixed = 1;
 	ft_bzero(tet_ptr.raw, 17);
 
 	if (!(*e = (t_env*)malloc(sizeof(t_env))))
