@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/09 00:02:34 by liumsn           ###   ########.fr       */
+/*   Updated: 2016/01/09 18:50:43 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int		fillit_run(t_env *e)
 	e->smallest_size = 4;
 	ft_putendl(fillit_save_printable(e));
 	e->smallest_size = 0;
-	fillit_move_around(e);
 	return (0);
 }
 
@@ -113,8 +112,12 @@ int		main(int argc, char **argv)
 	fillit_print_raw(e);
 	printf("There are %lu tetriminos\n", e->tcount);	
 	ft_putstr("Square size : "); ft_putnbr(e->smallest_size); ft_putchar('\n');
+	ft_putendl("\n============  Binary  test  ===========");
+	fillit_raw2binary(e);
+	e->smallest_size = 5;
+	ft_putendl(fillit_bin_print(e));
+	e->smallest_size = 0;
 	ft_putendl("============ Betatest print ===========\n");
-	ft_putendl(fillit_save_printable(e));
 	fillit_free_all(e);
 	ft_putendl("\n============ End of program ===========");
 	return (0);

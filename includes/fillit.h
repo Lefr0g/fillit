@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/07 22:51:51 by liums            ###   ########.fr       */
+/*   Updated: 2016/01/09 18:48:25 by liums            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct		s_tmp
 typedef struct		s_tetri
 {
 	char			letter;
+	unsigned short	binary_map;
 	char			raw[17];
 	int				x[4];
 	int				y[4];
@@ -99,5 +100,11 @@ int		fillit_check_contact(t_env *e, t_tetri *moving);
 int		fillit_xy_collision(int x, int y, t_tetri *ptr);
 void	fillit_move_around(t_env *e);
 void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
+
+/*
+** fillit_bin_test.c
+*/
+void	fillit_raw2binary(t_env *e);
+char	*fillit_bin_print(t_env *e);
 
 #endif
