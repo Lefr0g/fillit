@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/08 16:14:10 by liumsn           ###   ########.fr       */
+/*   Updated: 2016/01/09 13:06:20 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,6 @@ void	fillit_move_around(t_env *e)
 				i = 0;
 				while (fixed->fixed && i < 4)
 				{
-				ft_putendl("loop");
 					x_ref = fixed->x[i] + fixed->x_offset;
 					y_ref = fixed->y[i] + fixed->y_offset;
 					fillit_move_and_try(e, moving, x_ref + 1, y_ref);
@@ -215,10 +214,9 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 				siz_square = fillit_square_size(e, moving);
 				if (!siz_square || siz_square < e->smallest_size)
 				{
-					ft_putstr("square size smaller : ");ft_putnbr(siz_square);ft_putchar('\n');
 					ft_putendl(&moving->letter);
 					e->smallest_size = siz_square;
-					fillit_save_printable(e);
+					e->result = fillit_save_printable(e);
 				}
 			}
 			else
