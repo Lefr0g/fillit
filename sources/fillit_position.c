@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/09 13:06:20 by liumsn           ###   ########.fr       */
+/*   Updated: 2016/01/09 13:27:45 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 			if (e->tlocked == e->tcount)
 			{
 				siz_square = fillit_square_size(e, moving);
-				if (!siz_square || siz_square < e->smallest_size)
+				if (!e->smallest_size || siz_square < e->smallest_size)
 				{
 					ft_putendl(&moving->letter);
 					e->smallest_size = siz_square;
