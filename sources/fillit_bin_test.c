@@ -6,7 +6,7 @@
 /*   By: liums <liums@openaliasbox.org>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/09 13:41:47 by liums             #+#    #+#             */
-/*   Updated: 2016/01/09 19:25:44 by liums            ###   ######## fr       */
+/*   Updated: 2016/01/10 01:49:53 by liums            ###   ######## fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void		fillit_raw2binary(t_env *e)
 	while (l_lst)
 	{
 		t_ptr->binary_map = magic(t_ptr->raw);
+
 		ft_putchar(t_ptr->letter);
 		ft_putchar('\t');
 		ft_putnbr(t_ptr->binary_map);
@@ -52,6 +53,7 @@ void		fillit_raw2binary(t_env *e)
 		ft_puthex(t_ptr->binary_map, "min");
 		ft_putchar('\t');
 		ft_putendl(t_ptr->raw);
+
 		if ((l_lst = l_lst->next))
 			t_ptr = (t_tetri *)l_lst->content;
 	}
@@ -87,7 +89,7 @@ char	*fillit_bin_print(t_env *e)
 	t_list	*lst;
 	char	*ret;
 	int		siz;
-	int		tmp;
+	unsigned short		tmp;
 	int		c;
 
 	siz = e->smallest_size;
@@ -105,11 +107,23 @@ char	*fillit_bin_print(t_env *e)
 	tmp = mov->binary_map;
 	while (lst)
 	{
+		if (mov->letter == 'E')
+			mov->fixed = 1;
+		else
+			mov->fixed = 0;
 		if (mov->fixed)
 		{
-			c = 0;
-			*ret |= mov->binary_map;
-			while (tmp)
+			c = 16;
+			tmp = mov->binary_map;
+			while (ret[c])
+			{
+				if (ret[c] == '\n')
+					c--;
+				if (1 & tmp)
+					ret[c] = mov->letter;
+				tmp = tmp >> 1;
+				c--;
+			}
 		}
 		if ((lst = lst->next))
 			mov = (t_tetri *)lst->content;

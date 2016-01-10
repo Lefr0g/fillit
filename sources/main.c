@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/09 18:50:43 by liumsn           ###   ########.fr       */
+/*   Updated: 2016/01/10 01:45:15 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		fillit_run(t_env *e)
 
 	ft_putendl("Input map is valid, running rest of the program");
 	ft_putendl("Brut : ");
-	e->smallest_size = 4;
+	e->smallest_size = 6;
 	ft_putendl(fillit_save_printable(e));
 	e->smallest_size = 0;
 	return (0);
@@ -114,7 +114,7 @@ int		main(int argc, char **argv)
 	ft_putstr("Square size : "); ft_putnbr(e->smallest_size); ft_putchar('\n');
 	ft_putendl("\n============  Binary  test  ===========");
 	fillit_raw2binary(e);
-	e->smallest_size = 5;
+	e->smallest_size = 4;
 	ft_putendl(fillit_bin_print(e));
 	e->smallest_size = 0;
 	ft_putendl("============ Betatest print ===========\n");
