@@ -6,7 +6,7 @@
 #    By: amulin <amulin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/28 16:48:40 by amulin            #+#    #+#              #
-#    Updated: 2016/01/09 14:39:33 by liums            ###   ########.fr        #
+#    Updated: 2016/01/10 20:08:35 by lpoujade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,6 @@ LIBHEADIR = $(addprefix $(LIBDIR), $(LIBHDRS))
 
 LIBINCLUDES = -I $(LIBHEADIR)
 
-.PHONY: all, clean, fclean, re
 
 all : lib $(NAME)
 
@@ -57,10 +56,12 @@ lib :
 
 clean :
 	make -C libft/ clean
-	-rm $(OBJECTS)
+	#-rm $(OBJECTS)
 
 fclean : clean
 	make -C libft/ fclean
 	-rm $(NAME)
 
 re : fclean all
+
+.PHONY: all clean fclean re
