@@ -6,7 +6,7 @@
 /*   By: liums <liums@openaliasbox.org>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/09 13:41:47 by liums             #+#    #+#             */
-/*   Updated: 2016/01/10 01:49:53 by liums            ###   ######## fr       */
+/*   Updated: 2016/01/10 18:38:20 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,21 +107,24 @@ char	*fillit_bin_print(t_env *e)
 	tmp = mov->binary_map;
 	while (lst)
 	{
-		if (mov->letter == 'E')
+		if (mov->letter == 'A')
 			mov->fixed = 1;
 		else
 			mov->fixed = 0;
 		if (mov->fixed)
 		{
-			c = 16;
+			c = (mov->x_offset + mov->y_offset * (e->smallest_size + 1)) + 16;
+			ft_putnbr((mov->x_offset + mov->y_offset * (e->smallest_size + 1)) + 16);ft_putchar('\n');
 			tmp = mov->binary_map;
-			while (ret[c])
+			while (c)
 			{
 				if (ret[c] == '\n')
 					c--;
 				if (1 & tmp)
 					ret[c] = mov->letter;
 				tmp = tmp >> 1;
+				if (!((((mov->x_offset + mov->y_offset * e->smallest_size) + 16) - c) / 4))
+					c -= e->smallest_size + 1;
 				c--;
 			}
 		}
