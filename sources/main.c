@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/11 16:16:54 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/11 17:28:08 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ int		fillit_run(t_env *e)
 {
 
 	ft_putendl("Input map is valid, running rest of the program");
+	printf("There are %lu tetriminos\n", e->tcount);	
 	ft_putendl("Brut : ");
 	e->smallest_size = 4;
 	ft_putendl(fillit_save_printable(e));
 	e->smallest_size = 0;
-//	fillit_move_around(e);
+	e->inception = 0;
+	fillit_move_around(e);
 	return (0);
 }
 
