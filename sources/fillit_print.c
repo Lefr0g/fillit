@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/09 13:07:18 by liums            ###   ########.fr       */
+/*   Updated: 2016/01/11 18:25:14 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	fillit_print_raw(t_env *e)
 char	*fillit_save_printable(t_env *e)
 {
 	char	*ret;
+	char	tbd;
 	int		c;
 	t_list	*l_ptr;
 	t_tetri	*t_ptr;
@@ -135,13 +136,20 @@ char	*fillit_save_printable(t_env *e)
 	}
 	while (l_ptr)
 	{
+		printf(">>> DEBUG - fillit_save_printable() running on tetri %c\n", t_ptr->letter);
 		if (t_ptr->fixed)
 		{
 			c = 0;
 			while (c++ < 4)
+			{
 				ret[t_ptr->x_offset + t_ptr->x[c - 1] + \
 					((t_ptr->y[c - 1] + t_ptr->y_offset) * \
 					 (e->smallest_size + 1))] = t_ptr->letter;
+				tbd = ret[t_ptr->x_offset + t_ptr->x[c - 1] + \
+					((t_ptr->y[c - 1] + t_ptr->y_offset) * \
+					 (e->smallest_size + 1))];
+				printf(">>> DEBUG : tbd = %c\n", tbd);
+			}
 		}
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri *)l_ptr->content;
