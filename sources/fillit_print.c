@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/11 18:25:14 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/11 18:39:35 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ char	*fillit_save_printable(t_env *e)
 {
 	char	*ret;
 	char	tbd;
+	int		tbd_index;
 	int		c;
 	t_list	*l_ptr;
 	t_tetri	*t_ptr;
@@ -137,20 +138,22 @@ char	*fillit_save_printable(t_env *e)
 	while (l_ptr)
 	{
 		printf(">>> DEBUG - fillit_save_printable() running on tetri %c\n", t_ptr->letter);
-		if (t_ptr->fixed)
-		{
+		printf(">>> x_offset = %d, y_offset = %d\n", t_ptr->x_offset, t_ptr->y_offset);
+//		if (t_ptr->fixed)
+//		{
 			c = 0;
 			while (c++ < 4)
 			{
 				ret[t_ptr->x_offset + t_ptr->x[c - 1] + \
 					((t_ptr->y[c - 1] + t_ptr->y_offset) * \
 					 (e->smallest_size + 1))] = t_ptr->letter;
-				tbd = ret[t_ptr->x_offset + t_ptr->x[c - 1] + \
+				tbd_index = t_ptr->x_offset + t_ptr->x[c - 1] + \
 					((t_ptr->y[c - 1] + t_ptr->y_offset) * \
-					 (e->smallest_size + 1))];
-				printf(">>> DEBUG : tbd = %c\n", tbd);
+					 (e->smallest_size + 1));
+				tbd = ret[tbd_index];
+				printf(">>> DEBUG : tbd[%d] = %c\n", tbd_index, tbd);
 			}
-		}
+//		}
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri *)l_ptr->content;
 	}
