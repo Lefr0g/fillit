@@ -117,7 +117,7 @@ int		main(int argc, char **argv)
 	printf("There are %lu tetriminos\n", e->tcount);	
 	ft_putstr("Square size : "); ft_putnbr(e->smallest_size); ft_putchar('\n');
 	ft_putendl("============ Betatest print ===========\n");
-	ft_putendl(fillit_save_printable(e));
+	ft_putendl(e->result);
 	fillit_free_all(e);
 	ft_putendl("\n============ End of program ===========");
 	return (0);

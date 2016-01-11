@@ -157,15 +157,15 @@ void	fillit_move_around(t_env *e)
 
 	e->inception++;
 	lst_ptr_moving = e->first;
-	debug_inception_print(e);
-	printf("\033[35mENTERING fillit_move_around()\033[0m\n");
+//	debug_inception_print(e);
+//	printf("\033[35mENTERING fillit_move_around()\033[0m\n");
 	while (lst_ptr_moving)
 	{
 		moving = (t_tetri*)lst_ptr_moving->content;
 		if (!moving->fixed)
 		{
-			debug_inception_print(e);
-			printf("Moving tetri %c\n", moving->letter);
+//			debug_inception_print(e);
+//			printf("Moving tetri %c\n", moving->letter);
 			lst_ptr_fixed = e->first;
 			while (lst_ptr_fixed)
 			{
@@ -173,8 +173,8 @@ void	fillit_move_around(t_env *e)
 				i = 0;
 				while (fixed->fixed && i < 4)
 				{
-					debug_inception_print(e);
-					printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\n\033[0m", moving->letter, i);
+//					debug_inception_print(e);
+//					printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\n\033[0m", moving->letter, i);
 					x_ref = fixed->x[i] + fixed->x_offset;
 					y_ref = fixed->y[i] + fixed->y_offset;
 					fillit_move_and_try(e, moving, x_ref + 1, y_ref);
@@ -191,8 +191,8 @@ void	fillit_move_around(t_env *e)
 		}
 		lst_ptr_moving = lst_ptr_moving->next;
 	}
-	debug_inception_print(e);
-	printf("\033[35mLEAVING fillit_move_around()\033[0m\n");
+//	debug_inception_print(e);
+//	printf("\033[35mLEAVING fillit_move_around()\033[0m\n");
 	e->inception--;
 }
 
@@ -220,12 +220,12 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 		{
 			moving->fixed = 1;
 			e->tlocked++;
-			debug_inception_print(e);
-			printf("Tetri %c locked. %lu on %lu are locked\n", moving->letter, e->tlocked, e->tcount);
+//			debug_inception_print(e);
+//			printf("Tetri %c locked. %lu on %lu are locked\n", moving->letter, e->tlocked, e->tcount);
 			if (e->tlocked == e->tcount)
 			{
-				debug_inception_print(e);
-				printf("\033[36mAll tetris are locked\n\033[0m");
+//				debug_inception_print(e);
+//				printf("\033[36mAll tetris are locked\n\033[0m");
 				siz_square = fillit_square_size(e, moving);
 				if (!e->smallest_size || siz_square < e->smallest_size)
 				{
@@ -241,8 +241,8 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 				fillit_move_around(e);
 			}
 			moving->fixed = 0;
-			debug_inception_print(e);
-			printf("Tetri %c unlocked\n", moving->letter);
+//			debug_inception_print(e);
+//			printf("Tetri %c unlocked\n", moving->letter);
 			e->tlocked--;
 		}
 		j++;
