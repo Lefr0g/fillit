@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/11 17:30:31 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/11 17:47:57 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,10 +183,10 @@ void	fillit_move_around(t_env *e)
 					fillit_move_and_try(e, moving, x_ref, y_ref - 1);
 //					e->i++;
 					i++;
-					if ((lst_ptr_fixed = lst_ptr_fixed->next))
-						fixed = lst_ptr_fixed->content;
+
 				}
-				lst_ptr_fixed = lst_ptr_fixed->next;
+				if ((lst_ptr_fixed = lst_ptr_fixed->next))
+					fixed = lst_ptr_fixed->content;
 			}
 		}
 		lst_ptr_moving = lst_ptr_moving->next;
@@ -224,6 +224,7 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 			printf("Tetri %c locked. %lu on %lu are locked\n", moving->letter, e->tlocked, e->tcount);
 			if (e->tlocked == e->tcount)
 			{
+				debug_inception_print(e);
 				printf("\033[36mAll tetris are locked\n\033[0m");
 				siz_square = fillit_square_size(e, moving);
 				if (!e->smallest_size || siz_square < e->smallest_size)
