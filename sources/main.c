@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/09 00:02:34 by liumsn           ###   ########.fr       */
+/*   Updated: 2016/01/11 16:16:54 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		fillit_run(t_env *e)
 	e->smallest_size = 4;
 	ft_putendl(fillit_save_printable(e));
 	e->smallest_size = 0;
-	fillit_move_around(e);
+//	fillit_move_around(e);
 	return (0);
 }
 
@@ -109,6 +109,7 @@ int		main(int argc, char **argv)
 	}
 	else
 		fillit_error("main error exit");
+
 
 	fillit_print_raw(e);
 	printf("There are %lu tetriminos\n", e->tcount);	

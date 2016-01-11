@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/06 19:09:45 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/11 16:08:42 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ void	fillit_x_correct(t_tetri *ptr)
 
 void	fillit_xy_get(t_env *e, t_tetri *t_ptr)
 {
-	if (!e->j)
-		(void)e->j;
-	else if (e->i - e->j == 1)
+	if (e->i - e->j == 1)
 		e->x++;
 	else if (e->i - e->j == 2)
 	{
@@ -67,6 +65,8 @@ void	fillit_xy_get(t_env *e, t_tetri *t_ptr)
 	}
 	else if (e->i - e->j == 4)
 		e->y++;
+	else if (!e->j)
+		(void)e->j;
 	else
 		fillit_error("load_xy : incoherent spacing between blocks");
 	t_ptr->x[e->block] = e->x;
