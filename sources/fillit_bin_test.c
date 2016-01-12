@@ -6,7 +6,7 @@
 /*   By: liums <liums@openaliasbox.org>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/09 13:41:47 by liums             #+#    #+#             */
-/*   Updated: 2016/01/10 21:20:48 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/12 01:59:30 by liumsade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,34 +33,6 @@ static	unsigned short	magic(char *raw)
 	return (ret);
 }
 
-static void		fillit_bin_print_raw(t_tetri *p);
-void		fillit_raw2binary(t_env *e)
-{
-	t_list	*l_lst;
-	t_tetri *t_ptr;
-
-	l_lst = e->first;
-	t_ptr = (t_tetri *)l_lst->content;
-
-		ft_putendl("(letter / decimal / hexa / raw = binary)\n");
-	while (l_lst)
-	{
-		t_ptr->binary_map = magic(t_ptr->raw);
-
-		ft_putchar(t_ptr->letter);
-		ft_putchar('\t');
-		ft_putnbr(t_ptr->binary_map);
-		ft_putchar('\t');
-		ft_puthex(t_ptr->binary_map, "min");
-		ft_putchar('\t');
-		fillit_bin_print_raw(t_ptr);
-		ft_putchar('\n');
-
-		if ((l_lst = l_lst->next))
-			t_ptr = (t_tetri *)l_lst->content;
-	}
-}
-
 /*
  * Place all tetris to top-left corner in binary_map
 */
@@ -81,7 +53,27 @@ void	fillit_bin_place(t_env *e)
 	}
 }
 
-static void	fillit_bin_print_raw(t_tetri *p)
+void	fillit_print_piece(t_tetri *t);
+void		fillit_raw2binary(t_env *e)
+{
+	t_list	*l_lst;
+	t_tetri *t_ptr;
+
+	l_lst = e->first;
+	t_ptr = (t_tetri *)l_lst->content;
+
+		ft_putendl("(letter / decimal / hexa / raw = binary)\n");
+	while (l_lst)
+	{
+		t_ptr->binary_map = magic(t_ptr->raw);
+		fillit_print_piece(t_ptr);
+
+		if ((l_lst = l_lst->next))
+			t_ptr = (t_tetri *)l_lst->content;
+	}
+}
+
+void	fillit_bin_print_raw(t_tetri *p)
 {
 	int	c;
 
@@ -96,6 +88,18 @@ static void	fillit_bin_print_raw(t_tetri *p)
 			ft_putchar('0');
 		c--;
 	}
+}
+
+void	fillit_print_piece(t_tetri *t)
+{
+	ft_putchar(t->letter);
+	ft_putchar('\t');
+	ft_putnbr(t->binary_map);
+	ft_putchar('\t');
+	ft_puthex(t->binary_map, "min");
+	ft_putchar('\t');
+	fillit_bin_print_raw(t);
+	ft_putchar('\n');
 }
 
 /*
