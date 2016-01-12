@@ -6,7 +6,7 @@
 #    By: amulin <amulin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/28 16:48:40 by amulin            #+#    #+#              #
-#    Updated: 2016/01/08 20:32:27 by liums            ###   ########.fr        #
+#    Updated: 2016/01/12 15:10:27 by lpoujade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,6 @@ LIBHEADIR = $(addprefix $(LIBDIR), $(LIBHDRS))
 
 LIBINCLUDES = -I $(LIBHEADIR)
 
-.PHONY: all, clean, fclean, re
-
 all : lib $(NAME)
 
 $(NAME) : $(SOURCES) $(HEADERS)
@@ -64,3 +62,5 @@ fclean : clean
 	-rm $(NAME)
 
 re : fclean all
+
+.PHONY: all clean fclean re
