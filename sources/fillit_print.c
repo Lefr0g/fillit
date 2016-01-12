@@ -15,38 +15,36 @@
 /*
 ** This function prints the tetrimino passed as parameter on stdout, based on
 ** its xy coordinates, NOT on the raw string.
-** The two last conditions of the main loop avoid printing unallocated
-** coordinate tables when debugging.
 */
 
 void	fillit_print_single_tetri(t_tetri *ptr)
 {
-	int	i;
 	int	x;
 	int	y;
+	int	block;
 
-	i = 0;
 	x = 0;
 	y = 0;
-	while (i < 4 && ptr->x[i] < 4 && ptr->y[i] < 4)
+	block = 0;
+	while (y < 4 && block < 4)
 	{
-		while (x < ptr->x[i])
+		while (x < 4 && block < 4)
 		{
-			ft_putchar(' ');
+			if (ptr->y[block] == y && ptr->x[block] == x)
+			{
+				ft_putchar(ptr->letter);
+				block++;
+			}
+			else
+				ft_putchar(' ');
 			x++;
 		}
-		ft_putchar(ptr->letter);
-		x++;
-		if (y != ptr->y[i + 1])
-		{
-			ft_putchar('\n');
-			x = 0;
-			y++;
-		}
-		i++;
+		y++;
+		x = 0;
+		ft_putchar('\n');
 	}
 }
-
+	
 /*
 ** Printing debug subfunction.
 */

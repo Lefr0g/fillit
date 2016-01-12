@@ -81,8 +81,8 @@ int		fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr);
 int		fillit_calc(t_env *start);
 int		fillit_square_size(t_env *e, t_tetri *moving);
 void	fillit_load_xy(t_env *e);
-void	fillit_xy_get(t_env *e, t_tetri *t_ptr);
-void	fillit_x_correct(t_tetri *ptr);
+void	fillit_xy_get(t_tetri *t_ptr);
+void	fillit_xy_correct(t_tetri *ptr);
 
 /*
 ** fillit_print.c

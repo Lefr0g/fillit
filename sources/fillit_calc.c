@@ -17,6 +17,7 @@
 ** reference if needed.
 */
 
+/*
 void	fillit_x_correct(t_tetri *ptr)
 {
 	int	i;
@@ -40,37 +41,67 @@ void	fillit_x_correct(t_tetri *ptr)
 		}
 	}
 }
-
-/*
-** In this function, e->i is the position of the current block within the raw
-** string, and e->j is the position of the previous block.
-** Based on the fact that all tetrimino have known shape limitations, this
-** function translates the current block position into xy coordinates, based on
-** the know data on the previous block and the spacing witch separates them.
 */
 
-void	fillit_xy_get(t_env *e, t_tetri *t_ptr)
+void	fillit_xy_correct(t_tetri *ptr)
 {
-	if (e->i - e->j == 1)
-		e->x++;
-	else if (e->i - e->j == 2)
+	int	i;
+	int	min;
+
+	min = ft_tabmin(ptr->x, 4);
+	if (min > 0)
 	{
-		e->x -= 2;
-		e->y++;
+		i = 0;
+		while (i < 4)
+		{
+			ptr->x[i] -= min;
+			i++;
+		}
 	}
-	else if (e->i - e->j == 3)
+	min = ft_tabmin(ptr->y, 4);
+	if (min > 0)
 	{
-		e->x--;
-		e->y++;
+		i = 0;
+		while (i < 4)
+		{
+			ptr->y[i] -= min;
+			i++;
+		}
 	}
-	else if (e->i - e->j == 4)
-		e->y++;
-	else if (!e->j)
-		(void)e->j;
-	else
-		fillit_error("load_xy : incoherent spacing between blocks");
-	t_ptr->x[e->block] = e->x;
-	t_ptr->y[e->block] = e->y;
+}
+	
+/*
+** This function transforms the raw table into a double table of
+** coordinates (x,y)
+*/
+
+void	fillit_xy_get(t_tetri *t_ptr)
+{
+	int	i;
+	int	j;
+	int	r;
+	int	block;
+
+	i = 0;
+	j = 0;
+	r = 0;
+	block = 0;
+	while (j < 4)
+	{
+		while (i < 4)
+		{
+			if (t_ptr->raw[r] == '#')
+			{
+				t_ptr->x[block] = i;
+				t_ptr->y[block] = j;
+				block++;
+			}
+			i++;
+			r++;
+		}
+		j++;
+		i = 0;
+	}
 }
 
 /*
@@ -93,20 +124,13 @@ void	fillit_load_xy(t_env *e)
 	{
 		t_ptr->letter = e->letter;
 		e->tcount++;
-		while (t_ptr->raw[e->i] && e->block < 4)
-		{
-			if (t_ptr->raw[e->i] == '#')
-			{
-				fillit_xy_get(e, t_ptr);
-				e->block++;
-				e->j = e->i;
-			}
-			e->i++;
-		}
-		fillit_x_correct(t_ptr);
+		fillit_xy_get(t_ptr);
+		fillit_xy_correct(t_ptr);
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri*)l_ptr->content;
 		e->letter++;
 		fillit_reset_quickvars(e);
 	}
+	if (e->letter == 'Z')
+		fillit_error("too many tetriminos, 25 max.");
 }
