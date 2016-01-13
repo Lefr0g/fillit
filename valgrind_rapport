@@ -1,0 +1,87 @@
+
+ ~ > valgrind ./fillit maps/bin
+
+( sur archlinux pc perso par contre - valgrind-3.11.0 )
+au commit da7ace5 - avec maps/bin de ce commit ( maps/bin valide )
+
+ j'ai laissé tourner en fond un moment ( je sais pas comment j'ai fais, mais on
+ peut avec Valgrind laisser tourner en fond apparement ) et j'ai afficher e
+ Ce qui me choque c'est :
+
+  letter = 73
+
+et e->set ne sert plus ?
+
+-------------------------------------------------------------------------------
+
+
+Process 16539 stopped
+* thread #1: tid = 16539, 0x000000000040097f fillit`fillit_reset_quickvars(e=0x0000000000604010) + 63 at main.c:80, name = 'fillit', stop reason = step in
+	frame #0: 0x000000000040097f fillit`fillit_reset_quickvars(e=0x0000000000604010) + 63 at main.c:80
+   77			e->j = 0;
+   78			e->x = 0;
+   79			e->y = 0;
+-> 80	}
+   81  
+   82	void	fillit_del_tetri(void *content, size_t size)
+   83	{
+(lldb) ss
+error: 'ss' is not a valid command.
+error: Unrecognized command 'ss'.
+(lldb) s
+Process 16539 stopped
+* thread #1: tid = 16539, 0x000000000040195b fillit`fillit_check_collision(e=0x0000000000604010, moving=0x0000000000604450) + 59 at fillit_position.c:29, name = 'fillit', stop reason = step in
+	frame #0: 0x000000000040195b fillit`fillit_check_collision(e=0x0000000000604010, moving=0x0000000000604450) + 59 at fillit_position.c:29
+   26			fixed = lst_ptr->content;
+   27			while (lst_ptr)
+   28			{
+-> 29					fillit_reset_quickvars(e);
+   30					while (fixed->fixed && e->i < 4)
+   31					{
+   32							e->j = 0;
+(lldb) p e
+(t_env *) $16 = 0x0000000000604010
+(lldb) p *e
+(t_env) $17 = {
+  tmp = 0x0000000000604090
+  first = 0x0000000000604130
+  i = 0
+  j = 0
+  x = 0
+  y = 0
+  smallest_size = 8
+  tcount = 8
+  tlocked = 7
+  set = {
+	[0] = '\0'
+	[1] = '\0'
+	[2] = '\0'
+	[3] = '\0'
+	[4] = '\0'
+	[5] = '\0'
+	[6] = '\0'
+	[7] = '\0'
+	[8] = '\0'
+	[9] = '\0'
+	[10] = '\0'
+	[11] = '\0'
+	[12] = '\0'
+	[13] = '\0'
+	[14] = '\0'
+	[15] = '\0'
+	[16] = '\0'
+	[17] = '\0'
+	[18] = '\0'
+	[19] = '\0'
+	[20] = '\0'
+	[21] = '\0'
+	[22] = '\0'
+	[23] = '\0'
+	[24] = '\0'
+  }
+  result = 0x0000000000604530 "ABEEGGGGCABEE....CABFF....CABFFH...\nD.HHH...\nD.......\nD.......\nD.......\n"
+  block = 0
+  letter = 73
+  inception = 7
+}
+(lldb) 
