@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 13:40:33 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/14 15:18:54 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,8 @@ void	fillit_move_around(t_env *e)
 				i = 0;
 				while (fixed->fixed && i < 4)
 				{
-//					debug_inception_print(e);
-//					printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\n\033[0m", moving->letter, i);
+					debug_inception_print(e);
+					printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\033[0m\n", moving->letter, i);
 					x_ref = fixed->x[i] + fixed->x_offset;
 					y_ref = fixed->y[i] + fixed->y_offset;
 					fillit_move_and_try(e, moving, x_ref + 1, y_ref);
@@ -215,8 +215,9 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 	j = 0;
 	while (j < 4)
 	{
-		moving->x_offset = x + moving->x[j];
-		moving->y_offset = y + moving->y[j];
+		moving->x_offset = x - moving->x[j];
+		moving->y_offset = y - moving->y[j];
+//		ft_putendl(fillit_save_printable(e));
 		if (!(fillit_check_collision(e, moving)))
 		{
 			moving->fixed = 1;
