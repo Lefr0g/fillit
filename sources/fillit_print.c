@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/11 18:39:35 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 14:41:38 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,45 +115,34 @@ void	fillit_print_raw(t_env *e)
 char	*fillit_save_printable(t_env *e)
 {
 	char	*ret;
-	char	tbd;
-	int		tbd_index;
 	int		c;
+	int		sq_siz;
 	t_list	*l_ptr;
 	t_tetri	*t_ptr;
 
-	c = e->smallest_size;
+	sq_siz = fillit_square_size(e, NULL);
 	l_ptr = e->first;
 	t_ptr = (t_tetri *)l_ptr->content;
-	ret = (char *)malloc(c * (c + 1) + 1);
-	ft_memset(ret, '.', c * (c + 1));
+	ret = (char *)malloc(sq_siz * (sq_siz + 1) + 1);
+	ft_memset(ret, '.', sq_siz * (sq_siz + 1));
+	while (l_ptr)
+	{
+		c = 0;
+		while (c++ < 4)
+			ret[t_ptr->x_offset + t_ptr->x[c - 1] + \
+				((t_ptr->y[c - 1] + t_ptr->y_offset) * \
+				 (sq_siz + 1))] = t_ptr->letter;
+		if ((l_ptr = l_ptr->next))
+			t_ptr = (t_tetri *)l_ptr->content;
+	}
+	c = sq_siz;
 	ret[c * (c + 1) + 1] = 0;
 	c = c * (c + 1) - 1;
 	while (c > 0)
 	{
 		ret[c] = '\n';
-		c -= e->smallest_size + 1;
+		c -= sq_siz + 1;
 	}
-	while (l_ptr)
-	{
-//		printf(">>> DEBUG - fillit_save_printable() running on tetri %c\n", t_ptr->letter);
-//		printf(">>> x_offset = %d, y_offset = %d\n", t_ptr->x_offset, t_ptr->y_offset);
-//		if (t_ptr->fixed)
-//		{
-			c = 0;
-			while (c++ < 4)
-			{
-				ret[t_ptr->x_offset + t_ptr->x[c - 1] + \
-					((t_ptr->y[c - 1] + t_ptr->y_offset) * \
-					 (e->smallest_size + 1))] = t_ptr->letter;
-				tbd_index = t_ptr->x_offset + t_ptr->x[c - 1] + \
-					((t_ptr->y[c - 1] + t_ptr->y_offset) * \
-					 (e->smallest_size + 1));
-				tbd = ret[tbd_index];
-//				printf(">>> DEBUG : tbd[%d] = %c\n", tbd_index, tbd);
-			}
-//		}
-		if ((l_ptr = l_ptr->next))
-			t_ptr = (t_tetri *)l_ptr->content;
-	}
+	ft_putnbr(fillit_square_size(e, NULL));ft_putchar('\n');
 	return (ret);
 }

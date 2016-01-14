@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/11 17:47:57 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 13:40:33 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ int	fillit_check_contact(t_env *e, t_tetri *moving)
 }
 
 /*
-** Function to calc size of the square containing all fixed tretriminos plus
-** the one which is moving ( if there is one, else only those which are fixed )
+** Function to calc size of the square containing all fixed tretriminos plus the one moving
+** OR
+** if no moving piece : calc the size of the map with all tetriminos
 */
 
 int fillit_square_size(t_env *e, t_tetri *moving)
@@ -93,7 +94,7 @@ int fillit_square_size(t_env *e, t_tetri *moving)
 			c = t;
 	while (lst_ptr)
 	{
-		if (fixed->fixed)
+		if (fixed->fixed || !moving)
 		{
 			if ((t = fixed->x_offset + 1 + ft_tabmax(fixed->x, 4)) > c)
 				c = t;
