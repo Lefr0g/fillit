@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 15:50:00 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 17:28:53 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,15 +146,13 @@ int	fillit_xy_collision(int x, int y, t_tetri *ptr)
 ** matches with one of the tested tetri block.
 ** This test also ensures that in this position, the other blocks of the tested
 ** tetri are not colliding with any of the fixed blocks.
-** If no collision is detected, the tested tetri is set as 'fixed', then we
-** recursively lauch fillit_move_around() on the next moving tetri.
+** If no collision is detected, the tested tetri is set as 'fixed'.
 ** 
-** Once all tetris are fixed, we calculate the size of the smallest square
-** containing all the fixed tetris plus the moving tetri in its current position.
-** If this square is the smallest ever obtained, we take a "sreenshot" of the
-** resulting grid, which will either be replaced by an upcoming run of this test
-** or be printed on stdout at the end of the program if no smaller square could
-** be obtained by any other positioning of the tetris.
+** OPTIMZATION :
+** Then, we calculate the size of the square containing all fixed tetris.
+** 
+** If this square is smaller than the smallest 'fully filled' square, we 
+** recursively launch fillit_move_around() on the next moving tetri.
 */
 
 void	fillit_move_around(t_env *e)
@@ -185,15 +183,18 @@ void	fillit_move_around(t_env *e)
 				i = 0;
 				while (fixed->fixed && i < 4)
 				{
-					debug_inception_print(e);
-					printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\033[0m\n", moving->letter, i);
-					x_ref = fixed->x[i] + fixed->x_offset;
-					y_ref = fixed->y[i] + fixed->y_offset;
-					fillit_move_and_try(e, moving, x_ref + 1, y_ref);
-					fillit_move_and_try(e, moving, x_ref - 1, y_ref);
-					fillit_move_and_try(e, moving, x_ref, y_ref + 1);
-					fillit_move_and_try(e, moving, x_ref, y_ref - 1);
-//					e->i++;
+					if (!e->smallest_size || fillit_square_size(e)
+							< e->smallest_size)
+					{
+//						debug_inception_print(e);
+//						printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\033[0m\n", moving->letter, i);
+						x_ref = fixed->x[i] + fixed->x_offset;
+						y_ref = fixed->y[i] + fixed->y_offset;
+						fillit_move_and_try(e, moving, x_ref + 1, y_ref);
+						fillit_move_and_try(e, moving, x_ref - 1, y_ref);
+						fillit_move_and_try(e, moving, x_ref, y_ref + 1);
+						fillit_move_and_try(e, moving, x_ref, y_ref - 1);
+					}
 					i++;
 
 				}
@@ -213,8 +214,12 @@ void	fillit_move_around(t_env *e)
 ** blocks on the coordinates x,y.
 ** If no collision occurs with other fixed tetriminos and if all tetriminos are
 ** locked in position, then we calculate the size of the containing square.
-** If this square is the smallest ever calculated, a 'screenshot' of the grid
-** is saved.
+** Once all tetris are fixed, we calculate the size of the smallest square
+** containing all the fixed tetris.
+** If this square is the smallest ever obtained, we take a "sreenshot" of the
+** resulting grid, which will either be replaced by an upcoming run of this test
+** or be printed on stdout at the end of the program if no smaller square could
+** be obtained by any other positioning of the tetris.
 */
 
 void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
@@ -248,7 +253,7 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 					e->smallest_size = siz_square;
 					e->result = fillit_save_printable(e);
 				}
-				ft_putendl(fillit_save_printable(e));
+//				ft_putendl(fillit_save_printable(e));
 			}
 			else
 			{
