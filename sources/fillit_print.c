@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 14:41:38 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/14 15:38:00 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char	*fillit_save_printable(t_env *e)
 	t_list	*l_ptr;
 	t_tetri	*t_ptr;
 
-	sq_siz = fillit_square_size(e, NULL);
+	sq_siz = fillit_square_size(e);
 	l_ptr = e->first;
 	t_ptr = (t_tetri *)l_ptr->content;
 	ret = (char *)malloc(sq_siz * (sq_siz + 1) + 1);
@@ -143,6 +143,6 @@ char	*fillit_save_printable(t_env *e)
 		ret[c] = '\n';
 		c -= sq_siz + 1;
 	}
-	ft_putnbr(fillit_square_size(e, NULL));ft_putchar('\n');
+	ft_putnbr(fillit_square_size(e));ft_putchar('\n');
 	return (ret);
 }

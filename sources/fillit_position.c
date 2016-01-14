@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 15:18:54 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 15:41:36 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,33 +79,42 @@ int	fillit_check_contact(t_env *e, t_tetri *moving)
 ** if no moving piece : calc the size of the map with all tetriminos
 */
 
-int fillit_square_size(t_env *e, t_tetri *moving)
+int fillit_square_size(t_env *e)
 {
-	int		c;
+	int		xmax;
+	int		ymax;
+	int		xmin;
+	int		ymin;
 	int		t;
 
+	xmax = INT_MIN;
+	ymax = INT_MIN;
+	xmin = INT_MAX;
+	ymin = INT_MAX;
 	t_list	*lst_ptr;
 	t_tetri	*fixed;
-	c = 0;
 	lst_ptr = e->first;
 	fixed = (t_tetri *)lst_ptr->content;
-	if (moving)
-		if ((c = moving->x_offset + 1 + ft_tabmax(moving->x, 4)) < (t = moving->y_offset + 1 + ft_tabmax (moving->y, 4)))
-			c = t;
 	while (lst_ptr)
 	{
-		if (fixed->fixed || !moving)
+		if (fixed->fixed)
 		{
-			if ((t = fixed->x_offset + 1 + ft_tabmax(fixed->x, 4)) > c)
-				c = t;
-			t = fixed->y_offset + 1 + ft_tabmax(fixed->y, 4);
-			if ((t = fixed->y_offset + 1 + ft_tabmax(fixed->y, 4)) > c)
-				c = t;
+			if ((t = fixed->x_offset + ft_tabmax(fixed->x, 4)) > xmax)
+				xmax = t;
+			if ((t = fixed->y_offset + ft_tabmax(fixed->y, 4)) > ymax)
+				ymax = t;
+			if ((t = fixed->x_offset + ft_tabmin(fixed->x, 4)) < xmin)
+				xmin = t;
+			if ((t = fixed->y_offset + ft_tabmin(fixed->y, 4)) < ymin)
+				ymin = t;
 		}
 		if ((lst_ptr = lst_ptr->next))
 			fixed = (t_tetri *)lst_ptr->content;
 	}
-	return (c);
+	if (xmax - xmin > ymax - ymin)
+		return (xmax - xmin + 1);
+	else
+		return (ymax - ymin + 1);
 }
 
 /*
@@ -228,7 +237,7 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 			{
 //				debug_inception_print(e);
 //				printf("\033[36mAll tetris are locked\n\033[0m");
-				siz_square = fillit_square_size(e, moving);
+				siz_square = fillit_square_size(e);
 				if (!e->smallest_size || siz_square < e->smallest_size)
 				{
 					debug_inception_print(e);
