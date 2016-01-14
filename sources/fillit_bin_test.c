@@ -6,15 +6,11 @@
 /*   By: liums <liums@openaliasbox.org>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/09 13:41:47 by liums             #+#    #+#             */
-/*   Updated: 2016/01/12 01:59:30 by liumsade         ###   ########.fr       */
+/*   Updated: 2016/01/14 17:49:07 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-/*
- * new data representation : each tetriminos is a 4-octets number
-*/
 
 static	unsigned short	magic(char *raw)
 {
@@ -34,10 +30,35 @@ static	unsigned short	magic(char *raw)
 }
 
 /*
- * Place all tetris to top-left corner in binary_map
+** This function save in each tetrimino's struct a (t_tetri)->binary_map
+** which is binary-interpreted value of the raw string for this tetrimino
+** ( conversion is done using upside function )
 */
 
-void	fillit_bin_place(t_env *e)
+void					fillit_raw2binary(t_env *e)
+{
+	t_list	*l_lst;
+	t_tetri *t_ptr;
+
+	l_lst = e->first;
+	t_ptr = (t_tetri *)l_lst->content;
+
+	ft_putendl("(letter / decimal / hexa / raw = binary)\n");
+	while (l_lst)
+	{
+		t_ptr->binary_map = magic(t_ptr->raw);
+
+		if ((l_lst = l_lst->next))
+			t_ptr = (t_tetri *)l_lst->content;
+	}
+	fillit_bin_place(e);
+}
+
+/*
+ * Place all tetris to "top-left corner" in binary_map
+*/
+
+void					fillit_bin_place(t_env *e)
 {
 	t_tetri *mov;
 	t_list	*lst;
@@ -53,27 +74,8 @@ void	fillit_bin_place(t_env *e)
 	}
 }
 
-void	fillit_print_piece(t_tetri *t);
-void		fillit_raw2binary(t_env *e)
-{
-	t_list	*l_lst;
-	t_tetri *t_ptr;
 
-	l_lst = e->first;
-	t_ptr = (t_tetri *)l_lst->content;
-
-		ft_putendl("(letter / decimal / hexa / raw = binary)\n");
-	while (l_lst)
-	{
-		t_ptr->binary_map = magic(t_ptr->raw);
-		fillit_print_piece(t_ptr);
-
-		if ((l_lst = l_lst->next))
-			t_ptr = (t_tetri *)l_lst->content;
-	}
-}
-
-void	fillit_bin_print_raw(t_tetri *p)
+void					fillit_bin_print_raw(t_tetri *p)
 {
 	int	c;
 
@@ -90,7 +92,7 @@ void	fillit_bin_print_raw(t_tetri *p)
 	}
 }
 
-void	fillit_print_piece(t_tetri *t)
+void					fillit_bin_print_piece(t_tetri *t)
 {
 	ft_putchar(t->letter);
 	ft_putchar('\t');
@@ -106,7 +108,7 @@ void	fillit_print_piece(t_tetri *t)
  * Return str of fixed tetrimino using tetri->binary_map
 */
 
-char	*fillit_bin_print(t_env *e)
+char					*fillit_bin_printable(t_env *e)
 {
 	t_tetri *mov;
 	t_list	*lst;

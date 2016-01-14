@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/09 18:48:25 by liums            ###   ########.fr       */
+/*   Updated: 2016/01/14 17:19:39 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
 ** fillit_bin_test.c
 */
 void	fillit_raw2binary(t_env *e);
-char	*fillit_bin_print(t_env *e);
+char	*fillit_bin_printable(t_env *e);
+void	fillit_bin_print_piece(t_tetri *t);
+void	fillit_bin_place(t_env *e);
 
 #endif
