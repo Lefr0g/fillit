@@ -135,8 +135,8 @@ char	*fillit_save_printable(t_env *e)
 	}
 	while (l_ptr)
 	{
-		printf(">>> DEBUG - fillit_save_printable() running on tetri %c\n", t_ptr->letter);
-		printf(">>> x_offset = %d, y_offset = %d\n", t_ptr->x_offset, t_ptr->y_offset);
+//		printf(">>> DEBUG - fillit_save_printable() running on tetri %c\n", t_ptr->letter);
+//		printf(">>> x_offset = %d, y_offset = %d\n", t_ptr->x_offset, t_ptr->y_offset);
 //		if (t_ptr->fixed)
 //		{
 			c = 0;
@@ -149,7 +149,7 @@ char	*fillit_save_printable(t_env *e)
 					((t_ptr->y[c - 1] + t_ptr->y_offset) * \
 					 (e->smallest_size + 1));
 				tbd = ret[tbd_index];
-				printf(">>> DEBUG : tbd[%d] = %c\n", tbd_index, tbd);
+//				printf(">>> DEBUG : tbd[%d] = %c\n", tbd_index, tbd);
 			}
 //		}
 		if ((l_ptr = l_ptr->next))

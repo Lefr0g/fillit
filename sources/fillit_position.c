@@ -230,11 +230,12 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 				if (!e->smallest_size || siz_square < e->smallest_size)
 				{
 					debug_inception_print(e);
-					printf("\033[31mCurrent square is the smallest !\n\033[0m");
+					printf("\033[31mCurrent square is the smallest !\033[0m\n");
 					ft_putendl(&moving->letter);
 					e->smallest_size = siz_square;
 					e->result = fillit_save_printable(e);
 				}
+				ft_putendl(fillit_save_printable(e));
 			}
 			else
 			{
