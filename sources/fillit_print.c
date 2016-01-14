@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 15:38:00 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 15:53:36 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,8 @@ char	*fillit_save_printable(t_env *e)
 	{
 		c = 0;
 		while (c++ < 4)
-			ret[t_ptr->x_offset + t_ptr->x[c - 1] + \
-				((t_ptr->y[c - 1] + t_ptr->y_offset) * \
+			ret[t_ptr->x_offset - e->xmin + t_ptr->x[c - 1] + \
+				((t_ptr->y[c - 1] + t_ptr->y_offset - e->ymin) * \
 				 (sq_siz + 1))] = t_ptr->letter;
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri *)l_ptr->content;
