@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 15:37:18 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 15:49:13 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ typedef struct		s_env
 	int				j;
 	int				x;
 	int				y;
+	int				xmin;
+	int				ymin;
 	int				smallest_size; // cote du plus petit carre
 	size_t			tcount; // nombre de tetris dans la liste
 	size_t			tlocked; // nombre de tetris verouilles en position

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 15:41:36 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 15:50:00 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ int fillit_square_size(t_env *e)
 		if ((lst_ptr = lst_ptr->next))
 			fixed = (t_tetri *)lst_ptr->content;
 	}
+	e->xmin = xmin;
+	e->ymin = ymin;
 	if (xmax - xmin > ymax - ymin)
 		return (xmax - xmin + 1);
 	else
