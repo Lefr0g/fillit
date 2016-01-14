@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 15:53:36 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 18:10:15 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,6 @@ char	*fillit_save_printable(t_env *e)
 		ret[c] = '\n';
 		c -= sq_siz + 1;
 	}
-	ft_putnbr(fillit_square_size(e));ft_putchar('\n');
+//	ft_putnbr(fillit_square_size(e));ft_putchar('\n');
 	return (ret);
 }

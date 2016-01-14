@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 17:28:53 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 18:22:50 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void	fillit_move_around(t_env *e)
 						fillit_move_and_try(e, moving, x_ref, y_ref - 1);
 					}
 					i++;
-
+//					ft_putchar('-');
 				}
 				if ((lst_ptr_fixed = lst_ptr_fixed->next))
 					fixed = lst_ptr_fixed->content;
@@ -229,7 +229,7 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 
 	siz_square = 0;
 	j = 0;
-	while (j < 4)
+	while (j < 4 && (!e->smallest_size || fillit_square_size(e) < e->smallest_size))
 	{
 		moving->x_offset = x - moving->x[j];
 		moving->y_offset = y - moving->y[j];
@@ -248,12 +248,15 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 				if (!e->smallest_size || siz_square < e->smallest_size)
 				{
 					debug_inception_print(e);
-					printf("\033[31mCurrent square is the smallest !\033[0m\n");
-					ft_putendl(&moving->letter);
+					printf("\033[31mCurrent square is the smallest! \033[0m(%d)\n",
+							siz_square);
 					e->smallest_size = siz_square;
 					e->result = fillit_save_printable(e);
+					ft_putendl(e->result);
 				}
-//				ft_putendl(fillit_save_printable(e));
+//				else
+//					ft_putendl(fillit_save_printable(e));
+//				ft_putchar('|');
 			}
 			else
 			{
@@ -265,6 +268,8 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 			e->tlocked--;
 		}
 		j++;
+		if (e->smallest_size == 6 && e->tlocked > 5)
+			printf("%lu / %lu locked\n", e->tlocked, e->tcount);
 	}
 }
 

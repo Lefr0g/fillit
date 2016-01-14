@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/11 17:28:08 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/14 18:40:50 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,9 @@ int		main(int argc, char **argv)
 
 	fillit_print_raw(e);
 	printf("There are %lu tetriminos\n", e->tcount);	
-	ft_putstr("Square size : "); ft_putnbr(e->smallest_size); ft_putchar('\n');
+	ft_putstr("Square size : ");
+	ft_putnbr(e->smallest_size);
+	ft_putchar('\n');
 	ft_putendl("============ Betatest print ===========\n");
 	ft_putendl(e->result);
 	fillit_free_all(e);
