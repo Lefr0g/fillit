@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/15 19:57:41 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/15 20:36:29 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,30 @@ void	fillit_order_get(t_tetri *ptr)
 	int	i;
 	int	j;
 	int	xmax;
+
+	int	ymin;
 	
-	i = 0;
+	i = 3;
+
 	j = 0;
 	xmax = ft_tabmax(ptr->x, 4);
+	ymin = 0;
+	
+	while (j < 4)
+	{
+		if (ptr->y[i] == ymin)
+		{
+			ptr->order[j] = i;
+			j++;
+		}
+		i--;
+		if (i < 0)
+		{
+			i = 3;
+			ymin++;
+		}
+	}
+/*
 	while (xmax >= 0)
 	{
 		if (ptr->x[i] == xmax)
@@ -44,6 +64,7 @@ void	fillit_order_get(t_tetri *ptr)
 			xmax--;
 		}
 	}
+*/
 }
 
 /*
@@ -134,6 +155,7 @@ void	fillit_load_xy(t_env *e)
 		e->tcount++;
 		fillit_xy_get(t_ptr);
 		fillit_xy_correct(t_ptr);
+		fillit_order_get(t_ptr);
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri*)l_ptr->content;
 		e->letter++;

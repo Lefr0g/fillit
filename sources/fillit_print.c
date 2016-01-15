@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 18:10:15 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/15 20:05:23 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,16 @@ void	fillit_print_xy(t_tetri *ptr)
 		if (ptr->y[i] >= 0)
 			ft_putchar(' ');
 		ft_putnbr(ptr->y[i]);
+		ft_putchar('|');
+		i++;
+	}
+	ft_putchar('\n');
+	i = 0;
+	ft_putstr("\t\t order -> |");
+	while (i < 4)
+	{
+		ft_putchar(' ');
+		ft_putnbr(ptr->order[i]);
 		ft_putchar('|');
 		i++;
 	}
