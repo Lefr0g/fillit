@@ -6,41 +6,49 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/11 17:40:27 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/15 19:57:41 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 /*
-** This function ensures all the x coordinates are positive by changing the x
-** reference if needed.
+** This function finds out the order of the blocks, so we can rotate
+** around the tetri clockwise, starting top-left of fixed tetri, according to 
+** the rules defined in the subject.
+** The result will be stored in a int[4], within each t_tetri.
+** This data will be used in the high-level loop of the fillit_move_around()
+** function instead of the simple i increment.
 */
 
-/*
-void	fillit_x_correct(t_tetri *ptr)
+void	fillit_order_get(t_tetri *ptr)
 {
 	int	i;
 	int	j;
-
+	int	xmax;
+	
 	i = 0;
 	j = 0;
-	while (i < 4)
+	xmax = ft_tabmax(ptr->x, 4);
+	while (xmax >= 0)
 	{
-		if (ptr->x[i] < j)
-			j = ptr->x[i];
-		i++;
-	}
-	if (j < 0)
-	{
-		i = 0;
-		while (i < 4)
+		if (ptr->x[i] == xmax)
 		{
-			ptr->x[i] += -j;
-			i++;
+			ptr->order[j] = i;
+			j++;
+		}
+		i++;
+		if (i == 4)
+		{
+			i = 0;
+			xmax--;
 		}
 	}
 }
+
+/*
+** This function ensures all the x coordinates are positive by changing the x
+** reference if needed.
 */
 
 void	fillit_xy_correct(t_tetri *ptr)

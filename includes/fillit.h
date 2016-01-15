@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 15:49:13 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/15 19:59:49 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct		s_tetri
 	char			raw[17];
 	int				x[4];
 	int				y[4];
+	int				order[4];
 	int				x_offset;
 	int				y_offset;
 	int				fixed;
@@ -85,6 +86,7 @@ int		fillit_square_size(t_env *e);
 void	fillit_load_xy(t_env *e);
 void	fillit_xy_get(t_tetri *t_ptr);
 void	fillit_xy_correct(t_tetri *ptr);
+void	fillit_order_get(t_tetri *ptr);
 
 /*
 ** fillit_print.c
