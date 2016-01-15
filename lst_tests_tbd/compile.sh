@@ -1,4 +1,5 @@
 #!/bin/sh
 
-make -C ~/42/libft
-clang -Wall -Werror -Wextra -I ~/42/libft/includes -lft -L ~/42/libft main.c -o run.out
+rm run.out
+make -C ../libft
+clang -Wall -Werror -Wextra -I ../libft/includes -lft -L ../libft main.c -o run.out
