@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/11 17:40:27 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/15 17:40:27 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,10 @@ void	fillit_load_xy(t_env *e)
 		fillit_xy_get(t_ptr);
 		fillit_xy_correct(t_ptr);
 		if ((l_ptr = l_ptr->next))
+		{
 			t_ptr = (t_tetri*)l_ptr->content;
+			e->last = l_ptr;
+		}
 		e->letter++;
 		fillit_reset_quickvars(e);
 	}

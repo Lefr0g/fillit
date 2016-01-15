@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 18:22:50 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/15 17:43:46 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,9 @@ void	fillit_move_around(t_env *e)
 	int		i;
 
 	e->inception++;
-	lst_ptr_moving = e->first;
+//	lst_ptr_moving = e->first;
+	lst_ptr_moving = e->last;
+
 //	debug_inception_print(e);
 //	printf("\033[35mENTERING fillit_move_around()\033[0m\n");
 	while (lst_ptr_moving)
@@ -176,7 +178,9 @@ void	fillit_move_around(t_env *e)
 		{
 //			debug_inception_print(e);
 //			printf("Moving tetri %c\n", moving->letter);
-			lst_ptr_fixed = e->first;
+
+//			lst_ptr_fixed = e->first;
+			lst_ptr_fixed = e->last;
 			while (lst_ptr_fixed)
 			{
 				fixed = (t_tetri*)lst_ptr_fixed->content;
@@ -198,11 +202,13 @@ void	fillit_move_around(t_env *e)
 					i++;
 //					ft_putchar('-');
 				}
-				if ((lst_ptr_fixed = lst_ptr_fixed->next))
+//				if ((lst_ptr_fixed = lst_ptr_fixed->next))
+				if ((lst_ptr_fixed = lst_ptr_fixed->prev))
 					fixed = lst_ptr_fixed->content;
 			}
 		}
-		lst_ptr_moving = lst_ptr_moving->next;
+//		lst_ptr_moving = lst_ptr_moving->next;
+		lst_ptr_moving = lst_ptr_moving->prev;
 	}
 //	debug_inception_print(e);
 //	printf("\033[35mLEAVING fillit_move_around()\033[0m\n");

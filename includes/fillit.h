@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 15:49:13 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/15 17:17:36 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct		s_env
 {
 	t_tmp			*tmp;
 	t_list			*first;
+	t_list			*last;
 	int				i;
 	int				j;
 	int				x;
