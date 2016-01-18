@@ -1,0 +1,8 @@
+./fillit maps/valid0 > out/v0 2>&1  0.00s user 0.00s system 0% cpu 0.002 total
+./fillit maps/valid1 > out/v1 2>&1  115.18s user 0.14s system 98% cpu 1:56.77 total
+./fillit maps/valid2 > out/v2 2>&1  0.00s user 0.00s system 0% cpu 0.010 total
+./fillit maps/valid3 > out/v3 2>&1  103.34s user 0.08s system 98% cpu 1:44.78 total
+./fillit maps/valid4 > out/v4 2>&1  0.00s user 0.00s system 0% cpu 0.010 total
+./fillit maps/valid5 > out/v5 2>&1  0.00s user 0.00s system 0% cpu 0.012 total
+./fillit maps/valid6 > out/v6 2>&1  8.40s user 0.00s system 99% cpu 8.463 total
+cat: chrono : le fichier d'entrée est aussi celui de sortie

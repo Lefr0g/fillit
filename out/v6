@@ -1,0 +1,87 @@
+============ Program Start ============
+Input map is valid, running rest of the program
+Brut : 
+ED..
+EE..
+BE..
+B...
+
+
+[33m> [0m[33m> [0m[33m> [0m[33m> [0mCC......
+CCDD....
+AEDD....
+AEE.....
+ABE.....
+AB......
+.B......
+.B......
+
+[33m> [0m[33m> [0m[33m> [0m[33m> [0mCC.....
+CCDD...
+AEDD...
+AEEB...
+A.EB...
+A..B...
+...B...
+
+[33m> [0m[33m> [0m[33m> [0m[33m> [0mCC....
+CCDDB.
+AEDDB.
+AEE.B.
+A.E.B.
+A.....
+
+
+================ DEBUG ================
+Tetrimino A contains : .#...#...#...#..
+		     x -> | 0| 0| 0| 0|
+		     y -> | 0| 1| 2| 3|
+A   
+A   
+A   
+A
+
+Tetrimino B contains : ...#...#...#...#
+		     x -> | 0| 0| 0| 0|
+		     y -> | 0| 1| 2| 3|
+B   
+B   
+B   
+B
+
+Tetrimino C contains : ##..##..........
+		     x -> | 0| 1| 0| 1|
+		     y -> | 0| 0| 1| 1|
+CC  
+CC
+
+Tetrimino D contains : ..........##..##
+		     x -> | 0| 1| 0| 1|
+		     y -> | 0| 0| 1| 1|
+DD  
+DD
+
+Tetrimino E contains : ..#...##...#....
+		     x -> | 0| 0| 1| 1|
+		     y -> | 0| 1| 1| 2|
+E   
+EE  
+ E
+
+Square size : 6
+============ Betatest print ===========
+
+CC....
+CCDDB.
+AEDDB.
+AEE.B.
+A.E.B.
+A.....
+
+
+============ End of program ===========
+There are 5 tetriminos
+[31mCurrent square is the smallest! [0m(8)
+[31mCurrent square is the smallest! [0m(7)
+[31mCurrent square is the smallest! [0m(6)
+There are 5 tetriminos

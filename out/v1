@@ -1,0 +1,103 @@
+============ Program Start ============
+Input map is valid, running rest of the program
+Brut : 
+FFD
+FFE
+C..
+B
+[33m> [0m[33m> [0m[33m> [0m[33m> [0m[33m> [0m....B.....
+....B.....
+....B.....
+...EB.....
+..EEE.....
+.AFFDDD...
+AAFFD.....
+A.C.......
+..CC......
+..C.......
+
+[33m> [0m[33m> [0m[33m> [0m[33m> [0m[33m> [0m.B.......
+.B.......
+.B.E.....
+.BEEE....
+.AFFDDD..
+AAFFD....
+A.C......
+..CC.....
+..C......
+
+[33m> [0m[33m> [0m[33m> [0m[33m> [0m[33m> [0m...E...
+..EEE..
+.AFFDDD
+AAFFDB.
+A.C..B.
+..CC.B.
+..C..B.
+
+[33m> [0m[33m> [0m[33m> [0m[33m> [0m[33m> [0mC..E..
+CCEEEB
+CAFF.B
+AAFF.B
+A.DDDB
+..D...
+
+
+================ DEBUG ================
+Tetrimino A contains : ......#..##..#..
+		     x -> | 1| 0| 1| 0|
+		     y -> | 0| 1| 1| 2|
+ A  
+AA  
+A
+
+Tetrimino B contains : .#...#...#...#..
+		     x -> | 0| 0| 0| 0|
+		     y -> | 0| 1| 2| 3|
+B   
+B   
+B   
+B
+
+Tetrimino C contains : .....#...##..#..
+		     x -> | 0| 0| 1| 0|
+		     y -> | 0| 1| 1| 2|
+C   
+CC  
+C
+
+Tetrimino D contains : .###.#..........
+		     x -> | 0| 1| 2| 0|
+		     y -> | 0| 0| 0| 1|
+DDD 
+D
+
+Tetrimino E contains : .....#..###.....
+		     x -> | 1| 0| 1| 2|
+		     y -> | 0| 1| 1| 1|
+ E  
+EEE
+
+Tetrimino F contains : .........##..##.
+		     x -> | 0| 1| 0| 1|
+		     y -> | 0| 0| 1| 1|
+FF  
+FF
+
+Square size : 6
+============ Betatest print ===========
+
+C..E..
+CCEEEB
+CAFF.B
+AAFF.B
+A.DDDB
+..D...
+
+
+============ End of program ===========
+There are 6 tetriminos
+[31mCurrent square is the smallest! [0m(10)
+[31mCurrent square is the smallest! [0m(9)
+[31mCurrent square is the smallest! [0m(7)
+[31mCurrent square is the smallest! [0m(6)
+There are 6 tetriminos
