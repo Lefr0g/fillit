@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/15 20:36:29 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/18 17:36:39 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,76 @@ void	fillit_order_get(t_tetri *ptr)
 	int	i;
 	int	j;
 	int	xmax;
-
-	int	ymin;
+//	int	xmin;
+//	int	ymin;
+	int	ymax;
+	int	height;
+	int	isaved;
+	int	pos;
+	int	multiflag;
 	
-	i = 3;
+//	i = 3;
+//	j = 0;
+//	xmax = ft_tabmax(ptr->x, 4);
+//	ymin = 0;
 
+	ymax = ft_tabmax(ptr->y, 4);
+	xmax = -1;
+	i = 0;
+	isaved = -1;
 	j = 0;
-	xmax = ft_tabmax(ptr->x, 4);
-	ymin = 0;
-	
+	height = 0;
+	pos = 0;
+	multiflag = 0;
+
+	while (height <= ymax)
+	{
+		i = 0;
+		xmax = INT_MIN;
+		while (i < 4)
+		{
+			if (ptr->y[i] == height && ptr->x[i] > xmax)
+			{
+				xmax = ptr->x[i];
+				isaved = i;
+			}
+			i++;
+		}
+		if (isaved != -1)
+		{
+			ptr->order[pos] = isaved;
+			printf("Tetri %c, ptr->order[%d] = %d (top-down)\n", ptr->letter, pos, isaved);
+			pos++;
+			isaved = -1;
+		}
+		height++;
+	}
+	while (height >= 0)
+	{
+		xmax = INT_MIN;
+		i = 0;
+		while (i < 4)
+		{
+			if (ptr->y[i] == height && ptr->x[i] > xmax)
+				xmax = ptr->x[i];
+			i++;
+		}
+		i = 0;
+		while (i < 4)
+		{
+			if (ptr->y[i] == height && ptr->x[i] == xmax - 1)
+			{
+				printf("Tetri %c, ptr->order[%d] = %d (bottom-up)\n", ptr->letter, pos, i);
+				ptr->order[pos] = i;
+				pos++;
+				xmax--;
+				i = -1;
+			}
+			i++;
+		}
+		height--;
+	}
+/*	
 	while (j < 4)
 	{
 		if (ptr->y[i] == ymin)
@@ -47,21 +108,6 @@ void	fillit_order_get(t_tetri *ptr)
 		{
 			i = 3;
 			ymin++;
-		}
-	}
-/*
-	while (xmax >= 0)
-	{
-		if (ptr->x[i] == xmax)
-		{
-			ptr->order[j] = i;
-			j++;
-		}
-		i++;
-		if (i == 4)
-		{
-			i = 0;
-			xmax--;
 		}
 	}
 */

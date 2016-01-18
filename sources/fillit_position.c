@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/15 20:42:09 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/18 17:44:09 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,10 +191,10 @@ void	fillit_move_around(t_env *e)
 						x_ref = fixed->x[fixed->order[i]] + fixed->x_offset;
 						y_ref = fixed->y[fixed->order[i]] + fixed->y_offset;
 
-						fillit_move_and_try(e, moving, x_ref - 1, y_ref);
 						fillit_move_and_try(e, moving, x_ref + 1, y_ref);
-						fillit_move_and_try(e, moving, x_ref, y_ref - 1);
 						fillit_move_and_try(e, moving, x_ref, y_ref + 1);
+						fillit_move_and_try(e, moving, x_ref - 1, y_ref);
+						fillit_move_and_try(e, moving, x_ref, y_ref - 1);
 					}
 					i++;
 //					ft_putchar('-');
@@ -232,8 +232,8 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 	j = 0;
 	while (j < 4 && (!e->smallest_size || fillit_square_size(e) < e->smallest_size))
 	{
-		moving->x_offset = x - moving->x[moving->order[j]];
-		moving->y_offset = y - moving->y[moving->order[j]];
+		moving->x_offset = x - moving->x[j];
+		moving->y_offset = y - moving->y[j];
 //		ft_putendl(fillit_save_printable(e));
 		if (!(fillit_check_collision(e, moving)))
 		{
