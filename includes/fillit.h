@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/15 19:59:49 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/18 17:58:38 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct		s_tetri
 	int				x_offset;
 	int				y_offset;
 	int				fixed;
+	int				firstmove : 1;
 }					t_tetri;
 
 typedef struct		s_env

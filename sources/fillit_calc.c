@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/18 17:36:39 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/18 17:46:43 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	fillit_order_get(t_tetri *ptr)
 		if (isaved != -1)
 		{
 			ptr->order[pos] = isaved;
-			printf("Tetri %c, ptr->order[%d] = %d (top-down)\n", ptr->letter, pos, isaved);
+//			printf("Tetri %c, ptr->order[%d] = %d (top-down)\n", ptr->letter, pos, isaved);
 			pos++;
 			isaved = -1;
 		}
@@ -85,7 +85,7 @@ void	fillit_order_get(t_tetri *ptr)
 		{
 			if (ptr->y[i] == height && ptr->x[i] == xmax - 1)
 			{
-				printf("Tetri %c, ptr->order[%d] = %d (bottom-up)\n", ptr->letter, pos, i);
+//				printf("Tetri %c, ptr->order[%d] = %d (bottom-up)\n", ptr->letter, pos, i);
 				ptr->order[pos] = i;
 				pos++;
 				xmax--;

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/18 17:44:09 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/18 18:02:10 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,9 @@ void	fillit_move_around(t_env *e)
 						fillit_move_and_try(e, moving, x_ref + 1, y_ref);
 						fillit_move_and_try(e, moving, x_ref, y_ref + 1);
 						fillit_move_and_try(e, moving, x_ref - 1, y_ref);
-						fillit_move_and_try(e, moving, x_ref, y_ref - 1);
+						if (!moving->firstmove)
+							fillit_move_and_try(e, moving, x_ref, y_ref - 1);
+						moving->firstmove = 0;
 					}
 					i++;
 //					ft_putchar('-');
@@ -255,8 +257,8 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 					e->result = fillit_save_printable(e);
 					ft_putendl(e->result);
 				}
-//				else
-//					ft_putendl(fillit_save_printable(e));
+				else
+					ft_putendl(fillit_save_printable(e));
 //				ft_putchar('|');
 			}
 			else
@@ -264,6 +266,7 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 				fillit_move_around(e);
 			}
 			moving->fixed = 0;
+			moving->firstmove = 1;
 //			debug_inception_print(e);
 //			printf("Tetri %c unlocked\n", moving->letter);
 			e->tlocked--;

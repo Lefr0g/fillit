@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/14 18:40:46 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/18 17:50:27 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr)
 	(*tetri_ptr)->x_offset = 0;
 	(*tetri_ptr)->y_offset = 0;
 	(*tetri_ptr)->fixed = 0;
+	(*tetri_ptr)->firstmove = 1;
 	return (0);
 }
 
