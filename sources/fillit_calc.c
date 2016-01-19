@@ -26,19 +26,11 @@ void	fillit_order_get(t_tetri *ptr)
 	int	i;
 	int	j;
 	int	xmax;
-//	int	xmin;
-//	int	ymin;
 	int	ymax;
 	int	height;
 	int	isaved;
 	int	pos;
-	int	multiflag;
 	
-//	i = 3;
-//	j = 0;
-//	xmax = ft_tabmax(ptr->x, 4);
-//	ymin = 0;
-
 	ymax = ft_tabmax(ptr->y, 4);
 	xmax = -1;
 	i = 0;
@@ -46,20 +38,18 @@ void	fillit_order_get(t_tetri *ptr)
 	j = 0;
 	height = 0;
 	pos = 0;
-	multiflag = 0;
 
 	while (height <= ymax)
 	{
-		i = 0;
+		i = -1;
 		xmax = INT_MIN;
-		while (i < 4)
+		while (i++ < 4)
 		{
 			if (ptr->y[i] == height && ptr->x[i] > xmax)
 			{
 				xmax = ptr->x[i];
 				isaved = i;
 			}
-			i++;
 		}
 		if (isaved != -1)
 		{
@@ -95,22 +85,6 @@ void	fillit_order_get(t_tetri *ptr)
 		}
 		height--;
 	}
-/*	
-	while (j < 4)
-	{
-		if (ptr->y[i] == ymin)
-		{
-			ptr->order[j] = i;
-			j++;
-		}
-		i--;
-		if (i < 0)
-		{
-			i = 3;
-			ymin++;
-		}
-	}
-*/
 }
 
 /*

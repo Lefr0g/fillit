@@ -74,7 +74,8 @@ int	fillit_check_contact(t_env *e, t_tetri *moving)
 }
 
 /*
-** Function to calc size of the square containing all fixed tretriminos plus the one moving
+** Function to calc size of the square containing all fixed tretriminos plus
+** the one moving
 ** OR
 ** if no moving piece : calc the size of the map with all tetriminos
 */
@@ -234,7 +235,7 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 	j = 0;
 	while (j < 4 && (!e->smallest_size ||
 				(fillit_square_size(e) < e->smallest_size &&
-			e->smallest_size * e->smallest_size > ((int)e->tcount * 4) +
+			e->smallest_size * e->smallest_size >= ((int)e->tcount * 4) +
 			(e->smallest_size * 2 - 1))) && x >= 0 && y >= 0)
 	{
 		moving->x_offset = x - moving->x[j];
