@@ -232,7 +232,10 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 
 	siz_square = 0;
 	j = 0;
-	while (j < 4 && (!e->smallest_size || fillit_square_size(e) < e->smallest_size) && x >=0 && y >= 0)
+	while (j < 4 && (!e->smallest_size ||
+				(fillit_square_size(e) < e->smallest_size &&
+			e->smallest_size * e->smallest_size > ((int)e->tcount * 4) +
+			(e->smallest_size * 2 - 1))) && x >= 0 && y >= 0)
 	{
 		moving->x_offset = x - moving->x[j];
 		moving->y_offset = y - moving->y[j];
@@ -270,8 +273,8 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 			e->tlocked--;
 		}
 		j++;
-		if (e->smallest_size == 6 && e->tlocked > 5)
-			printf("%lu / %lu locked\n", e->tlocked, e->tcount);
+//		if (e->smallest_size == 6 && e->tlocked > 5)
+//			printf("%lu / %lu locked\n", e->tlocked, e->tcount);
 	}
 }
 
