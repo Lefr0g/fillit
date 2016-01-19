@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/19 13:45:34 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/19 16:42:40 by liums            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,16 +170,12 @@ void	fillit_print_colored(t_env *e, char *map)
 	while (map[i])
 	{
 		ft_putstr("\x1b[0m");
-		if (!ft_isalpha(map[i]))
-				ft_putchar(' ');
 		if (ft_isalpha(map[i]))
 		{
 			color = map[i] - 24;
 			ft_putstr("\x1b[");
 			ft_putnbr(color);
 			ft_putchar('m');
-			if (ft_isalpha(map[i]))
-					ft_putchar(' ');
 		}
 		ft_putchar(map[i]);
 		i++;
