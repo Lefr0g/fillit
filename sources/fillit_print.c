@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/15 20:05:23 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/19 13:45:34 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,4 +155,34 @@ char	*fillit_save_printable(t_env *e)
 	}
 //	ft_putnbr(fillit_square_size(e));ft_putchar('\n');
 	return (ret);
+}
+
+void	fillit_print_colored(t_env *e, char *map)
+{
+	int		i;
+	int		color;
+	t_list	*lst;
+	t_tetri	*ptr;
+
+	i = 0;
+	lst = (t_list *)e->first;
+	ptr = (t_tetri *)lst->content;
+	while (map[i])
+	{
+		ft_putstr("\x1b[0m");
+		if (!ft_isalpha(map[i]))
+				ft_putchar(' ');
+		if (ft_isalpha(map[i]))
+		{
+			color = map[i] - 24;
+			ft_putstr("\x1b[");
+			ft_putnbr(color);
+			ft_putchar('m');
+			if (ft_isalpha(map[i]))
+					ft_putchar(' ');
+		}
+		ft_putchar(map[i]);
+		i++;
+	}
+	ft_putstr("\x1b[0m");
 }

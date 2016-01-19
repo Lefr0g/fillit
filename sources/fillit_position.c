@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/18 18:50:59 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/19 13:52:34 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,8 +183,8 @@ void	fillit_move_around(t_env *e)
 				i = 0;
 				while (fixed->fixed && i < 4)
 				{
-					if (!e->smallest_size || fillit_square_size(e)
-							< e->smallest_size)
+					if ((!e->smallest_size || fillit_square_size(e)
+							< e->smallest_size))
 					{
 //						debug_inception_print(e);
 //						printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\033[0m\n", moving->letter, i);
@@ -248,14 +248,14 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 //				debug_inception_print(e);
 //				printf("\033[36mAll tetris are locked\n\033[0m");
 				siz_square = fillit_square_size(e);
-				if (!e->smallest_size || siz_square < e->smallest_size)
+				if ((!e->smallest_size || siz_square < e->smallest_size))
 				{
 					debug_inception_print(e);
 					printf("\033[31mCurrent square is the smallest! \033[0m(%d)\n",
 							siz_square);
 					e->smallest_size = siz_square;
 					e->result = fillit_save_printable(e);
-					ft_putendl(e->result);
+					fillit_print_colored(e, e->result);
 				}
 //				else
 //					ft_putendl(fillit_save_printable(e));
