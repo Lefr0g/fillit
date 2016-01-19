@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/14 18:40:50 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/18 22:53:32 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,11 @@ int		fillit_error(char *str)
 	return (-1);
 }
 
-/*
- * Je vire tout, mais c'est tjrs dans l'historique git
-*/
-
 int		fillit_run(t_env *e)
 {
 
 	ft_putendl("Input map is valid, running rest of the program");
 	printf("There are %lu tetriminos\n", e->tcount);	
-	ft_putendl("Brut : ");
-	e->smallest_size = 4;
-	ft_putendl(fillit_save_printable(e));
-	e->smallest_size = 0;
 	e->inception = 0;
 	fillit_move_around(e);
 	return (0);
@@ -117,8 +109,7 @@ int		main(int argc, char **argv)
 	printf("There are %lu tetriminos\n", e->tcount);	
 	ft_putstr("Square size : ");
 	ft_putnbr(e->smallest_size);
-	ft_putchar('\n');
-	ft_putendl("============ Betatest print ===========\n");
+	ft_putendl("\n");
 	ft_putendl(e->result);
 	fillit_free_all(e);
 	ft_putendl("\n============ End of program ===========");

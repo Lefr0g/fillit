@@ -1,0 +1,46 @@
+============ Program Start ============
+Input map is valid, running rest of the program
+Brut : 
+BA.
+BA.
+B..
+B
+[33m> [0m.AB.
+AAB.
+A.B.
+..B.
+
+
+
+================ DEBUG ================
+Tetrimino A contains : ......#..##..#..
+		     x -> | 1| 0| 1| 0|
+		     y -> | 0| 1| 1| 2|
+		 order -> | 0| 2| 3| 1|
+ A  
+AA  
+A
+
+Tetrimino B contains : .#...#...#...#..
+		     x -> | 0| 0| 0| 0|
+		     y -> | 0| 1| 2| 3|
+		 order -> | 0| 1| 2| 3|
+B   
+B   
+B   
+B
+
+Square size : 4
+============ Betatest print ===========
+
+.AB.
+AAB.
+A.B.
+..B.
+
+
+
+============ End of program ===========
+There are 2 tetriminos
+[31mCurrent square is the smallest! [0m(4)
+There are 2 tetriminos

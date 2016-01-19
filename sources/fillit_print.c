@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/15 20:05:23 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/18 21:57:40 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	fillit_print_single_tetri(t_tetri *ptr)
 		ft_putchar('\n');
 	}
 }
-	
+
 /*
 ** Printing debug subfunction.
 */
@@ -52,7 +52,7 @@ void	fillit_print_single_tetri(t_tetri *ptr)
 void	fillit_print_xy(t_tetri *ptr)
 {
 	int	i;
-	
+
 	i = 0;
 	ft_putstr("\t\t     x -> |");
 	while (i < 4)

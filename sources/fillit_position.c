@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/18 18:50:59 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/18 22:52:10 by liumsade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,15 +167,11 @@ void	fillit_move_around(t_env *e)
 
 	e->inception++;
 	lst_ptr_moving = e->first;
-//	debug_inception_print(e);
-//	printf("\033[35mENTERING fillit_move_around()\033[0m\n");
 	while (lst_ptr_moving)
 	{
 		moving = (t_tetri*)lst_ptr_moving->content;
 		if (!moving->fixed)
 		{
-//			debug_inception_print(e);
-//			printf("Moving tetri %c\n", moving->letter);
 			lst_ptr_fixed = e->first;
 			while (lst_ptr_fixed)
 			{
@@ -186,8 +182,6 @@ void	fillit_move_around(t_env *e)
 					if (!e->smallest_size || fillit_square_size(e)
 							< e->smallest_size)
 					{
-//						debug_inception_print(e);
-//						printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\033[0m\n", moving->letter, i);
 						x_ref = fixed->x[fixed->order[i]] + fixed->x_offset;
 						y_ref = fixed->y[fixed->order[i]] + fixed->y_offset;
 
@@ -199,7 +193,6 @@ void	fillit_move_around(t_env *e)
 						moving->firstmove = 0;
 					}
 					i++;
-//					ft_putchar('-');
 				}
 				if ((lst_ptr_fixed = lst_ptr_fixed->next))
 					fixed = lst_ptr_fixed->content;
@@ -207,8 +200,6 @@ void	fillit_move_around(t_env *e)
 		}
 		lst_ptr_moving = lst_ptr_moving->next;
 	}
-//	debug_inception_print(e);
-//	printf("\033[35mLEAVING fillit_move_around()\033[0m\n");
 	e->inception--;
 }
 
@@ -236,53 +227,25 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 	{
 		moving->x_offset = x - moving->x[j];
 		moving->y_offset = y - moving->y[j];
-//		ft_putendl(fillit_save_printable(e));
 		if (!(fillit_check_collision(e, moving)))
 		{
 			moving->fixed = 1;
 			e->tlocked++;
-//			debug_inception_print(e);
-//			printf("Tetri %c locked. %lu on %lu are locked\n", moving->letter, e->tlocked, e->tcount);
 			if (e->tlocked == e->tcount)
 			{
-//				debug_inception_print(e);
-//				printf("\033[36mAll tetris are locked\n\033[0m");
 				siz_square = fillit_square_size(e);
 				if (!e->smallest_size || siz_square < e->smallest_size)
 				{
-					debug_inception_print(e);
-					printf("\033[31mCurrent square is the smallest! \033[0m(%d)\n",
-							siz_square);
 					e->smallest_size = siz_square;
 					e->result = fillit_save_printable(e);
-					ft_putendl(e->result);
 				}
-//				else
-//					ft_putendl(fillit_save_printable(e));
-//				ft_putchar('|');
 			}
 			else
 				fillit_move_around(e);
 			moving->fixed = 0;
 			moving->firstmove = 1;
-//			debug_inception_print(e);
-//			printf("Tetri %c unlocked\n", moving->letter);
 			e->tlocked--;
 		}
 		j++;
-		if (e->smallest_size == 6 && e->tlocked > 5)
-			printf("%lu / %lu locked\n", e->tlocked, e->tcount);
-	}
-}
-
-void	debug_inception_print(t_env *e)
-{
-	int	i;
-
-	i = 0;
-	while (i < e->inception)
-	{
-		ft_putstr("\033[33m> \033[0m");
-		i++;
 	}
 }
