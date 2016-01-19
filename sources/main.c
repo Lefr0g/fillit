@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/19 11:57:12 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/19 17:52:15 by liumsade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	fillit_free_all(t_env *e)
 	free(e);
 }
 
-int		main(int argc, char **argv)
+int		main(int ac, char **av)
 {
 	t_env	*e;
 
@@ -102,9 +102,11 @@ int		main(int argc, char **argv)
 
 	if (fillit_init(&e))
 		return (fillit_error("init failed"));
-	if (argc == 2)
+
+	if (ac >= 2)
 	{
-		if (!fillit_parse(e, argv[argc - 1]))
+
+		if (!fillit_parse(e, av[ac - 1]))
 			fillit_run(e);
 		else
 			fillit_error("parsing detected an error in the input");
@@ -118,7 +120,10 @@ int		main(int argc, char **argv)
 	ft_putnbr(e->smallest_size);
 	ft_putchar('\n');
 	ft_putendl("============ Betatest print ===========\n");
-	fillit_print_colored(e, e->result);
+	if (!ft_strcmp(av[1], "--color"))
+		fillit_print_colored(e, e->result);
+	else
+		ft_putendl(e->result);
 	fillit_free_all(e);
 	ft_putendl("\n============ End of program ===========");
 	return (0);
