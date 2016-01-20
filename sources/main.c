@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/20 13:58:34 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/20 15:03:11 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,23 @@ int		fillit_run(t_env *e)
 	return (0);
 }
 
+void	fillit_reset_tmp(t_tmp *tmp)
+{
+	tmp->fd = 0;
+	tmp->i = 0;
+	tmp->isaved = -1;
+	tmp->xmax = 0;
+	tmp->ymax = 0;
+	tmp->height = -1;
+	tmp->pos = 0;
+	tmp->gnl_ret = 0;
+	tmp->jump = 0;
+	tmp->layers = 0;
+	tmp->layercheck_ret = 0;
+	tmp->blocks = 0;
+	ft_bzero(tmp->line, sizeof(tmp->line));
+}
+
 int		fillit_init(t_env **e)
 {
 	t_tetri		tet_ptr;
@@ -56,9 +73,7 @@ int		fillit_init(t_env **e)
 		return (-1);
 	if (!((*e)->tmp->line = ft_strnew(10)))
 		return (-1);
-	(*e)->tmp->blocks = 0;
-	(*e)->tmp->jump = 0;
-	(*e)->tmp->layers = 0;
+	fillit_reset_tmp((*e)->tmp);
 	(*e)->tcount = 0;
 	(*e)->update = 0;
 	(*e)->color = 0;
