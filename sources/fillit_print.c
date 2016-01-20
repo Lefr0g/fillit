@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/19 18:08:15 by liums            ###   ########.fr       */
+/*   Updated: 2016/01/20 18:30:18 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,13 @@ void	fillit_print_raw(t_env *e)
 /*
 ** save actual env (e) agencement ( fixed tetriminos ) to a printable str
 ** Steps :
-**	- reserve mem space of ( map size ) * ( map size + 1: \n) + 1: \0
-**	- memset with '.'
 **	- last char to '\0'
 **	- from (last char - 1), all ( map size + 1) chars, set a '\n'
 **	- then browse the tetrimino list and for each fixed tetriminos
+** !!! PARAMETER &MAP _MUST_ BE AT THE GOOD SIZE , AND THIS SIZE MUST BE BASED ON E->SMALLEST_SIZE !!!
 */
 
-char	*fillit_save_printable(t_env *e)
+void	fillit_save_printable(t_env *e, char **map)
 {
 	char	*ret;
 	int		c;
@@ -130,10 +129,10 @@ char	*fillit_save_printable(t_env *e)
 	t_list	*l_ptr;
 	t_tetri	*t_ptr;
 
-	sq_siz = fillit_square_size(e);
 	l_ptr = e->first;
 	t_ptr = (t_tetri *)l_ptr->content;
-	ret = (char *)malloc(sq_siz * (sq_siz + 1) + 1);
+	ret = *map;
+	sq_siz = e->smallest_size;
 	ft_memset(ret, '.', sq_siz * (sq_siz + 1));
 	while (l_ptr)
 	{
@@ -153,8 +152,6 @@ char	*fillit_save_printable(t_env *e)
 		ret[c] = '\n';
 		c -= sq_siz + 1;
 	}
-//	ft_putnbr(fillit_square_size(e));ft_putchar('\n');
-	return (ret);
 }
 
 void	fillit_print_colored(char *map)

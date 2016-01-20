@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:01:06 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/20 18:26:10 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	fillit_order_get_bottom_up(t_tmp *tmp, t_tetri *ptr);
 void	fillit_print_raw(t_env *e);
 void	fillit_print_xy(t_tetri *ptr);
 void	fillit_print_single_tetri(t_tetri *ptr);
-char	*fillit_save_printable(t_env *e);
+void	fillit_save_printable(t_env *e, char **map);
 void	fillit_print_colored(char *map);
 
 /*

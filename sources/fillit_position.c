@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 16:58:21 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/20 18:29:04 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,9 +149,9 @@ void	fillit_move_around(t_env *e)
 //			debug_inception_print(e);
 //			printf("Moving tetri %c\n", moving->letter);
 			lst_ptr_fixed = e->first;
+			fixed = (t_tetri*)lst_ptr_fixed->content;
 			while (lst_ptr_fixed)
 			{
-				fixed = (t_tetri*)lst_ptr_fixed->content;
 				i = 0;
 				while (fixed->fixed && i < 4)
 				{
@@ -171,7 +171,6 @@ void	fillit_move_around(t_env *e)
 						moving->firstmove = 0;
 					}
 					i++;
-//					ft_putchar('-');
 				}
 				if ((lst_ptr_fixed = lst_ptr_fixed->next))
 					fixed = lst_ptr_fixed->content;
@@ -229,7 +228,20 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 					printf("\033[31mCurrent square is the smallest! \033[0m(%d)\n",
 							siz_square);
 					e->smallest_size = siz_square;
-					e->result = fillit_save_printable(e);
+					if (!e->result)
+						e->result = (char *)ft_memalloc(e->smallest_size * (e->smallest_size + 1 ) + 1);
+					fillit_save_printable(e, &e->result);
+					if (e->update)
+					{
+						ft_putstr("\e[1;1H\e[2J");
+						ft_putendl(" ========== Status ========== ");
+						ft_putstr("\033[33m Current square\t:\033[0m\t");
+						ft_putnbr(e->smallest_size);
+						ft_putchar('\n');
+						ft_putstr("\033[33m Imbrication\t:\033[0m\t");
+						ft_putnbr(e->inception);
+						ft_putchar('\n');ft_putchar('\n');
+					}
 				}
 				else if (e->update)
 				{
@@ -241,12 +253,11 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 					ft_putstr("\033[33m Imbrication\t:\033[0m\t");
 					ft_putnbr(e->inception);
 					ft_putchar('\n');ft_putchar('\n');
-					if (e->color)
-						fillit_print_colored(fillit_save_printable(e));
-					else
-						ft_putendl(fillit_save_printable(e));
+//					if (e->color)
+//						fillit_print_colored(fillit_save_printable(e));
+//					else
+//						ft_putendl(fillit_save_printable(e));
 				}
-//				ft_putchar('|');
 			}
 			else
 				fillit_move_around(e);
