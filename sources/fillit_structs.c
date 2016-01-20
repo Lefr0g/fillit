@@ -6,11 +6,15 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 15:29:05 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 15:30:32 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/20 16:04:46 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+/*
+** Allocate and initialize the environment and related sub-structures.
+*/
 
 int		fillit_init(t_env **e)
 {
@@ -38,6 +42,10 @@ int		fillit_init(t_env **e)
 	return (0);
 }
 
+/*
+** Initialize the t_tmp substructure.
+*/
+
 void	fillit_reset_tmp(t_tmp *tmp)
 {
 	tmp->fd = 0;
@@ -55,6 +63,11 @@ void	fillit_reset_tmp(t_tmp *tmp)
 	ft_bzero(tmp->line, sizeof(tmp->line));
 }
 
+/*
+** Initialize some environment variables that are used by some function instead
+** of local variables / counters for norme reasons.
+*/
+
 void	fillit_reset_quickvars(t_env *e)
 {
 	e->block = 0;
@@ -64,11 +77,20 @@ void	fillit_reset_quickvars(t_env *e)
 	e->y = 0;
 }
 
+/*
+** Delete a tetrimino element within a list element.
+** Called as a function pointer by ft_lstdel()
+*/
+
 void	fillit_del_tetri(void *content, size_t size)
 {
 	ft_bzero(content, size);
 	free((t_tetri*)content);
 }
+
+/*
+** Final free before program exit.
+*/
 
 void	fillit_free_all(t_env *e)
 {
