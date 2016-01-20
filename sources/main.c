@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/19 17:52:15 by liumsade         ###   ########.fr       */
+/*   Updated: 2016/01/20 12:18:51 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ int		fillit_run(t_env *e)
 
 	ft_putendl("Input map is valid, running rest of the program");
 	printf("There are %lu tetriminos\n", e->tcount);	
-	ft_putendl("Brut : ");
-	e->smallest_size = 4;
-	ft_putendl(fillit_save_printable(e));
-	e->smallest_size = 0;
 	e->inception = 0;
 	fillit_move_around(e);
 	return (0);
@@ -64,6 +60,8 @@ int		fillit_init(t_env **e)
 	(*e)->tmp->jump = 0;
 	(*e)->tmp->layers = 0;
 	(*e)->tcount = 0;
+	(*e)->update = 0;
+	(*e)->smallest_size = 0;
 	ft_bzero((*e)->set, 25);
 	if (!((*e)->first = ft_lstnew(&tet_ptr, sizeof(t_tetri))))
 		return (-1);
@@ -102,6 +100,8 @@ int		main(int ac, char **av)
 
 	if (fillit_init(&e))
 		return (fillit_error("init failed"));
+	if (ac > 2 && ft_strchr(av[1], 's'))
+		e->update = 1;
 
 	if (ac >= 2)
 	{
@@ -115,13 +115,12 @@ int		main(int ac, char **av)
 		fillit_error("main error exit");
 
 
-	printf("There are %lu tetriminos\n", e->tcount);	
+	printf("There are %lu tetriminos\n", e->tcount);
 	ft_putstr("Square size : ");
 	ft_putnbr(e->smallest_size);
 	ft_putchar('\n');
-	ft_putendl("============ Betatest print ===========\n");
-	if (!ft_strcmp(av[1], "--color"))
-		fillit_print_colored(e, e->result);
+	if (ac > 2 && ft_strchr(av[1], 'c'))
+			fillit_print_colored(e->result);
 	else
 		ft_putendl(e->result);
 	fillit_free_all(e);

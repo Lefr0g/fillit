@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/19 11:23:19 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/19 23:20:22 by liumsade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct		s_env
 	int				block;
 	int				letter;
 	int				inception;
+	int				update : 1;
 }					t_env;
 
 /*
@@ -96,7 +97,7 @@ void	fillit_print_raw(t_env *e);
 void	fillit_print_xy(t_tetri *ptr);
 void	fillit_print_single_tetri(t_tetri *ptr);
 char	*fillit_save_printable(t_env *e);
-void	fillit_print_colored(t_env *e, char *map);
+void	fillit_print_colored(char *map);
 
 /*
 ** fillit_position.c

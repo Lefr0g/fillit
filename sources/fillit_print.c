@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/19 16:42:40 by liums            ###   ########.fr       */
+/*   Updated: 2016/01/19 18:08:15 by liums            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,16 +157,12 @@ char	*fillit_save_printable(t_env *e)
 	return (ret);
 }
 
-void	fillit_print_colored(t_env *e, char *map)
+void	fillit_print_colored(char *map)
 {
 	int		i;
 	int		color;
-	t_list	*lst;
-	t_tetri	*ptr;
 
 	i = 0;
-	lst = (t_list *)e->first;
-	ptr = (t_tetri *)lst->content;
 	while (map[i])
 	{
 		ft_putstr("\x1b[0m");
