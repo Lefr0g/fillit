@@ -6,7 +6,7 @@
 #    By: amulin <amulin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/28 16:48:40 by amulin            #+#    #+#              #
-#    Updated: 2016/01/12 15:10:27 by lpoujade         ###   ########.fr        #
+#    Updated: 2016/01/20 15:35:46 by amulin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CC = clang
 
 FLAGS = -Wall -Werror -Wextra -g
 
-SRCS = main.c fillit_parse.c fillit_print.c fillit_calc.c fillit_position.c
+SRCS = main.c fillit_parse.c fillit_print.c fillit_calc.c fillit_position.c \
+	   fillit_structs.c
 
 SRCSDIR = sources/
 
