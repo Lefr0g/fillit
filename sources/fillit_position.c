@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/19 23:26:29 by liumsade         ###   ########.fr       */
+/*   Updated: 2016/01/20 13:11:13 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,9 +263,13 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 				{
 					ft_putstr("\e[1;1H\e[2J");
 					ft_putendl(" ========== Status ========== ");
-					ft_putstr("\033[33m Current square :\033[0m\t"); ft_putnbr(e->smallest_size);
+					ft_putstr("\033[33m Current square\t:\033[0m\t"); ft_putnbr(e->smallest_size);ft_putchar('\n');
+					ft_putstr("\033[33m Imbrication\t:\033[0m\t"); ft_putnbr(e->inception);
 					ft_putchar('\n');ft_putchar('\n');
-					fillit_print_colored(fillit_save_printable(e));
+					if (e->color)
+						fillit_print_colored(fillit_save_printable(e));
+					else
+						ft_putendl(fillit_save_printable(e));
 				}
 //				ft_putchar('|');
 			}

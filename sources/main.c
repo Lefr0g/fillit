@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/20 12:18:51 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/20 13:07:36 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int		fillit_init(t_env **e)
 	(*e)->tmp->layers = 0;
 	(*e)->tcount = 0;
 	(*e)->update = 0;
+	(*e)->color = 0;
 	(*e)->smallest_size = 0;
 	ft_bzero((*e)->set, 25);
 	if (!((*e)->first = ft_lstnew(&tet_ptr, sizeof(t_tetri))))
@@ -100,8 +101,10 @@ int		main(int ac, char **av)
 
 	if (fillit_init(&e))
 		return (fillit_error("init failed"));
-	if (ac > 2 && ft_strchr(av[1], 's'))
+	if (ac > 2 && av[1][0] == '-' && ft_strchr(av[1], 's'))
 		e->update = 1;
+	if (ac > 2 && av[1][0] == '-' && ft_strchr(av[1], 'c'))
+		e->color = 1;
 
 	if (ac >= 2)
 	{
@@ -119,7 +122,7 @@ int		main(int ac, char **av)
 	ft_putstr("Square size : ");
 	ft_putnbr(e->smallest_size);
 	ft_putchar('\n');
-	if (ac > 2 && ft_strchr(av[1], 'c'))
+	if (e->color)
 			fillit_print_colored(e->result);
 	else
 		ft_putendl(e->result);

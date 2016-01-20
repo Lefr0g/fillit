@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/19 23:20:22 by liumsade         ###   ########.fr       */
+/*   Updated: 2016/01/20 13:06:03 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct		s_env
 	int				letter;
 	int				inception;
 	int				update : 1;
+	int				color : 1;
 }					t_env;
 
 /*
