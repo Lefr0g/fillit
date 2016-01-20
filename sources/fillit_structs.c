@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 15:29:05 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 16:04:46 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/20 16:25:56 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ void	fillit_reset_tmp(t_tmp *tmp)
 	tmp->fd = 0;
 	tmp->i = 0;
 	tmp->isaved = -1;
-	tmp->xmax = 0;
-	tmp->ymax = 0;
+	tmp->xmax = INT_MIN;
+	tmp->xmin = INT_MAX;
+	tmp->ymax = INT_MIN;
+	tmp->ymin = INT_MAX;
 	tmp->height = -1;
 	tmp->pos = 0;
 	tmp->gnl_ret = 0;
@@ -61,6 +63,12 @@ void	fillit_reset_tmp(t_tmp *tmp)
 	tmp->layercheck_ret = 0;
 	tmp->blocks = 0;
 	ft_bzero(tmp->line, sizeof(tmp->line));
+	tmp->lst_ptr = NULL;
+	tmp->lst_mov = NULL;
+	tmp->lst_fix = NULL;
+	tmp->tet_ptr = NULL;
+	tmp->tet_mov = NULL;
+	tmp->tet_fix = NULL;
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 13:11:13 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/20 16:58:21 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,81 +42,53 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 }
 
 /*
-** This function checks if the currently moving tetri is in contact with any
-** tetri which position has been set. In case of contact, 1 is returned.
+** Sub-function for fillit_square_size(), cut for norme reasons.
+** It changes the values of the most extreme blocks in the square if a block
+** is found beyond these limits.
 */
 
-int	fillit_check_contact(t_env *e, t_tetri *moving)
+void	fillit_square_get_range(t_tmp *t)
 {
-	t_list	*lst_ptr;
-	t_tetri	*fixed;
-
-	lst_ptr = e->first;
-	fixed = lst_ptr->content;
-	while (lst_ptr)
-	{
-		fillit_reset_quickvars(e);
-		while (fixed->fixed && e->i < 4)
-		{
-			e->x = fixed->x[e->i] + fixed->x_offset;
-			e->y = fixed->y[e->i] + fixed->y_offset;
-			if (fillit_xy_collision(e->x + 1, e->y, moving) ||
-					fillit_xy_collision(e->x - 1, e->y, moving) ||
-					fillit_xy_collision(e->x, e->y + 1, moving) ||
-					fillit_xy_collision(e->x, e->y - 1, moving))
-				return (1);
-			e->i++;
-		}
-		if ((lst_ptr = lst_ptr->next))
-			fixed = lst_ptr->content;
-	}
-	return (0);
+	if ((t->i = t->tet_fix->x_offset + ft_tabmax(t->tet_fix->x, 4)) > t->xmax)
+		t->xmax = t->i;
+	if ((t->i = t->tet_fix->y_offset + ft_tabmax(t->tet_fix->y, 4)) > t->ymax)
+		t->ymax = t->i;
+	if ((t->i = t->tet_fix->x_offset + ft_tabmin(t->tet_fix->x, 4)) < t->xmin)
+		t->xmin = t->i;
+	if ((t->i = t->tet_fix->y_offset + ft_tabmin(t->tet_fix->y, 4)) < t->ymin)
+		t->ymin = t->i;
 }
 
 /*
-** Function to calc size of the square containing all fixed tretriminos plus the one moving
+** Function to calc size of the square containing all fixed tretriminos
+** plus the one moving
 ** OR
 ** if no moving piece : calc the size of the map with all tetriminos
 */
 
 int fillit_square_size(t_env *e)
 {
-	int		xmax;
-	int		ymax;
-	int		xmin;
-	int		ymin;
-	int		t;
+	t_tmp	t;
 
-	xmax = INT_MIN;
-	ymax = INT_MIN;
-	xmin = INT_MAX;
-	ymin = INT_MAX;
-	t_list	*lst_ptr;
-	t_tetri	*fixed;
-	lst_ptr = e->first;
-	fixed = (t_tetri *)lst_ptr->content;
-	while (lst_ptr)
+	fillit_reset_tmp(e->tmp);
+	t = *e->tmp;
+	t.lst_ptr = e->first;
+	t.tet_fix = (t_tetri *)t.lst_ptr->content;
+	while (t.lst_ptr)
 	{
-		if (fixed->fixed)
+		if (t.tet_fix->fixed)
 		{
-			if ((t = fixed->x_offset + ft_tabmax(fixed->x, 4)) > xmax)
-				xmax = t;
-			if ((t = fixed->y_offset + ft_tabmax(fixed->y, 4)) > ymax)
-				ymax = t;
-			if ((t = fixed->x_offset + ft_tabmin(fixed->x, 4)) < xmin)
-				xmin = t;
-			if ((t = fixed->y_offset + ft_tabmin(fixed->y, 4)) < ymin)
-				ymin = t;
+			fillit_square_get_range(&t);
 		}
-		if ((lst_ptr = lst_ptr->next))
-			fixed = (t_tetri *)lst_ptr->content;
+		if ((t.lst_ptr = t.lst_ptr->next))
+			t.tet_fix = (t_tetri *)t.lst_ptr->content;
 	}
-	e->xmin = xmin;
-	e->ymin = ymin;
-	if (xmax - xmin > ymax - ymin)
-		return (xmax - xmin + 1);
+	e->xmin = t.xmin;
+	e->ymin = t.ymin;
+	if (t.xmax - t.xmin > t.ymax - t.ymin)
+		return (t.xmax - t.xmin + 1);
 	else
-		return (ymax - ymin + 1);
+		return (t.ymax - t.ymin + 1);
 }
 
 /*
@@ -263,8 +235,11 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 				{
 					ft_putstr("\e[1;1H\e[2J");
 					ft_putendl(" ========== Status ========== ");
-					ft_putstr("\033[33m Current square\t:\033[0m\t"); ft_putnbr(e->smallest_size);ft_putchar('\n');
-					ft_putstr("\033[33m Imbrication\t:\033[0m\t"); ft_putnbr(e->inception);
+					ft_putstr("\033[33m Current square\t:\033[0m\t");
+					ft_putnbr(e->smallest_size);
+					ft_putchar('\n');
+					ft_putstr("\033[33m Imbrication\t:\033[0m\t");
+					ft_putnbr(e->inception);
 					ft_putchar('\n');ft_putchar('\n');
 					if (e->color)
 						fillit_print_colored(fillit_save_printable(e));

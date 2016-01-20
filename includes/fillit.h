@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 15:31:57 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/20 17:01:06 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,6 @@
 # include <fcntl.h>
 
 # include <stdio.h>
-
-typedef struct		s_tmp
-{
-	int				fd;
-	int				i;
-	int				isaved;
-	int				xmax;
-	int				ymax;
-	int				height;
-	int				pos;
-	int				gnl_ret;
-	int				jump;
-	int				layers;
-	int				layercheck_ret;
-	int				blocks;
-	char			*line;
-}					t_tmp;
 
 typedef struct		s_tetri
 {
@@ -47,6 +30,31 @@ typedef struct		s_tetri
 	int				fixed;
 	int				firstmove : 1;
 }					t_tetri;
+
+typedef struct		s_tmp
+{
+	int				fd;
+	int				i;
+	int				isaved;
+	int				xmax;
+	int				xmin;
+	int				ymax;
+	int				ymin;
+	int				height;
+	int				pos;
+	int				gnl_ret;
+	int				jump;
+	int				layers;
+	int				layercheck_ret;
+	int				blocks;
+	char			*line;
+	t_list			*lst_ptr;
+	t_list			*lst_mov;
+	t_list			*lst_fix;
+	t_tetri			*tet_ptr;
+	t_tetri			*tet_mov;
+	t_tetri			*tet_fix;
+}					t_tmp;
 
 typedef struct		s_env
 {
@@ -101,6 +109,7 @@ int		fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr);
 */
 int		fillit_calc(t_env *start);
 int		fillit_square_size(t_env *e);
+void	fillit_square_get_range(t_tmp *t);
 void	fillit_load_xy(t_env *e);
 void	fillit_xy_get(t_tetri *t_ptr);
 void	fillit_xy_correct(t_tetri *ptr);
@@ -120,7 +129,6 @@ void	fillit_print_colored(char *map);
 ** fillit_position.c
 */
 int		fillit_check_collision(t_env *e, t_tetri *moving);
-int		fillit_check_contact(t_env *e, t_tetri *moving);
 int		fillit_xy_collision(int x, int y, t_tetri *ptr);
 void	fillit_move_around(t_env *e);
 void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
