@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 18:30:18 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/20 18:59:38 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ void	fillit_print_raw(t_env *e)
 void	fillit_save_printable(t_env *e, char **map)
 {
 	char	*ret;
-	int		c;
 	int		sq_siz;
+	int		c;
 	t_list	*l_ptr;
 	t_tetri	*t_ptr;
 
@@ -144,14 +144,10 @@ void	fillit_save_printable(t_env *e, char **map)
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri *)l_ptr->content;
 	}
-	c = sq_siz;
-	ret[c * (c + 1) + 1] = 0;
-	c = c * (c + 1) - 1;
-	while (c > 0)
-	{
+	c = sq_siz * (sq_siz + 1) - 1;
+	while ((c -= sq_siz + 1) > 0)
 		ret[c] = '\n';
-		c -= sq_siz + 1;
-	}
+	ret[e->smallest_size * (e->smallest_size + 1) - 1] = 0;
 }
 
 void	fillit_print_colored(char *map)

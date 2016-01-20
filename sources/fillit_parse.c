@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 14:23:49 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/20 18:57:24 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 		while (++i < 17)
 			if (tetri_ptr->raw[i] == '#')
 			{
-				if (!((i - 1 > 0 && tetri_ptr->raw[i - 1] == '#')
+				if (!((i - 1 >= 0 && tetri_ptr->raw[i - 1] == '#')
 						|| (i + 1 < 17 && tetri_ptr->raw[i + 1] == '#')
 						|| (i - 4 > 0 && tetri_ptr->raw[i - 4] == '#')
 						|| (i + 4 < 17 && tetri_ptr->raw[i + 4] == '#')))
