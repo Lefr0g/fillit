@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/18 17:50:27 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/20 14:23:49 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ int	fillit_parse(t_env *e, char *filename)
 		e->tmp->jump = 0;
 		while (get_next_line(e->tmp->fd, &e->tmp->line))
 			(void)ret;
+		return (ret);
 	}
 	if (e->tmp->jump)
 		return (fillit_error("empty line at the end of the file"));

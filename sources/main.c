@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*	 Created: 2015/12/28 16:49:16 by amulin			   #+#	  #+#			  */
-/*   Updated: 2016/01/20 13:07:36 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/20 13:58:34 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,22 +110,23 @@ int		main(int ac, char **av)
 	{
 
 		if (!fillit_parse(e, av[ac - 1]))
+		{
 			fillit_run(e);
+			printf("There are %lu tetriminos\n", e->tcount);
+			ft_putstr("Square size : ");
+			ft_putnbr(e->smallest_size);
+			ft_putchar('\n');
+			if (e->color)
+				fillit_print_colored(e->result);
+			else
+				ft_putendl(e->result);
+		}
 		else
 			fillit_error("parsing detected an error in the input");
 	}
 	else
 		fillit_error("main error exit");
 
-
-	printf("There are %lu tetriminos\n", e->tcount);
-	ft_putstr("Square size : ");
-	ft_putnbr(e->smallest_size);
-	ft_putchar('\n');
-	if (e->color)
-			fillit_print_colored(e->result);
-	else
-		ft_putendl(e->result);
 	fillit_free_all(e);
 	ft_putendl("\n============ End of program ===========");
 	return (0);
