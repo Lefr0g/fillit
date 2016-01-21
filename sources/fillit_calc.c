@@ -17,26 +17,26 @@
 ** to the top and ordering the blocks consequently.
 */
 
-void	fillit_order_get_bottom_up(t_tmp *tmp, t_tetri *tet)
+void	fillit_order_get_bottom_up(t_vars *v, t_tetri *tet)
 {
-	while (tmp->height >= 0)
+	while (v->height >= 0)
 	{
-		tmp->xmax = INT_MIN;
-		tmp->i = -1;
-		while ((tmp->i)++ < 4)
-			if (tet->y[tmp->i] == tmp->height && tet->x[tmp->i] > tmp->xmax)
-				tmp->xmax = tet->x[tmp->i];
-		tmp->i = -1;
-		while ((tmp->i)++ < 4)
-			if (tet->y[tmp->i] == tmp->height && tet->x[tmp->i]
-					== tmp->xmax - 1)
+		v->xmax = INT_MIN;
+		v->i = -1;
+		while ((v->i)++ < 4)
+			if (tet->y[v->i] == v->height && tet->x[v->i] > v->xmax)
+				v->xmax = tet->x[v->i];
+		v->i = -1;
+		while ((v->i)++ < 4)
+			if (tet->y[v->i] == v->height && tet->x[v->i]
+					== v->xmax - 1)
 			{
-				tet->order[tmp->pos] = tmp->i;
-				tmp->pos++;
-				tmp->xmax--;
-				tmp->i = -1;
+				tet->order[v->pos] = v->i;
+				v->pos++;
+				v->xmax--;
+				v->i = -1;
 			}
-		tmp->height--;
+		v->height--;
 	}
 }
 
@@ -49,28 +49,30 @@ void	fillit_order_get_bottom_up(t_tmp *tmp, t_tetri *tet)
 ** function instead of the simple i increment.
 */
 
-void	fillit_order_get(t_tmp *tmp, t_tetri *tet)
+void	fillit_order_get(t_tetri *tet)
 {
-	fillit_reset_tmp(tmp);
-	tmp->ymax = ft_tabmax(tet->y, 4);
-	while (tmp->height++ <= tmp->ymax)
+	t_vars	v;
+
+	fillit_init_vars(&v);
+	v.ymax = ft_tabmax(tet->y, 4);
+	while (v.height++ <= v.ymax)
 	{
-		tmp->i = -1;
-		tmp->xmax = INT_MIN;
-		while ((tmp->i)++ < 4)
-			if (tet->y[tmp->i] == tmp->height && tet->x[tmp->i] > tmp->xmax)
+		v.i = -1;
+		v.xmax = INT_MIN;
+		while ((v.i)++ < 4)
+			if (tet->y[v.i] == v.height && tet->x[v.i] > v.xmax)
 			{
-				tmp->xmax = tet->x[tmp->i];
-				tmp->isaved = tmp->i;
+				v.xmax = tet->x[v.i];
+				v.isaved = v.i;
 			}
-		if (tmp->isaved != -1)
+		if (v.isaved != -1)
 		{
-			tet->order[tmp->pos] = tmp->isaved;
-			(tmp->pos)++;
-			tmp->isaved = -1;
+			tet->order[v.pos] = v.isaved;
+			(v.pos)++;
+			v.isaved = -1;
 		}
 	}
-	fillit_order_get_bottom_up(tmp, tet);
+	fillit_order_get_bottom_up(&v, tet);
 }
 
 /*
@@ -161,7 +163,7 @@ void	fillit_load_xy(t_env *e)
 		e->tcount++;
 		fillit_xy_get(t_ptr);
 		fillit_xy_correct(t_ptr);
-		fillit_order_get(e->tmp, t_ptr);
+		fillit_order_get(t_ptr);
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri*)l_ptr->content;
 		e->letter++;

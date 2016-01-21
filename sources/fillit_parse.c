@@ -190,6 +190,7 @@ int	fillit_parse(t_env *e, char *filename)
 	if (e->tmp->jump)
 		return (fillit_error("empty line at the end of the file"));
 	fillit_load_xy(e);
+	fillit_print_raw(e);
 	close(e->tmp->fd);
 	return (ret);
 }

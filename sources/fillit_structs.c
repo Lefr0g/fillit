@@ -48,27 +48,37 @@ int		fillit_init(t_env **e)
 
 void	fillit_reset_tmp(t_tmp *tmp)
 {
-	tmp->fd = 0;
 	tmp->i = 0;
-	tmp->isaved = -1;
-	tmp->xmax = INT_MIN;
-	tmp->xmin = INT_MAX;
-	tmp->ymax = INT_MIN;
-	tmp->ymin = INT_MAX;
-	tmp->height = -1;
-	tmp->pos = 0;
+	tmp->fd = 0;
 	tmp->gnl_ret = 0;
 	tmp->jump = 0;
 	tmp->layers = 0;
 	tmp->layercheck_ret = 0;
 	tmp->blocks = 0;
 	ft_bzero(tmp->line, sizeof(tmp->line));
-	tmp->lst_ptr = NULL;
-	tmp->lst_mov = NULL;
-	tmp->lst_fix = NULL;
-	tmp->tet_ptr = NULL;
-	tmp->tet_mov = NULL;
-	tmp->tet_fix = NULL;
+
+}
+
+/*
+** Initialize the t_vars local structure
+*/
+
+void	fillit_init_vars(t_vars *v)
+{
+	v->i = 0;
+	v->isaved = -1;
+	v->height = -1;
+	v->pos = 0;
+	v->xmax = INT_MIN;
+	v->xmin = INT_MAX;
+	v->ymax = INT_MIN;
+	v->ymin = INT_MAX;
+	v->lst_ptr = NULL;
+	v->lst_mov = NULL;
+	v->lst_fix = NULL;
+	v->tet_ptr = NULL;
+	v->tet_mov = NULL;
+	v->tet_fix = NULL;
 }
 
 /*

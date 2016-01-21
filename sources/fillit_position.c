@@ -47,7 +47,7 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 ** is found beyond these limits.
 */
 
-void	fillit_square_get_range(t_tmp *t)
+void	fillit_square_get_range(t_vars *t)
 {
 	if ((t->i = t->tet_fix->x_offset + ft_tabmax(t->tet_fix->x, 4)) > t->xmax)
 		t->xmax = t->i;
@@ -68,10 +68,9 @@ void	fillit_square_get_range(t_tmp *t)
 
 int fillit_square_size(t_env *e)
 {
-	t_tmp	t;
+	t_vars	t;
 
-	fillit_reset_tmp(e->tmp);
-	t = *e->tmp;
+	fillit_init_vars(&t);
 	t.lst_ptr = e->first;
 	t.tet_fix = (t_tetri *)t.lst_ptr->content;
 	while (t.lst_ptr)

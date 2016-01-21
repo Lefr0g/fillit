@@ -33,28 +33,34 @@ typedef struct		s_tetri
 
 typedef struct		s_tmp
 {
-	int				fd;
 	int				i;
-	int				isaved;
-	int				xmax;
-	int				xmin;
-	int				ymax;
-	int				ymin;
-	int				height;
-	int				pos;
+	int				fd;
 	int				gnl_ret;
 	int				jump;
 	int				layers;
 	int				layercheck_ret;
 	int				blocks;
 	char			*line;
+
+}					t_tmp;
+
+typedef struct		s_vars
+{
+	int				height;
+	int				pos;
+	int				i;
+	int				isaved;
+	int				xmax;
+	int				xmin;
+	int				ymax;
+	int				ymin;
 	t_list			*lst_ptr;
 	t_list			*lst_mov;
 	t_list			*lst_fix;
 	t_tetri			*tet_ptr;
 	t_tetri			*tet_mov;
 	t_tetri			*tet_fix;
-}					t_tmp;
+}					t_vars;
 
 typedef struct		s_env
 {
@@ -92,6 +98,7 @@ void	fillit_reset_tmp(t_tmp *tmp);
 int		fillit_init(t_env **e);
 void	fillit_reset_tmp(t_tmp *tmp);
 void	fillit_reset_quickvars(t_env *e);
+void	fillit_init_vars(t_vars *t);
 void	fillit_del_tetri(void *content, size_t size);
 void	fillit_free_all(t_env *e);
 
@@ -109,12 +116,12 @@ int		fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr);
 */
 int		fillit_calc(t_env *start);
 int		fillit_square_size(t_env *e);
-void	fillit_square_get_range(t_tmp *t);
+void	fillit_square_get_range(t_vars *v);
 void	fillit_load_xy(t_env *e);
 void	fillit_xy_get(t_tetri *t_ptr);
 void	fillit_xy_correct(t_tetri *ptr);
-void	fillit_order_get(t_tmp *tmp, t_tetri *ptr);
-void	fillit_order_get_bottom_up(t_tmp *tmp, t_tetri *ptr);
+void	fillit_order_get(t_tetri *ptr);
+void	fillit_order_get_bottom_up(t_vars *v, t_tetri *ptr);
 
 /*
 ** fillit_print.c
