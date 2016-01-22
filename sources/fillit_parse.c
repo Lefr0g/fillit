@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/21 18:35:06 by liumsade         ###   ########.fr       */
+/*   Updated: 2016/01/22 12:21:40 by liumsade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ int	fillit_parse(t_env *e, char *filename)
 	if (e->tmp->jump)
 		return (-1);
 	fillit_load_xy(e);
-	fillit_print_raw(e);
 	close(e->tmp->fd);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/21 18:40:25 by liumsade         ###   ########.fr       */
+/*   Updated: 2016/01/22 12:20:14 by liumsade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 				siz_square = fillit_square_size(e);
 				if ((!e->smallest_size || siz_square < e->smallest_size))
 				{
-					debug_inception_print(e);
+//					debug_inception_print(e);
 					e->smallest_size = siz_square;
 					if (!e->result)
 						e->result = (char *)ft_memalloc(e->smallest_size * (e->smallest_size + 1 ) + 1);
