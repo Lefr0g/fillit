@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 18:57:24 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/21 18:35:06 by liumsade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 	i = -1;
 	e->tmp->jump++;
 	if (e->tmp->blocks != 4 && e->tmp->jump == 1)
-		return (fillit_error("not enough / too many blocks in tetri"));
+		return (-1);
 	else
 	{
 		while (++i < 17)
@@ -75,7 +75,7 @@ int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 						|| (i + 1 < 17 && tetri_ptr->raw[i + 1] == '#')
 						|| (i - 4 > 0 && tetri_ptr->raw[i - 4] == '#')
 						|| (i + 4 < 17 && tetri_ptr->raw[i + 4] == '#')))
-					return (fillit_error("invalid block placement in tetri"));
+					return (-1);
 			}
 	}
 	e->tmp->blocks = 0;
@@ -104,13 +104,13 @@ int	fillit_layer_check(t_tmp *tmp, t_list **list_ptr, t_tetri **tetri_ptr)
 	while (tmp->line[tmp->i])
 	{
 		if (tmp->line[tmp->i] != '.' && tmp->line[tmp->i] != '#')
-			return (fillit_error("forbidden character"));
+			return (-1);
 		else if (tmp->line[tmp->i] == '#')
 			blocks++;
 		(tmp->i)++;
 	}
 	if (tmp->i != 4)
-		return (fillit_error("wrong line size"));
+		return (-1);
 	(tmp->layers)++;
 	(tmp->blocks) += blocks;
 	if (ft_strlen((*tetri_ptr)->raw) <= 12)
@@ -142,7 +142,7 @@ int	fillit_input_check(t_env *e)
 	while ((e->tmp->gnl_ret = get_next_line(e->tmp->fd, &e->tmp->line)) != 0)
 	{
 		if (e->tmp->gnl_ret == -1)
-			return (fillit_error("gnl fail"));
+			return (-1);
 		if (e->tmp->line[0])
 		{
 			if ((fillit_layer_check(e->tmp, &list_ptr, &tetri_ptr)) < 0)
@@ -154,9 +154,9 @@ int	fillit_input_check(t_env *e)
 				return (-1);
 		}
 		if (e->tmp->jump && e->tmp->layers != 4)
-			return (fillit_error("wrong tetri height"));
+			return (-1);
 		if (e->tmp->jump > 1)
-			return (fillit_error("more than one empty line"));
+			return (-1);
 	}
 	return (0);
 }
@@ -178,7 +178,7 @@ int	fillit_parse(t_env *e, char *filename)
 
 	e->tmp->fd = open(filename, O_RDONLY);
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
-		return (fillit_error("open() failed"));
+		return (-1);
 	ret = fillit_input_check(e);
 	if (ret == -1)
 	{
@@ -188,7 +188,7 @@ int	fillit_parse(t_env *e, char *filename)
 		return (ret);
 	}
 	if (e->tmp->jump)
-		return (fillit_error("empty line at the end of the file"));
+		return (-1);
 	fillit_load_xy(e);
 	fillit_print_raw(e);
 	close(e->tmp->fd);

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 18:59:38 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/21 18:51:02 by liumsade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,5 @@ void	fillit_print_colored(char *map)
 		ft_putchar(map[i]);
 		i++;
 	}
-	ft_putstr("\x1b[0m");
+	ft_putendl("\x1b[0m");
 }

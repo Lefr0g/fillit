@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sources/main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 15:48:03 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/21 18:49:31 by liumsn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,9 @@
 
 int		fillit_error(char *str)
 {
-	if (!str)
-		ft_putstr_fd("error", 2);
-	else
-	{
-		ft_putstr_fd("error : ", 2);
-		ft_putstr_fd(str, 2);
-	}
-	ft_putstr_fd("\n", 2);
+	ft_putendl("error");
+	ft_putstr_fd("error : ", 2);
+	ft_putendl_fd(str, 2);
 	return (-1);
 }
 
@@ -43,14 +38,8 @@ int		fillit_error(char *str)
 
 int		fillit_run(t_env *e)
 {
-	ft_putendl("Input map is valid, running rest of the program");
-	printf("There are %lu tetriminos\n", e->tcount);
 	e->inception = 0;
 	fillit_move_around(e);
-	printf("There are %lu tetriminos\n", e->tcount);
-	ft_putstr("Square size : ");
-	ft_putnbr(e->smallest_size);
-	ft_putchar('\n');
 	if (e->color)
 		fillit_print_colored(e->result);
 	else
@@ -70,7 +59,6 @@ int		main(int ac, char **av)
 {
 	t_env	*e;
 
-	ft_putendl("============ Program Start ============");
 	if (fillit_init(&e))
 		return (fillit_error("init failed"));
 	if (ac > 2 && av[1][0] == '-' && ft_strchr(av[1], 's'))
@@ -87,6 +75,5 @@ int		main(int ac, char **av)
 	else
 		fillit_error("main error exit");
 	fillit_free_all(e);
-	ft_putendl("\n============ End of program ===========");
 	return (0);
 }
