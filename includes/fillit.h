@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 18:26:10 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/26 12:31:19 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ typedef struct		s_vars
 	int				isaved;
 	int				xmax;
 	int				xmin;
+	int				xref;
 	int				ymax;
 	int				ymin;
+	int				yref;
 	t_list			*lst_ptr;
 	t_list			*lst_mov;
 	t_list			*lst_fix;
@@ -137,7 +139,8 @@ void	fillit_print_colored(char *map);
 */
 int		fillit_check_collision(t_env *e, t_tetri *moving);
 int		fillit_xy_collision(int x, int y, t_tetri *ptr);
-void	fillit_move_around(t_env *e);
+void	fillit_solve(t_env *e);
+void	fillit_move_around(t_env *e, t_vars *t);
 void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
 void	debug_inception_print(t_env *e);
 

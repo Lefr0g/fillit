@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/20 15:19:50 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/26 12:25:52 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	fillit_order_get_bottom_up(t_vars *v, t_tetri *tet)
 ** around the tetri clockwise, starting top-left of fixed tetri, according to
 ** the rules defined in the subject.
 ** The result will be stored in a int[4], within each t_tetri.
-** This data will be used in the high-level loop of the fillit_move_around()
+** This data will be used in the high-level loop of the fillit_solve()
 ** function instead of the simple i increment.
 */
 

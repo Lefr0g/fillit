@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 15:48:03 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/26 12:24:43 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		fillit_error(char *str)
 ** e->inception gives the "deepness" of recursion, it was used mainly
 ** for debug purposes.
 ** The main job of this function is to launch the recursive solver by calling
-** fillit_move_around() once, and then to print the resulting map on the
+** fillit_solve() once, and then to print the resulting map on the
 ** standard output (uncolorized by default).
 */
 
@@ -46,8 +46,7 @@ int		fillit_run(t_env *e)
 	ft_putendl("Input map is valid, running rest of the program");
 	printf("There are %lu tetriminos\n", e->tcount);
 	e->inception = 0;
-	fillit_move_around(e);
-	printf("There are %lu tetriminos\n", e->tcount);
+	fillit_solve(e);
 	ft_putstr("Square size : ");
 	ft_putnbr(e->smallest_size);
 	ft_putchar('\n');

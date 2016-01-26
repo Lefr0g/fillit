@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 18:29:04 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/26 12:34:06 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,32 @@ int	fillit_xy_collision(int x, int y, t_tetri *ptr)
 	return (0);
 }
 
+
+void	fillit_move_around(t_env *e, t_vars *t)
+{ 
+	t->i = 0;
+	while (t->tet_fix->fixed && t->i < 4)
+	{
+		if ((!e->smallest_size || fillit_square_size(e)
+					< e->smallest_size))
+		{
+			//						debug_inception_print(e);
+			//						printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\033[0m\n", moving->letter, i);
+			t->xref = t->tet_fix->x[t->tet_fix->order[t->i]] + t->tet_fix->x_offset;
+			t->yref = t->tet_fix->y[t->tet_fix->order[t->i]] + t->tet_fix->y_offset;
+
+			fillit_move_and_try(e, t->tet_mov, t->xref + 1, t->yref);
+			fillit_move_and_try(e, t->tet_mov, t->xref, t->yref + 1);
+			fillit_move_and_try(e, t->tet_mov, t->xref - 1, t->yref);
+			if (!t->tet_mov->firstmove)
+				fillit_move_and_try(e, t->tet_mov, t->xref, t->yref - 1);
+			t->tet_mov->firstmove = 0;
+		}
+		t->i++;
+	}
+}
+
+
 /*
 ** Contrary to the functions above, this function takes the fixed tetris for
 ** reference. For each fixed block, it runs a test on its 4 neighbor coordinates.
@@ -123,62 +149,37 @@ int	fillit_xy_collision(int x, int y, t_tetri *ptr)
 ** Then, we calculate the size of the square containing all fixed tetris.
 ** 
 ** If this square is smaller than the smallest 'fully filled' square, we 
-** recursively launch fillit_move_around() on the next moving tetri.
+** recursively launch fillit_solve() on the next moving tetri.
 */
 
-void	fillit_move_around(t_env *e)
+void	fillit_solve(t_env *e)
 {
-	t_list	*lst_ptr_fixed;
-	t_list	*lst_ptr_moving;
-	t_tetri	*fixed;
-	t_tetri	*moving;
-	int		x_ref;
-	int		y_ref;
-	int		i;
+	t_vars	t;
 
 	e->inception++;
-	lst_ptr_moving = e->first;
+	t.lst_mov = e->first;
 //	debug_inception_print(e);
-//	printf("\033[35mENTERING fillit_move_around()\033[0m\n");
-	while (lst_ptr_moving)
+//	printf("\033[35mENTERING fillit_solve()\033[0m\n");
+	while (t.lst_mov)
 	{
-		moving = (t_tetri*)lst_ptr_moving->content;
-		if (!moving->fixed)
+		t.tet_mov = (t_tetri*)t.lst_mov->content;
+		if (!t.tet_mov->fixed)
 		{
 //			debug_inception_print(e);
 //			printf("Moving tetri %c\n", moving->letter);
-			lst_ptr_fixed = e->first;
-			fixed = (t_tetri*)lst_ptr_fixed->content;
-			while (lst_ptr_fixed)
+			t.lst_fix = e->first;
+			t.tet_fix = (t_tetri*)t.lst_fix->content;
+			while (t.lst_fix)
 			{
-				i = 0;
-				while (fixed->fixed && i < 4)
-				{
-					if ((!e->smallest_size || fillit_square_size(e)
-							< e->smallest_size))
-					{
-//						debug_inception_print(e);
-//						printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\033[0m\n", moving->letter, i);
-						x_ref = fixed->x[fixed->order[i]] + fixed->x_offset;
-						y_ref = fixed->y[fixed->order[i]] + fixed->y_offset;
-
-						fillit_move_and_try(e, moving, x_ref + 1, y_ref);
-						fillit_move_and_try(e, moving, x_ref, y_ref + 1);
-						fillit_move_and_try(e, moving, x_ref - 1, y_ref);
-						if (!moving->firstmove)
-							fillit_move_and_try(e, moving, x_ref, y_ref - 1);
-						moving->firstmove = 0;
-					}
-					i++;
-				}
-				if ((lst_ptr_fixed = lst_ptr_fixed->next))
-					fixed = lst_ptr_fixed->content;
+				fillit_move_around(e, &t);
+				if ((t.lst_fix = t.lst_fix->next))
+					t.tet_fix = t.lst_fix->content;
 			}
 		}
-		lst_ptr_moving = lst_ptr_moving->next;
+		t.lst_mov = t.lst_mov->next;
 	}
 //	debug_inception_print(e);
-//	printf("\033[35mLEAVING fillit_move_around()\033[0m\n");
+//	printf("\033[35mLEAVING fillit_solve()\033[0m\n");
 	e->inception--;
 }
 
@@ -259,7 +260,7 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 				}
 			}
 			else
-				fillit_move_around(e);
+				fillit_solve(e);
 			moving->fixed = 0;
 			moving->firstmove = 1;
 //			debug_inception_print(e);
