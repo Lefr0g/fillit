@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 16:41:46 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/26 17:37:35 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,9 +153,10 @@ int	fillit_input_check(t_env *e)
 
 	list_ptr = e->first;
 	tetri_ptr = (t_tetri*)(list_ptr->content);
+	printf("Pre-GNL check OK\n");
 	while ((e->tmp->gnl_ret = get_next_line(e->tmp->fd, &e->tmp->line)) != 0)
 	{
-//		printf("gnl_ret = %d\n", e->tmp->gnl_ret);
+		printf("gnl_ret = %d\n", e->tmp->gnl_ret);
 		if (e->tmp->gnl_ret == -1)
 			return (fillit_error("gnl fail"));
 		if (e->tmp->line[0])
@@ -178,8 +179,8 @@ int	fillit_input_check(t_env *e)
 	{
 		if (fillit_blocks_check(e, tetri_ptr) < 0)
 			return (-1);
-		else
-			e->tmp->jump = 0;
+//		else
+//			e->tmp->layers = 0;
 	}
 	return (0);
 }
@@ -202,18 +203,22 @@ int	fillit_parse(t_env *e, char *filename)
 	e->tmp->fd = open(filename, O_RDONLY);
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
 		return (fillit_error("open() failed"));
+	printf("OPEN SUCCESS, fd = %d\n", e->tmp->fd);
 	ret = fillit_input_check(e);
-	if (ret == -1)
-	{
-		e->tmp->jump = 0;
-		while (get_next_line(e->tmp->fd, &e->tmp->line))
-			(void)ret;
-		return (ret);
-	}
-	if (e->tmp->jump)
+//	if (ret == -1)
+//	{
+//		e->tmp->jump = 0;
+//		while (get_next_line(e->tmp->fd, &e->tmp->line))
+//			(void)ret;
+//		return (ret);
+//	}
+	if (e->tmp->jump > 1)
 		return (fillit_error("empty line at the end of the file"));
-	fillit_load_xy(e);
-	fillit_print_raw(e);
-	close(e->tmp->fd);
+	if (ret != -1)
+	{
+		fillit_load_xy(e);
+		fillit_print_raw(e);
+		close(e->tmp->fd);
+	}
 	return (ret);
 }
