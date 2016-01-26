@@ -6,111 +6,11 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 18:59:38 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/26 14:59:59 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-/*
-** This function prints the tetrimino passed as parameter on stdout, based on
-** its xy coordinates, NOT on the raw string.
-*/
-
-void	fillit_print_single_tetri(t_tetri *ptr)
-{
-	int	x;
-	int	y;
-	int	block;
-
-	x = 0;
-	y = 0;
-	block = 0;
-	while (y < 4 && block < 4)
-	{
-		while (x < 4 && block < 4)
-		{
-			if (ptr->y[block] == y && ptr->x[block] == x)
-			{
-				ft_putchar(ptr->letter);
-				block++;
-			}
-			else
-				ft_putchar(' ');
-			x++;
-		}
-		y++;
-		x = 0;
-		ft_putchar('\n');
-	}
-}
-	
-/*
-** Printing debug subfunction.
-*/
-
-void	fillit_print_xy(t_tetri *ptr)
-{
-	int	i;
-	
-	i = 0;
-	ft_putstr("\t\t     x -> |");
-	while (i < 4)
-	{
-		if (ptr->x[i] >= 0)
-			ft_putchar(' ');
-		ft_putnbr(ptr->x[i]);
-		ft_putchar('|');
-		i++;
-	}
-	ft_putchar('\n');
-	i = 0;
-	ft_putstr("\t\t     y -> |");
-	while (i < 4)
-	{
-		if (ptr->y[i] >= 0)
-			ft_putchar(' ');
-		ft_putnbr(ptr->y[i]);
-		ft_putchar('|');
-		i++;
-	}
-	ft_putchar('\n');
-	i = 0;
-	ft_putstr("\t\t order -> |");
-	while (i < 4)
-	{
-		ft_putchar(' ');
-		ft_putnbr(ptr->order[i]);
-		ft_putchar('|');
-		i++;
-	}
-	ft_putchar('\n');
-}
-
-/*
-** Parent printing debug function.
-*/
-
-void	fillit_print_raw(t_env *e)
-{
-	t_list	*l_ptr;
-	t_tetri	*t_ptr;
-
-	l_ptr = e->first;
-	ft_putendl("\n================ DEBUG ================");
-	while (l_ptr)
-	{
-		t_ptr = (t_tetri*)l_ptr->content;
-		ft_putstr("Tetrimino ");
-		ft_putchar(t_ptr->letter);
-		ft_putstr(" contains : ");
-		ft_putendl(t_ptr->raw);
-		l_ptr = l_ptr->next;
-		fillit_print_xy(t_ptr);
-		fillit_print_single_tetri(t_ptr);
-		ft_putchar('\n');
-	}
-}
 
 /*
 ** save actual env (e) agencement ( fixed tetriminos ) to a printable str
@@ -118,7 +18,8 @@ void	fillit_print_raw(t_env *e)
 **	- last char to '\0'
 **	- from (last char - 1), all ( map size + 1) chars, set a '\n'
 **	- then browse the tetrimino list and for each fixed tetriminos
-** !!! PARAMETER &MAP _MUST_ BE AT THE GOOD SIZE , AND THIS SIZE MUST BE BASED ON E->SMALLEST_SIZE !!!
+** !!! PARAMETER &MAP _MUST_ BE AT THE GOOD SIZE,
+** AND THIS SIZE MUST BE BASED ON E->SMALLEST_SIZE !!!
 */
 
 void	fillit_save_printable(t_env *e, char **map)
@@ -170,4 +71,23 @@ void	fillit_print_colored(char *map)
 		i++;
 	}
 	ft_putstr("\x1b[0m");
+}
+
+/*
+** This funtion printfs a standard or specified error message on the error
+** output.
+** -------------------------- To be added to libft ----------------------------
+*/
+
+int		fillit_error(char *str)
+{
+	if (!str)
+		ft_putstr_fd("error", 2);
+	else
+	{
+		ft_putstr_fd("error : ", 2);
+		ft_putstr_fd(str, 2);
+	}
+	ft_putstr_fd("\n", 2);
+	return (-1);
 }

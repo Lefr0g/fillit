@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 15:29:05 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 16:25:56 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/26 15:01:06 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,4 @@ void	fillit_del_tetri(void *content, size_t size)
 {
 	ft_bzero(content, size);
 	free((t_tetri*)content);
-}
-
-/*
-** Final free before program exit.
-*/
-
-void	fillit_free_all(t_env *e)
-{
-	ft_strdel(&(e->tmp->line));
-	free(e->tmp);
-	ft_lstdel(&e->first, &fillit_del_tetri);
-	free(e);
 }

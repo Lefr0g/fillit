@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 14:46:08 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/26 15:01:46 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ typedef struct		s_env
 /*
 ** main.c
 */
-int		fillit_error(char *str);
 void	fillit_free_all(t_env *e);
 void	fillit_reset_quickvars(t_env *e);
 void	fillit_reset_tmp(t_tmp *tmp);
@@ -102,7 +101,6 @@ void	fillit_reset_tmp(t_tmp *tmp);
 void	fillit_reset_quickvars(t_env *e);
 void	fillit_init_vars(t_vars *t);
 void	fillit_del_tetri(void *content, size_t size);
-void	fillit_free_all(t_env *e);
 
 /*
 ** fillit_parse.c
@@ -116,7 +114,6 @@ int		fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr);
 /*
 ** fillit_calc.c
 */
-//int		fillit_calc(t_env *start);
 void	fillit_load_xy(t_env *e);
 void	fillit_xy_get(t_tetri *t_ptr);
 void	fillit_xy_correct(t_tetri *ptr);
@@ -126,11 +123,9 @@ void	fillit_order_get_bottom_up(t_vars *v, t_tetri *ptr);
 /*
 ** fillit_print.c
 */
-void	fillit_print_raw(t_env *e);
-void	fillit_print_xy(t_tetri *ptr);
-void	fillit_print_single_tetri(t_tetri *ptr);
 void	fillit_save_printable(t_env *e, char **map);
 void	fillit_print_colored(char *map);
+int		fillit_error(char *str);
 
 /*
 ** fillit_position.c
@@ -140,7 +135,6 @@ int		fillit_square_size(t_env *e);
 void	fillit_square_get_range(t_vars *v);
 int		fillit_xy_collision(int x, int y, t_tetri *ptr);
 void	fillit_liveprint(t_env *e);
-void	debug_inception_print(t_env *e);
 
 /*
 ** fillit_solve.c
@@ -149,5 +143,13 @@ void	fillit_solve(t_env *e);
 void	fillit_move_around(t_env *e, t_vars *t);
 void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
 void	fillit_check_solution(t_env *e, int *siz_square);
+
+/*
+** fillit_debug.c
+*/
+void	debug_inception_print(t_env *e);
+void	fillit_print_raw(t_env *e);
+void	fillit_print_xy(t_tetri *ptr);
+void	fillit_print_single_tetri(t_tetri *ptr);
 
 #endif

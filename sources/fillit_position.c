@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 14:42:19 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/26 14:53:29 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,16 +123,4 @@ void	fillit_liveprint(t_env *e)
 	//						fillit_print_colored(fillit_save_printable(e));
 	//					else
 	//						ft_putendl(fillit_save_printable(e));
-}
-
-void	debug_inception_print(t_env *e)
-{
-	int	i;
-
-	i = 0;
-	while (i < e->inception)
-	{
-		ft_putstr("\033[33m> \033[0m");
-		i++;
-	}
 }

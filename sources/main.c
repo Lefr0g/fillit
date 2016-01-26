@@ -6,30 +6,11 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 12:24:43 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/26 15:01:35 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-/*
-** This funtion printfs a standard or specified error message on the error
-** output.
-** -------------------------- To be added to libft ----------------------------
-*/
-
-int		fillit_error(char *str)
-{
-	if (!str)
-		ft_putstr_fd("error", 2);
-	else
-	{
-		ft_putstr_fd("error : ", 2);
-		ft_putstr_fd(str, 2);
-	}
-	ft_putstr_fd("\n", 2);
-	return (-1);
-}
 
 /*
 ** This function is launched only if the input was validated and converted
@@ -88,4 +69,16 @@ int		main(int ac, char **av)
 	fillit_free_all(e);
 	ft_putendl("\n============ End of program ===========");
 	return (0);
+}
+
+/*
+** Final free before program exit.
+*/
+
+void	fillit_free_all(t_env *e)
+{
+	ft_strdel(&(e->tmp->line));
+	free(e->tmp);
+	ft_lstdel(&e->first, &fillit_del_tetri);
+	free(e);
 }
