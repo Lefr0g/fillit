@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 12:31:19 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/26 12:46:34 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int		fillit_xy_collision(int x, int y, t_tetri *ptr);
 void	fillit_solve(t_env *e);
 void	fillit_move_around(t_env *e, t_vars *t);
 void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
+void	fillit_liveprint(t_env *e);
 void	debug_inception_print(t_env *e);
 
 #endif

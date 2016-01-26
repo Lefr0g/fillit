@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 12:34:06 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/26 12:48:03 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ int	fillit_xy_collision(int x, int y, t_tetri *ptr)
 	return (0);
 }
 
-
+/*
+** This function tries to position the moving tetri in any possible way around
+** one block of the fixed tetris assembly.
+*/
 void	fillit_move_around(t_env *e, t_vars *t)
 { 
 	t->i = 0;
@@ -118,8 +121,8 @@ void	fillit_move_around(t_env *e, t_vars *t)
 		if ((!e->smallest_size || fillit_square_size(e)
 					< e->smallest_size))
 		{
-			//						debug_inception_print(e);
-			//						printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\033[0m\n", moving->letter, i);
+//			debug_inception_print(e);
+//			printf("\033[32mLaunching move_and_try() on moving tetri %c, i = %d\033[0m\n", moving->letter, i);
 			t->xref = t->tet_fix->x[t->tet_fix->order[t->i]] + t->tet_fix->x_offset;
 			t->yref = t->tet_fix->y[t->tet_fix->order[t->i]] + t->tet_fix->y_offset;
 
@@ -149,7 +152,8 @@ void	fillit_move_around(t_env *e, t_vars *t)
 ** Then, we calculate the size of the square containing all fixed tetris.
 ** 
 ** If this square is smaller than the smallest 'fully filled' square, we 
-** recursively launch fillit_solve() on the next moving tetri.
+** recursively launch fillit_solve() on the next moving tetri
+** via fillit_move_around().
 */
 
 void	fillit_solve(t_env *e)
@@ -229,35 +233,13 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 							siz_square);
 					e->smallest_size = siz_square;
 					if (!e->result)
-						e->result = (char *)ft_memalloc(e->smallest_size * (e->smallest_size + 1 ) + 1);
+						e->result = (char *)ft_memalloc(e->smallest_size
+								* (e->smallest_size + 1 ) + 1);
 					fillit_save_printable(e, &e->result);
-					if (e->update)
-					{
-						ft_putstr("\e[1;1H\e[2J");
-						ft_putendl(" ========== Status ========== ");
-						ft_putstr("\033[33m Current square\t:\033[0m\t");
-						ft_putnbr(e->smallest_size);
-						ft_putchar('\n');
-						ft_putstr("\033[33m Imbrication\t:\033[0m\t");
-						ft_putnbr(e->inception);
-						ft_putchar('\n');ft_putchar('\n');
-					}
+
 				}
-				else if (e->update)
-				{
-					ft_putstr("\e[1;1H\e[2J");
-					ft_putendl(" ========== Status ========== ");
-					ft_putstr("\033[33m Current square\t:\033[0m\t");
-					ft_putnbr(e->smallest_size);
-					ft_putchar('\n');
-					ft_putstr("\033[33m Imbrication\t:\033[0m\t");
-					ft_putnbr(e->inception);
-					ft_putchar('\n');ft_putchar('\n');
-//					if (e->color)
-//						fillit_print_colored(fillit_save_printable(e));
-//					else
-//						ft_putendl(fillit_save_printable(e));
-				}
+				if (e->update)
+					fillit_liveprint(e);
 			}
 			else
 				fillit_solve(e);
@@ -271,6 +253,22 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 //		if (e->smallest_size == 6 && e->tlocked > 5)
 //			printf("%lu / %lu locked\n", e->tlocked, e->tcount);
 	}
+}
+
+void	fillit_liveprint(t_env *e)
+{
+	ft_putstr("\e[1;1H\e[2J");
+	ft_putendl(" ========== Status ========== ");
+	ft_putstr("\033[33m Current square\t:\033[0m\t");
+	ft_putnbr(e->smallest_size);
+	ft_putchar('\n');
+	ft_putstr("\033[33m Imbrication\t:\033[0m\t");
+	ft_putnbr(e->inception);
+	ft_putchar('\n');ft_putchar('\n');
+	//					if (e->color)
+	//						fillit_print_colored(fillit_save_printable(e));
+	//					else
+	//						ft_putendl(fillit_save_printable(e));
 }
 
 void	debug_inception_print(t_env *e)
