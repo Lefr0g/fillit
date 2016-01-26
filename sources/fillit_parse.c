@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/20 18:57:24 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/01/26 16:41:46 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr)
 int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 {
 	int	i;
+	int	j;
+	int	blockid;
 
+	blockid = 0;
 	i = -1;
 	e->tmp->jump++;
 	if (e->tmp->blocks != 4 && e->tmp->jump == 1)
@@ -69,14 +72,25 @@ int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 	else
 	{
 		while (++i < 17)
+		{
 			if (tetri_ptr->raw[i] == '#')
-			{
+			{	
 				if (!((i - 1 >= 0 && tetri_ptr->raw[i - 1] == '#')
 						|| (i + 1 < 17 && tetri_ptr->raw[i + 1] == '#')
 						|| (i - 4 > 0 && tetri_ptr->raw[i - 4] == '#')
 						|| (i + 4 < 17 && tetri_ptr->raw[i + 4] == '#')))
-					return (fillit_error("invalid block placement in tetri"));
+					return (fillit_error("invalid block placement in tetri"));	
+				if (blockid > 0)
+				{
+					j = i - 1;
+					while (tetri_ptr->raw[j] != '#')
+						j--;
+					if (j < i - 4)
+						return (fillit_error("invalid block placement"));
+				}
+				blockid++;
 			}
+		}
 	}
 	e->tmp->blocks = 0;
 	return (0);
@@ -123,7 +137,7 @@ int	fillit_layer_check(t_tmp *tmp, t_list **list_ptr, t_tetri **tetri_ptr)
 ** interrupted if any issue is detected in this file, as defined in the project
 ** specifications.
 ** When a non-empty line is read, fillit_layer_check() is called.
-** If the line is empty, it sould mean that a tetrimino has been fully read. In
+** If the line is empty, it should mean that a tetrimino has been fully read. In
 ** this case the fillit_block_check function is called to verify that the '#'
 ** blocks are placed correctly, ensuring a valid tetrimino.
 ** The two last checks ensure that only 4-layers high tetriminos are accepted,
@@ -141,6 +155,7 @@ int	fillit_input_check(t_env *e)
 	tetri_ptr = (t_tetri*)(list_ptr->content);
 	while ((e->tmp->gnl_ret = get_next_line(e->tmp->fd, &e->tmp->line)) != 0)
 	{
+//		printf("gnl_ret = %d\n", e->tmp->gnl_ret);
 		if (e->tmp->gnl_ret == -1)
 			return (fillit_error("gnl fail"));
 		if (e->tmp->line[0])
@@ -157,6 +172,14 @@ int	fillit_input_check(t_env *e)
 			return (fillit_error("wrong tetri height"));
 		if (e->tmp->jump > 1)
 			return (fillit_error("more than one empty line"));
+	}
+//	printf("e->tmp->layers = %d\n", e->tmp->layers);
+	if (e->tmp->layers)
+	{
+		if (fillit_blocks_check(e, tetri_ptr) < 0)
+			return (-1);
+		else
+			e->tmp->jump = 0;
 	}
 	return (0);
 }
