@@ -79,9 +79,9 @@ void	fillit_print_colored(char *map)
 ** -------------------------- To be added to libft ----------------------------
 */
 
-int		fillit_error(char *str)
+int		fillit_error(char *str, int mode)
 {
-	if (!str)
+	if (!str || !mode)
 		ft_putstr_fd("error", 2);
 	else
 	{

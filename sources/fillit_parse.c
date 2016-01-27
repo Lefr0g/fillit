@@ -68,7 +68,8 @@ int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 	i = -1;
 	e->tmp->jump++;
 	if (e->tmp->blocks != 4 && e->tmp->jump == 1)
-		return (fillit_error("not enough / too many blocks in tetri"));
+		return (fillit_error("not enough / too many blocks in tetri",
+					DEBUG_MODE));
 	else
 	{
 		while (++i < 17)
@@ -79,14 +80,16 @@ int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 						|| (i + 1 < 17 && tetri_ptr->raw[i + 1] == '#')
 						|| (i - 4 > 0 && tetri_ptr->raw[i - 4] == '#')
 						|| (i + 4 < 17 && tetri_ptr->raw[i + 4] == '#')))
-					return (fillit_error("invalid block placement in tetri"));	
+					return (fillit_error("invalid block placement in tetri",
+								DEBUG_MODE));	
 				if (blockid > 0)
 				{
 					j = i - 1;
 					while (tetri_ptr->raw[j] != '#')
 						j--;
 					if (j < i - 4)
-						return (fillit_error("invalid block placement"));
+						return (fillit_error("invalid block placement",
+									DEBUG_MODE));
 				}
 				blockid++;
 			}
@@ -118,13 +121,13 @@ int	fillit_layer_check(t_tmp *tmp, t_list **list_ptr, t_tetri **tetri_ptr)
 	while (tmp->line[tmp->i])
 	{
 		if (tmp->line[tmp->i] != '.' && tmp->line[tmp->i] != '#')
-			return (fillit_error("forbidden character"));
+			return (fillit_error("forbidden character", DEBUG_MODE));
 		else if (tmp->line[tmp->i] == '#')
 			blocks++;
 		(tmp->i)++;
 	}
 	if (tmp->i != 4)
-		return (fillit_error("wrong line size"));
+		return (fillit_error("wrong line size", DEBUG_MODE));
 	(tmp->layers)++;
 	(tmp->blocks) += blocks;
 	if (ft_strlen((*tetri_ptr)->raw) <= 12)
@@ -153,12 +156,14 @@ int	fillit_input_check(t_env *e)
 
 	list_ptr = e->first;
 	tetri_ptr = (t_tetri*)(list_ptr->content);
-	printf("Pre-GNL check OK\n");
+	if (DEBUG_MODE)
+		printf("Pre-GNL check OK\n");
 	while ((e->tmp->gnl_ret = get_next_line(e->tmp->fd, &e->tmp->line)) != 0)
 	{
-		printf("gnl_ret = %d\n", e->tmp->gnl_ret);
+		if (DEBUG_MODE)
+			printf("gnl_ret = %d\n", e->tmp->gnl_ret);
 		if (e->tmp->gnl_ret == -1)
-			return (fillit_error("gnl fail"));
+			return (fillit_error("gnl fail", DEBUG_MODE));
 		if (e->tmp->line[0])
 		{
 			if ((fillit_layer_check(e->tmp, &list_ptr, &tetri_ptr)) < 0)
@@ -170,9 +175,9 @@ int	fillit_input_check(t_env *e)
 				return (-1);
 		}
 		if (e->tmp->jump && e->tmp->layers != 4)
-			return (fillit_error("wrong tetri height"));
+			return (fillit_error("wrong tetri height", DEBUG_MODE));
 		if (e->tmp->jump > 1)
-			return (fillit_error("more than one empty line"));
+			return (fillit_error("more than one empty line", DEBUG_MODE));
 	}
 //	printf("e->tmp->layers = %d\n", e->tmp->layers);
 	if (e->tmp->layers)
@@ -204,8 +209,9 @@ int	fillit_parse(t_env *e, char *filename)
 		return (-1);
 	e->tmp->fd = open(filename, O_RDONLY);
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
-		return (fillit_error("open() failed"));
-	printf("OPEN SUCCESS, fd = %d\n", e->tmp->fd);
+		return (fillit_error("open() failed", DEBUG_MODE));
+	if (DEBUG_MODE)
+		printf("OPEN SUCCESS, fd = %d\n", e->tmp->fd);
 	ret = fillit_input_check(e);
 //	if (ret == -1)
 //	{
@@ -215,7 +221,7 @@ int	fillit_parse(t_env *e, char *filename)
 //		return (ret);
 //	}
 	if (e->tmp->jump > 1)
-		return (fillit_error("empty line at the end of the file"));
+		return (fillit_error("empty line at the end of the file", DEBUG_MODE));
 	if (ret != -1)
 	{
 		fillit_load_xy(e);

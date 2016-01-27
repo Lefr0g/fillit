@@ -147,7 +147,8 @@ void	fillit_check_solution(t_env *e, int *siz_square)
 	if ((!e->smallest_size || *siz_square < e->smallest_size))
 	{
 		debug_inception_print(e);
-		printf("\033[31mCurrent square is the smallest! \033[0m(%d)\n",
+		if (DEBUG_MODE)
+			printf("\033[31mCurrent square is the smallest! \033[0m(%d)\n",
 				*siz_square);
 		e->smallest_size = *siz_square;
 		if (!e->result)

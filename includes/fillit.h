@@ -18,6 +18,8 @@
 
 # include <stdio.h>
 
+# define DEBUG_MODE 0
+
 typedef struct		s_tetri
 {
 	char			letter;
@@ -125,7 +127,7 @@ void	fillit_order_get_bottom_up(t_vars *v, t_tetri *ptr);
 */
 void	fillit_save_printable(t_env *e, char **map);
 void	fillit_print_colored(char *map);
-int		fillit_error(char *str);
+int		fillit_error(char *str, int mode);
 
 /*
 ** fillit_position.c
@@ -153,7 +155,7 @@ void	fillit_print_xy(t_tetri *ptr);
 void	fillit_print_single_tetri(t_tetri *ptr);
 
 /*
-** ft_stdin_check.c
+** ft_basicfilecheck.c
 */
 int		ft_basicfilecheck(char *filename, char trigger, int lenght);
 

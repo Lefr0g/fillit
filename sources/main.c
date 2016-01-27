@@ -25,7 +25,8 @@
 int		fillit_run(t_env *e)
 {
 	ft_putendl("Input map is valid, running rest of the program");
-	printf("There are %lu tetriminos\n", e->tcount);
+	if (DEBUG_MODE)
+		printf("There are %lu tetriminos\n", e->tcount);
 	e->inception = 0;
 	fillit_solve(e);
 	ft_putstr("Square size : ");
@@ -50,9 +51,10 @@ int		main(int ac, char **av)
 {
 	t_env	*e;
 
-	ft_putendl("============ Program Start ============");
+	if (DEBUG_MODE)
+		ft_putendl("============ Program Start ============");
 	if (fillit_init(&e))
-		return (fillit_error("init failed"));
+		return (fillit_error("init failed", DEBUG_MODE));
 	if (ac > 2 && av[1][0] == '-' && ft_strchr(av[1], 's'))
 		e->update = 1;
 	if (ac > 2 && av[1][0] == '-' && ft_strchr(av[1], 'c'))
@@ -62,12 +64,13 @@ int		main(int ac, char **av)
 		if (!fillit_parse(e, av[ac - 1]))
 			fillit_run(e);
 		else
-			fillit_error("parsing detected an error in the input");
+			fillit_error("parsing detected an error in the input", DEBUG_MODE);
 	}
 	else
-		fillit_error("main error exit");
+		fillit_error("main error exit", DEBUG_MODE);
 	fillit_free_all(e);
-	ft_putendl("\n============ End of program ===========");
+	if (DEBUG_MODE)
+		ft_putendl("\n============ End of program ===========");
 	return (0);
 }
 

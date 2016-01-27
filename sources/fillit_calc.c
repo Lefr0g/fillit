@@ -170,5 +170,5 @@ void	fillit_load_xy(t_env *e)
 		fillit_reset_quickvars(e);
 	}
 	if (e->letter == 'Z')
-		fillit_error("too many tetriminos, 25 max.");
+		fillit_error("too many tetriminos, 25 max.", DEBUG_MODE);
 }
