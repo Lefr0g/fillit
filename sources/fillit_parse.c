@@ -225,7 +225,8 @@ int	fillit_parse(t_env *e, char *filename)
 	if (ret != -1)
 	{
 		fillit_load_xy(e);
-		fillit_print_raw(e);
+		if (DEBUG_MODE)
+			fillit_print_raw(e);
 		close(e->tmp->fd);
 	}
 	return (ret);

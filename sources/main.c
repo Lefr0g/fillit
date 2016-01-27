@@ -24,14 +24,19 @@
 
 int		fillit_run(t_env *e)
 {
-	ft_putendl("Input map is valid, running rest of the program");
 	if (DEBUG_MODE)
+	{
+		ft_putendl("Input map is valid, running rest of the program");
 		printf("There are %lu tetriminos\n", e->tcount);
+	}
 	e->inception = 0;
 	fillit_solve(e);
-	ft_putstr("Square size : ");
-	ft_putnbr(e->smallest_size);
-	ft_putchar('\n');
+	if (DEBUG_MODE)
+	{
+		ft_putstr("Square size : ");
+		ft_putnbr(e->smallest_size);
+		ft_putchar('\n');
+	}
 	if (e->color)
 		fillit_print_colored(e->result);
 	else

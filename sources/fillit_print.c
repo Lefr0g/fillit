@@ -82,12 +82,17 @@ void	fillit_print_colored(char *map)
 int		fillit_error(char *str, int mode)
 {
 	if (!str || !mode)
-		ft_putstr_fd("error", 2);
+	{
+		ft_putstr("error");
+		ft_putstr("\n");
+	}
 	else
 	{
 		ft_putstr_fd("error : ", 2);
 		ft_putstr_fd(str, 2);
+		ft_putstr_fd("\n", 2);
 	}
-	ft_putstr_fd("\n", 2);
+	if (!DEBUG_MODE)
+		exit(0);
 	return (-1);
 }
