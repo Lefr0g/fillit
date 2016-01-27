@@ -200,6 +200,8 @@ int	fillit_parse(t_env *e, char *filename)
 {
 	int	ret;
 
+	if (ft_basicfilecheck(filename, '\n', 5) != 1)
+		return (-1);
 	e->tmp->fd = open(filename, O_RDONLY);
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
 		return (fillit_error("open() failed"));

@@ -1,7 +1,6 @@
 
 
-#include "libft.h"
-#include <fcntl.h>
+#include "fillit.h"
 
 /*
 ** This function is designed as a fuse prior to a gnl() call in a parsing
@@ -12,7 +11,7 @@
 ** for example.
 */
 
-int	ft_stdin_check(char *filename, char trigger, int lenght)
+int	ft_basicfilecheck(char *filename, char trigger, int lenght)
 {
 	int		i;
 	int		fd;
@@ -29,14 +28,12 @@ int	ft_stdin_check(char *filename, char trigger, int lenght)
 	else
 	{
 		ret = 0;
-		i = 0;
-		while (buf[i])
-		{
+		i = -1;
+		while (buf[++i])
 			if (buf[i] == trigger)
 				ret++;
-			i++;
-		}
 	}
+	ft_strdel(&buf);
 	if (close(fd) == -1)
 		return (-4);
 	return (ret);

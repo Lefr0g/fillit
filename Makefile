@@ -17,7 +17,7 @@ CC = clang
 FLAGS = -Wall -Werror -Wextra -g
 
 SRCS = main.c fillit_parse.c fillit_print.c fillit_calc.c fillit_position.c \
-	   fillit_structs.c fillit_solve.c fillit_debug.c
+	   fillit_structs.c fillit_solve.c fillit_debug.c ft_basicfilecheck.c
 
 SRCSDIR = sources/
 

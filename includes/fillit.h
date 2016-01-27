@@ -152,4 +152,9 @@ void	fillit_print_raw(t_env *e);
 void	fillit_print_xy(t_tetri *ptr);
 void	fillit_print_single_tetri(t_tetri *ptr);
 
+/*
+** ft_stdin_check.c
+*/
+int		ft_basicfilecheck(char *filename, char trigger, int lenght);
+
 #endif
