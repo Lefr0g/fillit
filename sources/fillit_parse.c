@@ -174,12 +174,13 @@ int	fillit_input_check(t_env *e)
 			if (fillit_blocks_check(e, tetri_ptr) < 0)
 				return (-1);
 		}
-		if (e->tmp->jump && e->tmp->layers != 4)
+		if ((e->tmp->jump && e->tmp->layers != 4)
+				|| (!e->tmp->jump && e->tmp->layers > 4))
 			return (fillit_error("wrong tetri height", DEBUG_MODE));
 		if (e->tmp->jump > 1)
 			return (fillit_error("more than one empty line", DEBUG_MODE));
 	}
-//	printf("e->tmp->layers = %d\n", e->tmp->layers);
+//	printf("layers = %d, jump = %d\n", e->tmp->layers, e->tmp->jump);
 	if (e->tmp->layers)
 	{
 		if (fillit_blocks_check(e, tetri_ptr) < 0)
