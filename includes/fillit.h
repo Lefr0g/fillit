@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 15:01:46 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/28 15:12:18 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # include <stdio.h>
 
-# define DEBUG_MODE 0
+# define DEBUG_MODE 1
 
 typedef struct		s_tetri
 {

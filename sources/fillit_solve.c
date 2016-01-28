@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 14:46:54 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/28 14:41:43 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	fillit_move_around(t_env *e, t_vars *t)
 			fillit_move_and_try(e, t->tet_mov, t->xref + 1, t->yref);
 			fillit_move_and_try(e, t->tet_mov, t->xref, t->yref + 1);
 			fillit_move_and_try(e, t->tet_mov, t->xref - 1, t->yref);
-			if (!t->tet_mov->firstmove)
+//			if (!t->tet_mov->firstmove)
 				fillit_move_and_try(e, t->tet_mov, t->xref, t->yref - 1);
 			t->tet_mov->firstmove = 0;
 		}
@@ -106,7 +106,13 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 {
 	int		j;
 	int		siz_square;
+//
+	char	*map;
 
+	if (!e->smallest_size)
+		e->smallest_size = 10;
+	map = ft_strnew(e->smallest_size * (e->smallest_size + 1) + 1);
+//
 	siz_square = 0;
 	j = 0;
 	while (j < 4 && (!e->smallest_size ||
@@ -116,7 +122,11 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 	{
 		moving->x_offset = x - moving->x[j];
 		moving->y_offset = y - moving->y[j];
-//		ft_putendl(fillit_save_printable(e));
+//		moving->x_offset = x - moving->x[moving->order[3 - j]];
+//		moving->y_offset = y - moving->y[moving->order[3 - j]];
+
+//		fillit_print_raw(e);
+
 		if (!(fillit_check_collision(e, moving)))
 		{
 			moving->fixed = 1;
@@ -124,7 +134,17 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y)
 //			debug_inception_print(e);
 //			printf("Tetri %c locked. %lu on %lu are locked\n", moving->letter, e->tlocked, e->tcount);
 			if (e->tlocked == e->tcount)
+			{
+//
+//				if (DEBUG_MODE)
+//				{
+//					fillit_print_raw(e);
+//					fillit_save_printable(e, &map);
+//					ft_putendl(map); ft_putchar('\n');
+//				}
+//
 				fillit_check_solution(e, &siz_square);
+			}
 			else
 				fillit_solve(e);
 			moving->fixed = 0;

@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/26 12:25:52 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/28 15:16:59 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	fillit_order_get_bottom_up(t_vars *v, t_tetri *tet)
 	{
 		v->xmax = INT_MIN;
 		v->i = -1;
-		while ((v->i)++ < 4)
+		while (++(v->i) < 4)
 			if (tet->y[v->i] == v->height && tet->x[v->i] > v->xmax)
 				v->xmax = tet->x[v->i];
 		v->i = -1;
-		while ((v->i)++ < 4)
+		while (++(v->i) < 4)
 			if (tet->y[v->i] == v->height && tet->x[v->i]
 					== v->xmax - 1)
 			{
@@ -59,7 +59,7 @@ void	fillit_order_get(t_tetri *tet)
 	{
 		v.i = -1;
 		v.xmax = INT_MIN;
-		while ((v.i)++ < 4)
+		while (++(v.i) < 4)
 			if (tet->y[v.i] == v.height && tet->x[v.i] > v.xmax)
 			{
 				v.xmax = tet->x[v.i];
