@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 15:29:05 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 15:01:06 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/28 16:37:46 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		fillit_init(t_env **e)
 	tet_ptr.letter = '\0';
 	tet_ptr.x_offset = 0;
 	tet_ptr.y_offset = 0;
-	tet_ptr.fixed = 1;
+	tet_ptr.fixed = 0;
 	ft_bzero(tet_ptr.raw, 17);
 	if (!(*e = (t_env*)malloc(sizeof(t_env))))
 		return (-1);

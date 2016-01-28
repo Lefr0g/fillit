@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 15:01:35 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/28 16:48:47 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int		fillit_run(t_env *e)
 {
 	if (DEBUG_MODE)
 	{
-		ft_putendl("Input map is valid, running rest of the program");
-		printf("There are %lu tetriminos\n", e->tcount);
+		ft_putendl("\033[32mInput map is valid, running rest of the program");
+		printf("There are %lu tetriminos\033[0m\n", e->tcount);
 	}
 	e->inception = 0;
 	fillit_solve(e);
