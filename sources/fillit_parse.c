@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 17:37:35 by amulin           ###   ########.fr       */
+/*   Updated: 2016/01/28 18:07:58 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 }
 
 /*
+	(*tetri_ptr)->firstmove = 1;
 ** This function simply checks that the current 1/4 of tetrimino only contains
 ** allowed characters, and that the length is correct.
 ** At the begining the 'jump' and 'layers' variables are reset in case we are
@@ -156,6 +157,9 @@ int	fillit_input_check(t_env *e)
 
 	list_ptr = e->first;
 	tetri_ptr = (t_tetri*)(list_ptr->content);
+//	fillit_new_tetri(&e->first, &tetri_ptr);
+	tetri_ptr->firstmove = 1;
+
 	if (DEBUG_MODE)
 		printf("Pre-GNL check OK\n");
 	while ((e->tmp->gnl_ret = get_next_line(e->tmp->fd, &e->tmp->line)) != 0)
