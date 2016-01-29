@@ -56,14 +56,17 @@ void	fillit_get_fixed_range(t_env *e, t_vars *v)
 	while (v->lst_ptr)
 	{
 		v->tet_ptr = v->lst_ptr->content;
-		if ((t = ft_tabmax(v->tet_ptr->x, 4) + v->tet_ptr->x_offset) > v->xmax)
-			v->xmax = t;
-		if ((t = ft_tabmax(v->tet_ptr->y, 4) + v->tet_ptr->y_offset) > v->ymax)
-			v->ymax = t;
-		if ((t = ft_tabmin(v->tet_ptr->x, 4) + v->tet_ptr->x_offset) < v->xmin)
-			v->xmin = t;
-		if ((t = ft_tabmin(v->tet_ptr->y, 4) + v->tet_ptr->y_offset) < v->ymin)
-			v->ymin = t;
+		if (v->tet_ptr->fixed)
+		{
+			if ((t = ft_tabmax(v->tet_ptr->x, 4) + v->tet_ptr->x_offset) > v->xmax)
+				v->xmax = t;
+			if ((t = ft_tabmax(v->tet_ptr->y, 4) + v->tet_ptr->y_offset) > v->ymax)
+				v->ymax = t;
+			if ((t = ft_tabmin(v->tet_ptr->x, 4) + v->tet_ptr->x_offset) < v->xmin)
+				v->xmin = t;
+			if ((t = ft_tabmin(v->tet_ptr->y, 4) + v->tet_ptr->y_offset) < v->ymin)
+				v->ymin = t;
+		}
 		v->lst_ptr = v->lst_ptr->next;
 	}
 
@@ -78,27 +81,60 @@ void	fillit_get_fixed_range(t_env *e, t_vars *v)
 
 void	fillit_move_along_right(t_env *e, t_vars *v, t_tetri *moving)
 {
-	moving->y_offset += 1;
+	printf("fillit_move_along_right START\n");
+	if (!v->move_engaged)
+	{
+		moving->x_offset = v->xmax;
+		moving->y_offset = v->ymin;
+		printf("moving->x_offset = %d, moving->y_offset = %d\n",
+				moving->x_offset, moving->y_offset);
+		v->move_engaged = 1;
+	}
+	else
+		moving->y_offset += 1;
+	printf("fillit_move_along_right MIDDLE\n");
 	if (ft_tabmin(moving->y, 4) + moving->y_offset > v->ymax)
+	{
 		v->side++;
+		v->move_engaged = 0;
+	}
 	else
 	{
+		printf("fillit_move_along_right pre-adjustment loop\n");
 		while (fillit_check_collision(e, moving)
 				|| !fillit_check_contact(e, moving))
 		{
+			printf("fillit_move_along_right adjustment loop\n");
+			printf("Collision = %d, contact = %d\n",
+					fillit_check_collision(e, moving),
+					fillit_check_contact(e, moving));
+			printf("moving->x_offset = %d, moving->y_offset = %d\n",
+					moving->x_offset, moving->y_offset);
 			if (fillit_check_collision(e, moving))
 				moving->x_offset += 1;
 			else if (!fillit_check_contact(e, moving))
 				moving->x_offset -= 1;
+			sleep(1);
 		}
 	}
+//	printf("fillit_move_along_right END\n");
 }
 
 void	fillit_move_along_bottom(t_env *e, t_vars *v, t_tetri *moving)
 {
-	moving->x_offset += 1;
+	if (!v->move_engaged)
+	{
+		moving->x_offset = v->xmin;
+		moving->y_offset = v->ymax;
+		v->move_engaged = 1;
+	}
+	else
+		moving->x_offset += 1;
 	if (ft_tabmin(moving->x, 4) + moving->x_offset > v->xmax)
+	{
 		v->side++;
+		v->move_engaged = 0;
+	}
 	else
 	{
 		while (fillit_check_collision(e, moving)
@@ -114,9 +150,19 @@ void	fillit_move_along_bottom(t_env *e, t_vars *v, t_tetri *moving)
 
 void	fillit_move_along_left(t_env *e, t_vars *v, t_tetri *moving)
 {
-	moving->y_offset += 1;
+	if (!v->move_engaged)
+	{
+		moving->x_offset = v->xmin;
+		moving->y_offset = v->ymin;
+		v->move_engaged = 1;
+	}
+	else
+		moving->y_offset += 1;
 	if (ft_tabmin(moving->y, 4) + moving->y_offset > v->ymax)
+	{
 		v->side++;
+		v->move_engaged = 0;
+	}
 	else
 	{
 		while (fillit_check_collision(e, moving)
@@ -132,9 +178,19 @@ void	fillit_move_along_left(t_env *e, t_vars *v, t_tetri *moving)
 
 void	fillit_move_along_top(t_env *e, t_vars *v, t_tetri *moving)
 {
-	moving->x_offset += 1;
+	if (!v->move_engaged)
+	{
+		moving->x_offset = v->xmin;
+		moving->y_offset = v->ymin;
+		v->move_engaged = 1;
+	}
+	else
+		moving->x_offset += 1;
 	if (ft_tabmin(moving->x, 4) + moving->x_offset > v->xmax)
+	{
 		v->side++;
+		v->move_engaged = 0;
+	}
 	else
 	{
 		while (fillit_check_collision(e, moving)
@@ -182,6 +238,7 @@ HINTS : utilisation de pointeurs sur fonction.
 
 void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 {
+	ft_putstr("Entering set_position\n");
 	if (v->side == 0)
 		fillit_move_along_right(e, v, moving);
 	else if (v->side == 1)
@@ -190,6 +247,7 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 		fillit_move_along_left(e, v, moving);
 	else if (v->side == 3)
 		fillit_move_along_top(e, v, moving);
+	ft_putstr("Leaving set_position\n");
 }
 
 /*
@@ -210,8 +268,9 @@ void	fillit_solve(t_env *e)
 	v.lst_ptr = e->first;
 	if (e->tlocked == e->tcount)
 	{
-		fillit_save_printable(e, &e->result);
+//		fillit_save_printable(e, &e->result);
 		e->smallest_size = fillit_square_size(e);
+		printf("Smallest square is %d\n", e->smallest_size);
 	}
 	else
 	{
@@ -225,7 +284,9 @@ void	fillit_solve(t_env *e)
 				printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
 				while (v.side < 4)
 				{
+					printf("Check, side = %d\n", v.side);
 					fillit_set_position(e, &v, v.tet_ptr);
+					ft_putstr("set_position OK\n");
 					v.tet_ptr->fixed = 1;
 					e->tlocked++;
 					fillit_solve(e);

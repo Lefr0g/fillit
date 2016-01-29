@@ -53,6 +53,7 @@ typedef struct		s_vars
 	int				i;
 	int				isaved;
 	int				side;
+	int				move_engaged;
 	int				xmax;
 	int				xmin;
 	int				xref;

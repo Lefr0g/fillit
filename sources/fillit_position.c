@@ -67,8 +67,8 @@ int     fillit_check_contact(t_env *e, t_tetri *moving)
 				return (1);
 			e->i++;
 		}
-		lst_ptr = lst_ptr->next;
-		fixed = lst_ptr->content;
+		if ((lst_ptr = lst_ptr->next))
+			fixed = lst_ptr->content;
 	}
 	return (0);
 }
