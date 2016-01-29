@@ -24,13 +24,25 @@
 
 int		fillit_run(t_env *e)
 {
+	t_vars	v;
+
+	fillit_init_vars(&v);
+	v.lst_ptr = e->first;
+
 	if (DEBUG_MODE)
 	{
 		ft_putendl("\033[32mInput map is valid, running rest of the program");
 		printf("There are %lu tetriminos\033[0m\n", e->tcount);
 	}
 	e->inception = 0;
-	fillit_solve(e);
+	while (v.lst_ptr)
+	{
+		v.tet_ptr = (v.lst_ptr)->content;
+		v.tet_ptr->fixed = 1;
+		fillit_solve(e);
+		v.tet_ptr->fixed = 0;
+		v.lst_ptr = v.lst_ptr->next;
+	}
 	if (DEBUG_MODE)
 	{
 		ft_putstr("Square size : ");

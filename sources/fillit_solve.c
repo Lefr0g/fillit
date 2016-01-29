@@ -114,7 +114,7 @@ void	fillit_move_along_right(t_env *e, t_vars *v, t_tetri *moving)
 				moving->x_offset += 1;
 			else if (!fillit_check_contact(e, moving))
 				moving->x_offset -= 1;
-			sleep(1);
+			usleep(100000);
 		}
 	}
 //	printf("fillit_move_along_right END\n");
@@ -277,6 +277,8 @@ void	fillit_solve(t_env *e)
 		while (v.lst_ptr)
 		{
 			v.tet_ptr = (v.lst_ptr)->content;
+			fillit_print_xy(v.tet_ptr);
+			printf("Tetri %c fixed = %d\n", v.tet_ptr->letter, v.tet_ptr->fixed);
 			if (!v.tet_ptr->fixed)
 			{
 				fillit_get_fixed_range(e, &v);
