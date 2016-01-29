@@ -152,8 +152,8 @@ void	fillit_load_xy(t_env *e)
 	t_list	*l_ptr;
 
 	e->letter = 'A';
-	e->tcount = 0;
-	e->tlocked = 1;
+	e->tcount = 1;
+	e->tlocked = 0;
 	fillit_reset_quickvars(e);
 	l_ptr = e->first;
 	t_ptr = (t_tetri*)l_ptr->content;

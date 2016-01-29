@@ -29,7 +29,7 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 		fillit_reset_quickvars(e);
 		while (fixed->fixed && e->i < 4)
 		{
-			e->j = 0;
+//			e->j = 0;
 			if (fillit_xy_collision(fixed->x[e->i] + fixed->x_offset,
 						fixed->y[e->i] + fixed->y_offset, moving))
 				return (1);

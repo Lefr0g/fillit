@@ -39,8 +39,10 @@ int		fillit_run(t_env *e)
 	{
 		v.tet_ptr = (v.lst_ptr)->content;
 		v.tet_ptr->fixed = 1;
+		e->tlocked++;
 		fillit_solve(e);
 		v.tet_ptr->fixed = 0;
+		e->tlocked--;
 		v.lst_ptr = v.lst_ptr->next;
 	}
 	if (DEBUG_MODE)

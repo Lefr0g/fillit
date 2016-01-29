@@ -36,6 +36,7 @@ int		fillit_init(t_env **e)
 	(*e)->update = 0;
 	(*e)->color = 0;
 	(*e)->smallest_size = 0;
+	(*e)->result = NULL;
 	ft_bzero((*e)->set, 25);
 	if (!((*e)->first = ft_lstnew(&tet_ptr, sizeof(t_tetri))))
 		return (-1);
