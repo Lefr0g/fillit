@@ -69,6 +69,7 @@ void	fillit_init_vars(t_vars *v)
 	v->isaved = -1;
 	v->height = -1;
 	v->pos = 0;
+	v->side = 0;
 	v->xmax = INT_MIN;
 	v->xmin = INT_MAX;
 	v->ymax = INT_MIN;

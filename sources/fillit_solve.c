@@ -44,6 +44,111 @@ void	debug_print_t_tetri(t_env *e, t_tetri *t)
 }
 
 /*
+** This function gets the values of the most extremes coordinates of the fixed
+** tetriminos assembly.
+*/
+
+void	fillit_get_fixed_range(t_env *e, t_vars *v)
+{
+	int	t;
+
+	v->lst_ptr = e->first;
+	while (v->lst_ptr)
+	{
+		v->tet_ptr = v->lst_ptr->content;
+		if ((t = ft_tabmax(v->tet_ptr->x, 4) + v->tet_ptr->x_offset) > v->xmax)
+			v->xmax = t;
+		if ((t = ft_tabmax(v->tet_ptr->y, 4) + v->tet_ptr->y_offset) > v->ymax)
+			v->ymax = t;
+		if ((t = ft_tabmin(v->tet_ptr->x, 4) + v->tet_ptr->x_offset) < v->xmin)
+			v->xmin = t;
+		if ((t = ft_tabmin(v->tet_ptr->y, 4) + v->tet_ptr->y_offset) < v->ymin)
+			v->ymin = t;
+		v->lst_ptr = v->lst_ptr->next;
+	}
+
+}
+
+/*
+** This functions moves the free tetrimino down along the right side of the
+** fixed tetris assembly.
+** It ensures that the moving tetri is in contact but not colliding with
+** any blocks of the fixed tetri assembly.
+*/
+
+void	fillit_move_along_right(t_env *e, t_vars *v, t_tetri *moving)
+{
+	moving->y_offset += 1;
+	if (ft_tabmin(moving->y, 4) + moving->y_offset > v->ymax)
+		v->side++;
+	else
+	{
+		while (fillit_check_collision(e, moving)
+				|| !fillit_check_contact(e, moving))
+		{
+			if (fillit_check_collision(e, moving))
+				moving->x_offset += 1;
+			else if (!fillit_check_contact(e, moving))
+				moving->x_offset -= 1;
+		}
+	}
+}
+
+void	fillit_move_along_bottom(t_env *e, t_vars *v, t_tetri *moving)
+{
+	moving->x_offset += 1;
+	if (ft_tabmin(moving->x, 4) + moving->x_offset > v->xmax)
+		v->side++;
+	else
+	{
+		while (fillit_check_collision(e, moving)
+				|| !fillit_check_contact(e, moving))
+		{
+			if (fillit_check_collision(e, moving))
+				moving->y_offset += 1;
+			else if (!fillit_check_contact(e, moving))
+				moving->y_offset -= 1;
+		}
+	}
+}
+
+void	fillit_move_along_left(t_env *e, t_vars *v, t_tetri *moving)
+{
+	moving->y_offset += 1;
+	if (ft_tabmin(moving->y, 4) + moving->y_offset > v->ymax)
+		v->side++;
+	else
+	{
+		while (fillit_check_collision(e, moving)
+				|| !fillit_check_contact(e, moving))
+		{
+			if (fillit_check_collision(e, moving))
+				moving->x_offset -= 1;
+			else if (!fillit_check_contact(e, moving))
+				moving->x_offset += 1;
+		}
+	}
+}
+
+void	fillit_move_along_top(t_env *e, t_vars *v, t_tetri *moving)
+{
+	moving->x_offset += 1;
+	if (ft_tabmin(moving->x, 4) + moving->x_offset > v->xmax)
+		v->side++;
+	else
+	{
+		while (fillit_check_collision(e, moving)
+				|| !fillit_check_contact(e, moving))
+		{
+			if (fillit_check_collision(e, moving))
+				moving->y_offset -= 1;
+			else if (!fillit_check_contact(e, moving))
+				moving->y_offset += 1;
+		}
+	}
+}
+
+/*
 ** This function displaces the moving tetri in a particular order around the
 ** group of fixed tetris.
 ** Each call to this function must move the tetri to the next position, until
@@ -75,6 +180,18 @@ HINTS : utilisation de pointeurs sur fonction.
 }
 */
 
+void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
+{
+	if (v->side == 0)
+		fillit_move_along_right(e, v, moving);
+	else if (v->side == 1)
+		fillit_move_along_bottom(e, v, moving);
+	else if (v->side == 2)
+		fillit_move_along_left(e, v, moving);
+	else if (v->side == 3)
+		fillit_move_along_top(e, v, moving);
+}
+
 /*
 ** 0/ Se mettre en debut de liste
 **   1/ Positionner le tetri
@@ -92,8 +209,10 @@ void	fillit_solve(t_env *e)
 	fillit_init_vars(&v);
 	v.lst_ptr = e->first;
 	if (e->tlocked == e->tcount)
-		ft_putstr("\033[31mSNAP!\033[0m\n");
-		// take snapshot
+	{
+		fillit_save_printable(e, &e->result);
+		e->smallest_size = fillit_square_size(e);
+	}
 	else
 	{
 		while (v.lst_ptr)
@@ -101,16 +220,21 @@ void	fillit_solve(t_env *e)
 			v.tet_ptr = (v.lst_ptr)->content;
 			if (!v.tet_ptr->fixed)
 			{
-//				fillit_set_position(e, v.tet_ptr);
-				v.tet_ptr->fixed = 1;
-				e->tlocked++;
-				fillit_solve(e);
+				fillit_get_fixed_range(e, &v);
+				printf("xmin = %d, xmax = %d\n", v.xmin, v.xmax);
+				printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
+				while (v.side < 4)
+				{
+					fillit_set_position(e, &v, v.tet_ptr);
+					v.tet_ptr->fixed = 1;
+					e->tlocked++;
+					fillit_solve(e);
 
-				// 			do stuff
-				debug_print_t_tetri(e, v.tet_ptr);
+					debug_print_t_tetri(e, v.tet_ptr);
+					v.tet_ptr->fixed = 0;
+					e->tlocked--;
+				}
 
-				v.tet_ptr->fixed = 0;
-				e->tlocked--;
 			}
 			v.lst_ptr = v.lst_ptr->next;
 		}

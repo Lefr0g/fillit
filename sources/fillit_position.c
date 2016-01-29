@@ -42,6 +42,38 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 }
 
 /*
+** This function checks if the currently moving tetri is in contact with any
+** tetri which position has been set. In case of contact, 1 is returned.
+*/
+
+int     fillit_check_contact(t_env *e, t_tetri *moving)
+{
+	t_list  *lst_ptr;
+	t_tetri *fixed;
+
+	lst_ptr = e->first;
+	fixed = lst_ptr->content;
+	while (lst_ptr)
+	{
+		fillit_reset_quickvars(e);
+		while (fixed->fixed && e->i < 4)
+		{
+			e->x = fixed->x[e->i] + fixed->x_offset;
+			e->y = fixed->y[e->i] + fixed->y_offset;
+			if (fillit_xy_collision(e->x + 1, e->y, moving) ||
+					fillit_xy_collision(e->x - 1, e->y, moving) ||
+					fillit_xy_collision(e->x, e->y + 1, moving) ||
+					fillit_xy_collision(e->x, e->y - 1, moving))
+				return (1);
+			e->i++;
+		}
+		lst_ptr = lst_ptr->next;
+		fixed = lst_ptr->content;
+	}
+	return (0);
+}
+
+/*
 ** Sub-function for fillit_square_size(), cut for norme reasons.
 ** It changes the values of the most extreme blocks in the square if a block
 ** is found beyond these limits.

@@ -52,6 +52,7 @@ typedef struct		s_vars
 	int				pos;
 	int				i;
 	int				isaved;
+	int				side;
 	int				xmax;
 	int				xmin;
 	int				xref;
@@ -133,6 +134,7 @@ int		fillit_error(char *str, int mode);
 ** fillit_position.c
 */
 int		fillit_check_collision(t_env *e, t_tetri *moving);
+int		fillit_check_contact(t_env *e, t_tetri *moving);
 int		fillit_square_size(t_env *e);
 void	fillit_square_get_range(t_vars *v);
 int		fillit_xy_collision(int x, int y, t_tetri *ptr);
