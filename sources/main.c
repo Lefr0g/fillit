@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/28 16:48:47 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 13:36:01 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		fillit_run(t_env *e)
 		ft_putnbr(e->smallest_size);
 		ft_putchar('\n');
 	}
+	ft_putchar('\n');
 	if (e->color)
 		fillit_print_colored(e->result);
 	else

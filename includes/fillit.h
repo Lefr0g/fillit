@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/28 17:29:59 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 13:06:26 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void	debug_inception_print(t_env *e);
 void	fillit_print_raw(t_env *e);
 void	fillit_print_xy(t_tetri *ptr);
 void	fillit_print_single_tetri(t_tetri *ptr);
+void	fillit_print_all_tetri_status(t_env *e);
 
 /*
 ** ft_basicfilecheck.c

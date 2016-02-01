@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/28 18:49:11 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 13:35:15 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	fillit_move_along_right(t_env *e, t_vars *v, t_tetri *moving)
 				moving->x_offset += 1;
 			else if (!fillit_check_contact(e, moving))
 				moving->x_offset -= 1;
-			usleep(100000);
+//			usleep(100000);
 		}
 	}
 //	printf("Tetri %c : moving->x_offset = %d, moving->y_offset = %d\n",
@@ -267,57 +267,68 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 void	fillit_solve(t_env *e)
 {
 	t_vars	v;
+	int		sq_siz;
 
 	e->inception++;
 	fillit_init_vars(&v);
 	v.lst_ptr = e->first;
-	if (e->tlocked == e->tcount)
+//	debug_inception_print(e);
+//	printf("%lu of %lu tetris are locked\n", e->tlocked, e->tcount);
+	sq_siz = fillit_square_size(e);
+	if (!e->smallest_size || sq_siz < e->smallest_size)
 	{
-		e->smallest_size = fillit_square_size(e);
-//		printf("Smallest square is %d\n", e->smallest_size);
-		if (!e->result)
+		if (e->tlocked == e->tcount)
 		{
-			e->result = (char *)ft_memalloc(e->smallest_size *
-					(e->smallest_size + 1) + 1);
-//			printf("e->result @ %p contains %d bytes\n", e->result,
-//					e->smallest_size * (e->smallest_size + 1) + 1);
-		}
-		fillit_save_printable(e, &e->result);
-	}
-	else
-	{
-		while (v.lst_ptr)
-		{
-//			printf("List element address is %p\n", v.lst_ptr);
-			v.tet_ptr = (v.lst_ptr)->content;
-//			printf("\t\t    Tetri %c fixed = %d\n",
-//					v.tet_ptr->letter, v.tet_ptr->fixed);
-//			fillit_print_xy(v.tet_ptr);
-			if (!v.tet_ptr->fixed)
+
+			e->smallest_size = sq_siz;
+			printf("\t\t\033[32mThis is the smallest so far (%d)\033[0m\n", e->smallest_size);
+			//			printf("Smallest square is %d\n", e->smallest_size);
+			if (!e->result)
 			{
-				fillit_get_fixed_range(e, &v);
-				printf("xmin = %d, xmax = %d\n", v.xmin, v.xmax);
-				printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
-				while (v.side < 4)
-				{
-					printf("v.side = %d\n", v.side);
-//					printf("Check, side = %d\n", v.side);
-					fillit_set_position(e, &v, v.tet_ptr);
-//					ft_putstr("set_position OK\n");
-					v.tet_ptr->fixed = 1;
-					e->tlocked++;
-					fillit_solve(e);
-
-//					debug_print_t_tetri(e, v.tet_ptr);
-					v.tet_ptr->fixed = 0;
-					e->tlocked--;
-				}
-
+				e->result = (char *)ft_memalloc(e->smallest_size *
+						(e->smallest_size + 1) + 1);
+				//				printf("e->result @ %p contains %d bytes\n", e->result,
+				//						e->smallest_size * (e->smallest_size + 1) + 1);
 			}
-//			printf("List element address is %p\n", v.lst_ptr);
-//			ft_print_memory(v.lst_ptr, sizeof(t_list));
-//			ft_putendl("\n\t\t\t-----------------\n");
-			v.lst_ptr = v.lst_ptr->next;
+			fillit_save_printable(e, &e->result);
+			ft_putendl(e->result);
+		}
+		else
+		{
+			while (v.lst_ptr)
+			{
+				//			printf("List element address is %p\n", v.lst_ptr);
+				v.tet_ptr = (v.lst_ptr)->content;
+				//			printf("\t\t    Tetri %c fixed = %d\n",
+				//					v.tet_ptr->letter, v.tet_ptr->fixed);
+				//			fillit_print_xy(v.tet_ptr);
+				if (!v.tet_ptr->fixed)
+				{
+					fillit_get_fixed_range(e, &v);
+//					printf("xmin = %d, xmax = %d\n", v.xmin, v.xmax);
+//					printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
+//					fillit_print_all_tetri_status(e);
+					while (v.side < 4)
+					{
+//						printf("v.side = %d\n", v.side);
+						//					printf("Check, side = %d\n", v.side);
+						fillit_set_position(e, &v, v.tet_ptr);
+						//					ft_putstr("set_position OK\n");
+						v.tet_ptr->fixed = 1;
+						e->tlocked++;
+						fillit_solve(e);
+
+						//					debug_print_t_tetri(e, v.tet_ptr);
+						v.tet_ptr->fixed = 0;
+						e->tlocked--;
+					}
+
+				}
+				//			printf("List element address is %p\n", v.lst_ptr);
+				//			ft_print_memory(v.lst_ptr, sizeof(t_list));
+				//			ft_putendl("\n\t\t\t-----------------\n");
+				v.lst_ptr = v.lst_ptr->next;
+			}
 		}
 	}
 	e->inception--;

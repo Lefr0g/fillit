@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/01/28 15:16:59 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 13:13:44 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void	fillit_load_xy(t_env *e)
 	t_list	*l_ptr;
 
 	e->letter = 'A';
-	e->tcount = 1;
+	e->tcount = 0;
 	e->tlocked = 0;
 	fillit_reset_quickvars(e);
 	l_ptr = e->first;
