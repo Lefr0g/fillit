@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/28 18:07:58 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 13:43:24 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,8 @@ int	fillit_input_check(t_env *e)
 		printf("Pre-GNL check OK\n");
 	while ((e->tmp->gnl_ret = get_next_line(e->tmp->fd, &e->tmp->line)) != 0)
 	{
-		if (DEBUG_MODE)
-			printf("gnl_ret = %d\n", e->tmp->gnl_ret);
+//		if (DEBUG_MODE)
+//			printf("gnl_ret = %d\n", e->tmp->gnl_ret);
 		if (e->tmp->gnl_ret == -1)
 			return (fillit_error("gnl fail", DEBUG_MODE));
 		if (e->tmp->line[0])

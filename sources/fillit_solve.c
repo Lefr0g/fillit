@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 13:35:15 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 13:57:10 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,8 @@ HINTS : utilisation de pointeurs sur fonction.
 
 void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 {
-//	ft_putstr("Entering set_position\n");
+//	if (moving->letter < currently_fixed->letter)
+//	{
 	if (v->side == 0)
 		fillit_move_along_right(e, v, moving);
 	else if (v->side == 1)
@@ -252,7 +253,16 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 		fillit_move_along_left(e, v, moving);
 	else if (v->side == 3)
 		fillit_move_along_top(e, v, moving);
-//	ft_putstr("Leaving set_position\n");
+//	}
+
+//	else
+//	{
+//		inverser l'ordre de placement du moving
+//		-
+//		-
+//		-
+//		-
+//	}
 }
 
 /*
