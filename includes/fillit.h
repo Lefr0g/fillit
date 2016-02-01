@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 15:27:33 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 16:37:03 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void	fillit_order_get_bottom_up(t_vars *v, t_tetri *ptr);
 void	fillit_save_printable(t_env *e, char **map);
 void	fillit_print_colored(char *map);
 int		fillit_error(char *str, int mode);
+char	*fillit_get_output_map(t_env *e);
 
 /*
 ** fillit_position.c
@@ -150,6 +151,8 @@ void	fillit_solve(t_env *e);
 void	fillit_move_around(t_env *e, t_vars *t);
 void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
 void	fillit_check_solution(t_env *e, int *siz_square);
+
+void	fillit_get_fixed_range(t_env *e, t_vars *v);
 
 /*
 ** fillit_debug.c

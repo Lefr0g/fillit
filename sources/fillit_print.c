@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 14:59:59 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 16:56:33 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,45 @@ int		fillit_error(char *str, int mode)
 	if (!DEBUG_MODE)
 		exit(0);
 	return (-1);
+}
+
+char	*fillit_get_output_map(t_env *e)
+{
+	t_vars	v;
+	int		i;
+	int		side;
+	char	*out;
+
+	fillit_init_vars(&v);
+	fillit_get_fixed_range(e, &v);
+	if (v.xmax - v.xmin > v.ymax - v.ymin)
+		side = v.xmax - v.xmin;
+	else
+		side = v.ymax - v.ymin;
+	out = ft_strnew((side + 1) * side + 1);
+	ft_memset(out, '.', (side + 1) * side + 1);
+	out[(side + 1) * side + 1] = '\0';
+
+	v.lst_ptr = e->first;
+	while (v.lst_ptr)
+	{
+		v.tet_ptr = (t_tetri*)v.lst_ptr->content;
+
+		i = 0;
+		while (i < 4)
+		{
+			out[(v.tet_ptr->x[i] + v.tet_ptr->x_offset - v.xmin)
+				+ ((v.tet_ptr->y[i] + (v.tet_ptr->y_offset - v.ymin)) * (side + 1))]
+				= v.tet_ptr->letter;
+			i++;
+		}
+		v.lst_ptr = v.lst_ptr->next;
+	}
+	i = side + 1;
+	while (i <= (side + 1) * side + 1)
+	{
+		out[i] = '\n';
+		i += side + 1;
+	}
+	return (out);
 }

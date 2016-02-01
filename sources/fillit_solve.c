@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 16:06:47 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 16:41:53 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,6 +366,8 @@ HINTS : utilisation de pointeurs sur fonction.
 
 void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 {
+	char	*out_tmp;
+
 //	if (moving->letter > e->letter)
 //	{
 		if (v->side == 0)
@@ -388,15 +390,20 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 		else if (v->side == 3)
 			fillit_move_along_bottom_rev(e, v, moving);
 	}*/
-/*	if (e->result)
+	if (e->result)
 	{
 		ft_putstr("\033[2J");
 		ft_putstr("\n\n");
 		fillit_save_printable(e, &e->result);
 		ft_putendl(e->result);
+
+		ft_putendl("\n");
+
+		out_tmp = fillit_get_output_map(e);
+		ft_putendl(out_tmp);
+		ft_strdel(&out_tmp);
 		usleep(200000);
 	}
-	*/
 }
 
 /*
