@@ -48,28 +48,28 @@ void	debug_print_t_tetri(t_env *e, t_tetri *t)
 ** tetriminos assembly.
 */
 
-void	fillit_get_fixed_range(t_env *e)
+void	fillit_get_fixed_range(t_env *e, t_vars *v)
 {
-	t_vars	v;
 	int		t;
+	t_list	*lst_ptr;
+	t_tetri	*tet_ptr;
 
-	fillit_init_vars(&v);
-	v.lst_ptr = e->first;
-	while (v.lst_ptr)
+	lst_ptr = e->first;
+	while (lst_ptr)
 	{
-		v.tet_ptr = v.lst_ptr->content;
-		if (v.tet_ptr->fixed)
+		tet_ptr = lst_ptr->content;
+		if (tet_ptr->fixed)
 		{
-			if ((t = ft_tabmax(v.tet_ptr->x, 4) + v.tet_ptr->x_offset) > v.xmax)
-				v.xmax = t;
-			if ((t = ft_tabmax(v.tet_ptr->y, 4) + v.tet_ptr->y_offset) > v.ymax)
-				v.ymax = t;
-			if ((t = ft_tabmin(v.tet_ptr->x, 4) + v.tet_ptr->x_offset) < v.xmin)
-				v.xmin = t;
-			if ((t = ft_tabmin(v.tet_ptr->y, 4) + v.tet_ptr->y_offset) < v.ymin)
-				v.ymin = t;
+			if ((t = ft_tabmax(tet_ptr->x, 4) + tet_ptr->x_offset) > v->xmax)
+				v->xmax = t;
+			if ((t = ft_tabmax(tet_ptr->y, 4) + tet_ptr->y_offset) > v->ymax)
+				v->ymax = t;
+			if ((t = ft_tabmin(tet_ptr->x, 4) + tet_ptr->x_offset) < v->xmin)
+				v->xmin = t;
+			if ((t = ft_tabmin(tet_ptr->y, 4) + tet_ptr->y_offset) < v->ymin)
+				v->ymin = t;
 		}
-		v.lst_ptr = v.lst_ptr->next;
+		lst_ptr = lst_ptr->next;
 	}
 
 }
@@ -243,7 +243,7 @@ HINTS : utilisation de pointeurs sur fonction.
 
 void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 {
-	ft_putstr("Entering set_position\n");
+//	ft_putstr("Entering set_position\n");
 	if (v->side == 0)
 		fillit_move_along_right(e, v, moving);
 	else if (v->side == 1)
@@ -252,7 +252,7 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 		fillit_move_along_left(e, v, moving);
 	else if (v->side == 3)
 		fillit_move_along_top(e, v, moving);
-	ft_putstr("Leaving set_position\n");
+//	ft_putstr("Leaving set_position\n");
 }
 
 /*
@@ -274,13 +274,13 @@ void	fillit_solve(t_env *e)
 	if (e->tlocked == e->tcount)
 	{
 		e->smallest_size = fillit_square_size(e);
-		printf("Smallest square is %d\n", e->smallest_size);
+//		printf("Smallest square is %d\n", e->smallest_size);
 		if (!e->result)
 		{
 			e->result = (char *)ft_memalloc(e->smallest_size *
 					(e->smallest_size + 1) + 1);
-			printf("e->result @ %p contains %d bytes\n", e->result,
-					e->smallest_size * (e->smallest_size + 1) + 1);
+//			printf("e->result @ %p contains %d bytes\n", e->result,
+//					e->smallest_size * (e->smallest_size + 1) + 1);
 		}
 		fillit_save_printable(e, &e->result);
 	}
@@ -288,20 +288,22 @@ void	fillit_solve(t_env *e)
 	{
 		while (v.lst_ptr)
 		{
-			printf("List element address is %p\n", v.lst_ptr);
+//			printf("List element address is %p\n", v.lst_ptr);
 			v.tet_ptr = (v.lst_ptr)->content;
-			fillit_print_xy(v.tet_ptr);
-			printf("Tetri %c fixed = %d\n", v.tet_ptr->letter, v.tet_ptr->fixed);
+//			printf("\t\t    Tetri %c fixed = %d\n",
+//					v.tet_ptr->letter, v.tet_ptr->fixed);
+//			fillit_print_xy(v.tet_ptr);
 			if (!v.tet_ptr->fixed)
 			{
-				fillit_get_fixed_range(e);
+				fillit_get_fixed_range(e, &v);
 				printf("xmin = %d, xmax = %d\n", v.xmin, v.xmax);
 				printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
 				while (v.side < 4)
 				{
-					printf("Check, side = %d\n", v.side);
+					printf("v.side = %d\n", v.side);
+//					printf("Check, side = %d\n", v.side);
 					fillit_set_position(e, &v, v.tet_ptr);
-					ft_putstr("set_position OK\n");
+//					ft_putstr("set_position OK\n");
 					v.tet_ptr->fixed = 1;
 					e->tlocked++;
 					fillit_solve(e);
@@ -312,8 +314,9 @@ void	fillit_solve(t_env *e)
 				}
 
 			}
-			printf("List element address is %p\n", v.lst_ptr);
-			ft_print_memory(v.lst_ptr, sizeof(t_list));
+//			printf("List element address is %p\n", v.lst_ptr);
+//			ft_print_memory(v.lst_ptr, sizeof(t_list));
+//			ft_putendl("\n\t\t\t-----------------\n");
 			v.lst_ptr = v.lst_ptr->next;
 		}
 	}
