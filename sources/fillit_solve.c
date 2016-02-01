@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 16:41:53 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 20:01:33 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -366,8 +366,6 @@ HINTS : utilisation de pointeurs sur fonction.
 
 void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 {
-	char	*out_tmp;
-
 //	if (moving->letter > e->letter)
 //	{
 		if (v->side == 0)
@@ -390,21 +388,30 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 		else if (v->side == 3)
 			fillit_move_along_bottom_rev(e, v, moving);
 	}*/
+	
+}
+
+void	debug_print_map(t_env *e)
+{
+	char	*out_tmp;
+	
+	ft_putstr("\033[2J");
+	ft_putstr("\n\n");
+//	/*
 	if (e->result)
 	{
-		ft_putstr("\033[2J");
-		ft_putstr("\n\n");
 		fillit_save_printable(e, &e->result);
 		ft_putendl(e->result);
 
 		ft_putendl("\n");
-
-		out_tmp = fillit_get_output_map(e);
-		ft_putendl(out_tmp);
-		ft_strdel(&out_tmp);
-		usleep(200000);
 	}
+//	*/
+	out_tmp = fillit_get_output_map(e);
+	ft_putendl(out_tmp);
+	ft_strdel(&out_tmp);
+	usleep(200000);
 }
+
 
 /*
 ** 0/ Se mettre en debut de liste
@@ -468,6 +475,9 @@ void	fillit_solve(t_env *e)
 						fillit_set_position(e, &v, v.tet_ptr);
 						//					ft_putstr("set_position OK\n");
 						v.tet_ptr->fixed = 1;
+
+						debug_print_map(e);
+						
 						e->prev_letter = e->letter;
 						e->letter = v.tet_ptr->letter;
 						e->tlocked++;
