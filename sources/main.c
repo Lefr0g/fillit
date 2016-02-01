@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 13:49:03 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 15:30:22 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 ** The main job of this function is to launch the recursive solver by calling
 ** fillit_solve() once, and then to print the resulting map on the
 ** standard output (uncolorized by default).
+** 
+** From this function, and for all its children, e->letter will be used to
+** remember the id of the latest fixed tetri.
 */
 
 int		fillit_run(t_env *e)
@@ -42,6 +45,7 @@ int		fillit_run(t_env *e)
 				v.tet_ptr->letter);
 		v.tet_ptr->fixed = 1;
 		e->tlocked++;
+		e->letter = v.tet_ptr->letter;
 		fillit_solve(e);
 		v.tet_ptr->fixed = 0;
 		e->tlocked--;

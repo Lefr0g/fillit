@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 13:57:10 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 16:06:47 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,8 @@ void	fillit_move_along_left(t_env *e, t_vars *v, t_tetri *moving)
 	}
 }
 
+
+
 void	fillit_move_along_top(t_env *e, t_vars *v, t_tetri *moving)
 {
 	if (!v->move_engaged)
@@ -205,6 +207,127 @@ void	fillit_move_along_top(t_env *e, t_vars *v, t_tetri *moving)
 				moving->y_offset -= 1;
 			else if (!fillit_check_contact(e, moving))
 				moving->y_offset += 1;
+		}
+	}
+}
+
+/*
+** REVERTED ==============================================================
+*/
+
+void	fillit_move_along_left_rev(t_env *e, t_vars *v, t_tetri *moving)
+{
+	if (!v->move_engaged)
+	{
+		moving->x_offset = v->xmin;
+		moving->y_offset = v->ymin;
+		v->move_engaged = 1;
+	}
+	else
+		moving->y_offset -= 1;
+	if (ft_tabmax(moving->y, 4) + moving->y_offset < v->ymin)
+	{
+		v->side++;
+		v->move_engaged = 0;
+	}
+	else
+	{
+		while (fillit_check_collision(e, moving)
+				|| !fillit_check_contact(e, moving))
+		{
+			if (fillit_check_collision(e, moving))
+				moving->x_offset -= 1;
+			else if (!fillit_check_contact(e, moving))
+				moving->x_offset += 1;
+//			printf("moving->x_offset = %d\n", moving->x_offset);
+//			printf("ft_tabmax(moving->y, 4) = %d\n", ft_tabmax(moving->y, 4));
+//			printf("moving->y_offset = %d\n", moving->y_offset);
+//			printf("v->ymin = %d\n", v->ymin);
+
+		}
+	}
+}
+
+void	fillit_move_along_top_rev(t_env *e, t_vars *v, t_tetri *moving)
+{
+	if (!v->move_engaged)
+	{
+		moving->x_offset = v->xmin;
+		moving->y_offset = v->ymin;
+		v->move_engaged = 1;
+	}
+	else
+		moving->x_offset -= 1;
+	if (ft_tabmax(moving->x, 4) + moving->x_offset < v->xmin)
+	{
+		v->side++;
+		v->move_engaged = 0;
+	}
+	else
+	{
+		while (fillit_check_collision(e, moving)
+				|| !fillit_check_contact(e, moving))
+		{
+			if (fillit_check_collision(e, moving))
+				moving->y_offset -= 1;
+			else if (!fillit_check_contact(e, moving))
+				moving->y_offset += 1;
+		}
+	}
+}
+
+void	fillit_move_along_bottom_rev(t_env *e, t_vars *v, t_tetri *moving)
+{
+	if (!v->move_engaged)
+	{
+		moving->x_offset = v->xmin;
+		moving->y_offset = v->ymax;
+		v->move_engaged = 1;
+	}
+	else
+		moving->x_offset -= 1;
+	if (ft_tabmax(moving->x, 4) + moving->x_offset < v->xmin)
+	{
+		v->side++;
+		v->move_engaged = 0;
+	}
+	else
+	{
+		while (fillit_check_collision(e, moving)
+				|| !fillit_check_contact(e, moving))
+		{
+			if (fillit_check_collision(e, moving))
+				moving->y_offset += 1;
+			else if (!fillit_check_contact(e, moving))
+				moving->y_offset -= 1;
+		}
+	}
+}
+
+void	fillit_move_along_right_rev(t_env *e, t_vars *v, t_tetri *moving)
+{
+	if (!v->move_engaged)
+	{
+		moving->x_offset = v->xmax;
+		moving->y_offset = v->ymin;
+		v->move_engaged = 1;
+	}
+	else
+		moving->y_offset -= 1;
+	if (ft_tabmax(moving->y, 4) + moving->y_offset < v->ymin)
+	{
+		v->side++;
+		v->move_engaged = 0;
+	}
+	else
+	{
+		while (fillit_check_collision(e, moving)
+				|| !fillit_check_contact(e, moving))
+		{
+			if (fillit_check_collision(e, moving))
+				moving->x_offset += 1;
+			else if (!fillit_check_contact(e, moving))
+				moving->x_offset -= 1;
 		}
 	}
 }
@@ -243,26 +366,37 @@ HINTS : utilisation de pointeurs sur fonction.
 
 void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 {
-//	if (moving->letter < currently_fixed->letter)
+//	if (moving->letter > e->letter)
 //	{
-	if (v->side == 0)
-		fillit_move_along_right(e, v, moving);
-	else if (v->side == 1)
-		fillit_move_along_bottom(e, v, moving);
-	else if (v->side == 2)
-		fillit_move_along_left(e, v, moving);
-	else if (v->side == 3)
-		fillit_move_along_top(e, v, moving);
-//	}
-
-//	else
-//	{
-//		inverser l'ordre de placement du moving
-//		-
-//		-
-//		-
-//		-
-//	}
+		if (v->side == 0)
+			fillit_move_along_right(e, v, moving);
+		else if (v->side == 1)
+			fillit_move_along_bottom(e, v, moving);
+		else if (v->side == 2)
+			fillit_move_along_left(e, v, moving);
+		else if (v->side == 3)
+			fillit_move_along_top(e, v, moving);
+/*	}
+	else
+	{
+		if (v->side == 0)
+			fillit_move_along_left_rev(e, v, moving);
+		else if (v->side == 1)
+			fillit_move_along_top_rev(e, v, moving);
+		else if (v->side == 2)
+			fillit_move_along_right_rev(e, v, moving);
+		else if (v->side == 3)
+			fillit_move_along_bottom_rev(e, v, moving);
+	}*/
+/*	if (e->result)
+	{
+		ft_putstr("\033[2J");
+		ft_putstr("\n\n");
+		fillit_save_printable(e, &e->result);
+		ft_putendl(e->result);
+		usleep(200000);
+	}
+	*/
 }
 
 /*
@@ -291,6 +425,7 @@ void	fillit_solve(t_env *e)
 		{
 
 			e->smallest_size = sq_siz;
+//			ft_putstr("\033[2J");
 			printf("\t\t\033[32mThis is the smallest so far (%d)\033[0m\n", e->smallest_size);
 			//			printf("Smallest square is %d\n", e->smallest_size);
 			if (!e->result)
@@ -302,6 +437,7 @@ void	fillit_solve(t_env *e)
 			}
 			fillit_save_printable(e, &e->result);
 			ft_putendl(e->result);
+			usleep(500000);
 		}
 		else
 		{
@@ -315,8 +451,8 @@ void	fillit_solve(t_env *e)
 				if (!v.tet_ptr->fixed)
 				{
 					fillit_get_fixed_range(e, &v);
-//					printf("xmin = %d, xmax = %d\n", v.xmin, v.xmax);
-//					printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
+					printf("xmin = %d, xmax = %d\n", v.xmin, v.xmax);
+					printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
 //					fillit_print_all_tetri_status(e);
 					while (v.side < 4)
 					{
@@ -325,11 +461,14 @@ void	fillit_solve(t_env *e)
 						fillit_set_position(e, &v, v.tet_ptr);
 						//					ft_putstr("set_position OK\n");
 						v.tet_ptr->fixed = 1;
+						e->prev_letter = e->letter;
+						e->letter = v.tet_ptr->letter;
 						e->tlocked++;
 						fillit_solve(e);
 
 						//					debug_print_t_tetri(e, v.tet_ptr);
 						v.tet_ptr->fixed = 0;
+						e->letter = e->prev_letter;
 						e->tlocked--;
 					}
 

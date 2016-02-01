@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 13:06:26 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/01 15:27:33 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct		s_vars
 	int				ymax;
 	int				ymin;
 	int				yref;
+//	char			latest_letter;
 	t_list			*lst_ptr;
 	t_list			*lst_mov;
 	t_list			*lst_fix;
@@ -85,6 +86,7 @@ typedef struct		s_env
 	char			*result; // Map de sortie
 	int				block;
 	int				letter;
+	int				prev_letter;
 	int				inception;
 	int				update : 1;
 	int				color : 1;
