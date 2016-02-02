@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 15:30:22 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/02 18:18:56 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int		fillit_run(t_env *e)
 	while (v.lst_ptr)
 	{
 		v.tet_ptr = (v.lst_ptr)->content;
-		printf("\tSolving now centered on tetri \033[31m%c\033[0m\n",
+		if (DEBUG_MODE)
+			printf("\tSolving now centered on tetri \033[31m%c\033[0m\n",
 				v.tet_ptr->letter);
 		v.tet_ptr->fixed = 1;
 		e->tlocked++;
@@ -57,7 +58,7 @@ int		fillit_run(t_env *e)
 		ft_putnbr(e->smallest_size);
 		ft_putchar('\n');
 	}
-	ft_putchar('\n');
+//	ft_putchar('\n');
 	if (e->color)
 		fillit_print_colored(e->result);
 	else

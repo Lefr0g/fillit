@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/02 18:05:30 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/02 18:43:16 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,10 +224,10 @@ void	fillit_move_along_left_rev(t_env *e, t_vars *v, t_tetri *moving)
 			moving->x_offset -= 1;
 		else if (!fillit_check_contact(e, moving))
 			moving->x_offset += 1;
-		//			printf("moving->x_offset = %d\n", moving->x_offset);
-		//			printf("ft_tabmax(moving->y, 4) = %d\n", ft_tabmax(moving->y, 4));
-		//			printf("moving->y_offset = %d\n", moving->y_offset);
-		//			printf("v->ymin = %d\n", v->ymin);
+//			printf("moving->x_offset = %d\n", moving->x_offset);
+//			printf("ft_tabmax(moving->y, 4) = %d\n", ft_tabmax(moving->y, 4));
+//			printf("moving->y_offset = %d\n", moving->y_offset);
+//			printf("v->ymin = %d\n", v->ymin);
 	}
 	if (ft_tabmax(moving->y, 4) + moving->y_offset < v->ymin)
 	{
@@ -348,8 +348,8 @@ HINTS : utilisation de pointeurs sur fonction.
 
 void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 {
-//	if (moving->letter > e->letter)
-//	{
+	if (moving->letter > e->letter)
+	{
 		if (v->side == 0)
 			fillit_move_along_right(e, v, moving);
 		else if (v->side == 1)
@@ -358,7 +358,8 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 			fillit_move_along_left(e, v, moving);
 		else if (v->side == 3)
 			fillit_move_along_top(e, v, moving);
-/*	}
+//	/*	
+	}
 	else
 	{
 		if (v->side == 0)
@@ -369,7 +370,8 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 			fillit_move_along_right_rev(e, v, moving);
 		else if (v->side == 3)
 			fillit_move_along_bottom_rev(e, v, moving);
-	}*/
+	}
+//	*/
 	
 }
 
@@ -429,7 +431,9 @@ void	fillit_solve(t_env *e)
 
 			e->smallest_size = sq_siz;
 //			ft_putstr("\033[2J");
-			printf("\t\t\033[32mThis is the smallest so far (%d)\033[0m\n", e->smallest_size);
+			if (DEBUG_MODE)
+				printf("\t\t\033[32mThis is the smallest so far (%d)\033[0m\n",\
+						e->smallest_size);
 			//			printf("Smallest square is %d\n", e->smallest_size);
 			if (!e->result)
 			{
@@ -439,8 +443,11 @@ void	fillit_solve(t_env *e)
 				//						e->smallest_size * (e->smallest_size + 1) + 1);
 			}
 			fillit_save_printable(e, &e->result);
-			ft_putendl(e->result);
-			usleep(500000);
+			if (DEBUG_MODE)
+			{
+				ft_putendl(e->result);
+				usleep(500000);
+			}
 		}
 		else
 		{
@@ -454,8 +461,8 @@ void	fillit_solve(t_env *e)
 				if (!v.tet_ptr->fixed)
 				{
 					fillit_get_fixed_range(e, &v);
-					printf("xmin = %d, xmax = %d\n", v.xmin, v.xmax);
-					printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
+//					printf("xmin = %d, xmax = %d\n", v.xmin, v.xmax);
+//					printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
 //					fillit_print_all_tetri_status(e);
 					while (v.side < 4)
 					{
@@ -466,15 +473,16 @@ void	fillit_solve(t_env *e)
 						v.tet_ptr->fixed = 1;
 
 						
-						e->prev_letter = e->letter;
+						v.prev_letter = e->letter;
 						e->letter = v.tet_ptr->letter;
 						e->tlocked++;
-						debug_print_map(e);
+						if (DEBUG_MODE)
+							debug_print_map(e);
 						fillit_solve(e);
 
 						//					debug_print_t_tetri(e, v.tet_ptr);
 						v.tet_ptr->fixed = 0;
-						e->letter = e->prev_letter;
+						e->letter = v.prev_letter;
 						e->tlocked--;
 					}
 
