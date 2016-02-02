@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 20:01:33 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/02 17:14:39 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -397,7 +397,7 @@ void	debug_print_map(t_env *e)
 	
 	ft_putstr("\033[2J");
 	ft_putstr("\n\n");
-//	/*
+	/*
 	if (e->result)
 	{
 		fillit_save_printable(e, &e->result);
@@ -405,11 +405,11 @@ void	debug_print_map(t_env *e)
 
 		ft_putendl("\n");
 	}
-//	*/
+	*/
 	out_tmp = fillit_get_output_map(e);
 	ft_putendl(out_tmp);
 	ft_strdel(&out_tmp);
-	usleep(200000);
+	usleep(50000);
 }
 
 

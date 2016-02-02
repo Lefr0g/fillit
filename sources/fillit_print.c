@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 20:04:30 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/02 17:01:16 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,25 @@ char	*fillit_get_output_map(t_env *e)
 	fillit_init_vars(&v);
 	fillit_get_fixed_range(e, &v);
 	if (v.xmax - v.xmin > v.ymax - v.ymin)
-		side = v.xmax - v.xmin;
+		side = v.xmax - v.xmin + 1;
 	else
-		side = v.ymax - v.ymin;
+		side = v.ymax - v.ymin + 1;
 	out = ft_strnew((side + 1) * (side) + 1);
 	ft_memset(out, '.', (side + 1) * (side) + 1);
 //	out[(side + 1) * side + 1] = '\0';
 
-//	printf("xmin = %d, ymin = %d\n", v.xmin, v.ymin);
+//	printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
+	
+	i = side;
+	while (i < (side + 1) * side)
+	{
+		out[i] = '\n';
+		i += side + 1;
+	}
+	i -= side;
+	out[i] = '\0';
+
+
 	v.lst_ptr = e->first;
 	while (v.lst_ptr)
 	{
@@ -131,13 +142,6 @@ char	*fillit_get_output_map(t_env *e)
 //		*/
 		v.lst_ptr = v.lst_ptr->next;
 	}
-	i = side;
-	while (i < (side + 1) * side)
-	{
-		out[i] = '\n';
-		i += side + 1;
-	}
-	i -= side;
-	out[i] = '\0';
+//	printf("End of fillit_get_output_map()\n");
 	return (out);
 }
