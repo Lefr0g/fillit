@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 15:29:05 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/28 16:37:46 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/03 15:56:45 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	fillit_init_vars(t_vars *v)
 	v->xmin = INT_MAX;
 	v->ymax = INT_MIN;
 	v->ymin = INT_MAX;
+	v->prev_letter = '\0';
+	v->curr_letter = '\0';
 	v->lst_ptr = NULL;
 	v->lst_mov = NULL;
 	v->lst_fix = NULL;

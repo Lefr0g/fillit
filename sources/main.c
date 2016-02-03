@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/02 18:18:56 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/03 16:41:58 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		fillit_run(t_env *e)
 		v.tet_ptr->fixed = 1;
 		e->tlocked++;
 		e->letter = v.tet_ptr->letter;
-		fillit_solve(e);
+		fillit_solve(e, v.tet_ptr->letter);
 		v.tet_ptr->fixed = 0;
 		e->tlocked--;
 		v.lst_ptr = v.lst_ptr->next;

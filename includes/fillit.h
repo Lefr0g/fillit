@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/02 18:44:48 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/03 17:37:44 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 # include <stdio.h>
 
-# define DEBUG_MODE 0
-# define ANIMATION_DELAY 500000
+# define DEBUG_MODE 1
+# define ANIMATION_DELAY 400000
 
 typedef struct		s_tetri
 {
@@ -62,6 +62,7 @@ typedef struct		s_vars
 	int				ymin;
 	int				yref;
 	char			prev_letter;
+	char			curr_letter;
 	t_list			*lst_ptr;
 	t_list			*lst_mov;
 	t_list			*lst_fix;
@@ -148,7 +149,7 @@ void	fillit_liveprint(t_env *e);
 /*
 ** fillit_solve.c
 */
-void	fillit_solve(t_env *e);
+void	fillit_solve(t_env *e, char latest_letter);
 void	fillit_move_around(t_env *e, t_vars *t);
 void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
 void	fillit_check_solution(t_env *e, int *siz_square);
