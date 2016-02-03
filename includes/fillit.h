@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/03 17:37:44 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/03 18:59:46 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 # include <stdio.h>
 
-# define DEBUG_MODE 1
-# define ANIMATION_DELAY 400000
+# define DEBUG_MODE 0
+# define ANIMATION_DELAY 200000
 
 typedef struct		s_tetri
 {
