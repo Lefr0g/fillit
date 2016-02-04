@@ -19,7 +19,7 @@
 # include <stdio.h>
 
 # define DEBUG_MODE 0
-# define ANIMATION_DELAY 200000
+# define ANIMATION_DELAY 150000
 
 typedef struct		s_tetri
 {

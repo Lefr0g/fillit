@@ -15,15 +15,22 @@
 
 int		fillit_can_be_smaller(t_env *e)
 {
-	int	free;
+	int		free;
+//	char	*outmap;
 
 	free = (e->smallest_size * e->smallest_size) - (e->tcount * 4);
 	if (free >= e->smallest_size * 2 - 1)
 	{
-		printf("Can be smaller\n");
+//		printf("Can be smaller\n");
+//		outmap = fillit_get_output_map(e);
+//		ft_putendl(outmap);
+//		ft_strdel(&outmap);
 		return (1);
 	}
-	printf("Cannot be smaller\n");
+//	printf("Cannot be smaller\n");
+//	outmap = fillit_get_output_map(e);
+//	ft_putendl(outmap);
+//	ft_strdel(&outmap);
 	return (0);
 }
 
@@ -173,7 +180,7 @@ void	fillit_move_along_bottom(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along BOTTOM\n");
 	if (!v->move_engaged)
 	{
-		moving->x_offset = v->xmin;
+		moving->x_offset = v->xmin - ft_tabmax(moving->x, 4);
 		v->move_engaged = 1;
 	}
 	else
@@ -202,7 +209,7 @@ void	fillit_move_along_left(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along LEFT\n");
 	if (!v->move_engaged)
 	{
-		moving->y_offset = v->ymin;
+		moving->y_offset = v->ymin - ft_tabmax(moving->y, 4);
 		v->move_engaged = 1;
 	}
 	else
@@ -232,7 +239,7 @@ void	fillit_move_along_top(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along TOP\n");
 	if (!v->move_engaged)
 	{
-		moving->x_offset = v->xmin;
+		moving->x_offset = v->xmin - ft_tabmax(moving->x, 4);
 		v->move_engaged = 1;
 	}
 	else
@@ -266,7 +273,7 @@ void	fillit_move_along_left_rev(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along LEFT (REV)\n");
 	if (!v->move_engaged)
 	{
-		moving->y_offset = v->ymin;
+		moving->y_offset = v->ymin - ft_tabmax(moving->y, 4);
 		v->move_engaged = 1;
 	}
 	else
@@ -297,7 +304,7 @@ void	fillit_move_along_top_rev(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along TOP (REV)\n");
 	if (!v->move_engaged)
 	{
-		moving->x_offset = v->xmin;
+		moving->x_offset = v->xmin - ft_tabmax(moving->x, 4);
 		v->move_engaged = 1;
 	}
 	else
@@ -327,7 +334,7 @@ void	fillit_move_along_bottom_rev(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along BOTTOM (REV)\n");
 	if (!v->move_engaged)
 	{
-		moving->x_offset = v->xmin;
+		moving->x_offset = v->xmin - ft_tabmax(moving->x, 4);
 		v->move_engaged = 1;
 	}
 	else
@@ -357,7 +364,7 @@ void	fillit_move_along_right_rev(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along RIGHT (REV)\n");
 	if (!v->move_engaged)
 	{
-		moving->y_offset = v->ymin;
+		moving->y_offset = v->ymin - ft_tabmax(moving->y, 4);
 		v->move_engaged = 1;
 	}
 	else
@@ -418,11 +425,11 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 			fillit_move_along_right(e, v, moving);
 		else if (v->side == 1)
 			fillit_move_along_bottom(e, v, moving);
-		else if (v->side >= 2 && !fillit_can_be_smaller(e))
-			v->side = 4;
-		else if (v->side == 2 && fillit_can_be_smaller(e))
+//		else if (v->side >= 2 && !fillit_can_be_smaller(e))
+//			v->side = 4;
+		else if (v->side == 2)
 			fillit_move_along_left(e, v, moving);
-		else if (v->side == 3 && fillit_can_be_smaller(e))
+		else if (v->side == 3)
 			fillit_move_along_top(e, v, moving);
 //	/*	
 	}
@@ -432,12 +439,14 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 			fillit_move_along_left_rev(e, v, moving);
 		else if (v->side == 1)
 			fillit_move_along_top_rev(e, v, moving);
-		else if (v->side >= 2 && !fillit_can_be_smaller(e))
-			v->side = 4;
-		else if (v->side == 2 && fillit_can_be_smaller(e))
-			fillit_move_along_right_rev(e, v, moving);
-		else if (v->side == 3 && fillit_can_be_smaller(e))
+//		else if (v->side >= 2 && !fillit_can_be_smaller(e))
+//			v->side = 4;
+//		else if (v->side == 2)
+//			v->side = 4;
+		else if (v->side == 2)
 			fillit_move_along_bottom_rev(e, v, moving);
+		else if (v->side == 3)
+			fillit_move_along_right_rev(e, v, moving);
 	}
 //	*/
 }
@@ -465,8 +474,8 @@ void	fillit_solve(t_env *e, char latest_letter)
 //	debug_inception_print(e);
 //	printf("%lu of %lu tetris are locked\n", e->tlocked, e->tcount);
 	sq_siz = fillit_square_size(e);
-//	if (!e->smallest_size || sq_siz < e->smallest_size)
-//	{
+	if (!e->smallest_size || sq_siz < e->smallest_size)
+	{
 //		if (e->tlocked == e->tcount)
 		if (e->tlocked == e->tcount && (!e->smallest_size
 					|| sq_siz < e->smallest_size))
@@ -489,7 +498,6 @@ void	fillit_solve(t_env *e, char latest_letter)
 			if (DEBUG_MODE)
 			{
 				ft_putendl(e->result);
-				usleep(500000);
 			}
 		}
 		else
@@ -540,6 +548,6 @@ void	fillit_solve(t_env *e, char latest_letter)
 				v.lst_ptr = v.lst_ptr->next;
 			}
 		}
-//	}
+	}
 	e->inception--;
 }
