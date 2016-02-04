@@ -12,6 +12,31 @@
 
 #include "fillit.h"
 
+int		fillit_new_is_better(t_env *e)
+{
+	t_list	*oldlist;
+	t_tetri	*oldtet;
+	t_list	*newlist;
+	t_tetri	*newtet;
+	int		diff;
+
+	oldlist = e->first;
+	newlist = e->copy;
+	while (newlist && oldlist)
+	{
+		oldtet = (t_tetri*)oldlist->content;
+		newtet = (t_tetri*)newlist->content;
+
+		diff = (newtet->x_offset - oldtet->x_offset) +
+			(newtet->y_offset - oldtet->y_offset);
+		if (diff < 0)
+			return (1);
+		oldlist = oldlist->next;
+		newlist = newlist->next;
+	}
+	return (0);
+}
+
 t_list	*fillit_lstcpy_joke(t_list *elem)
 {
 	return (elem);
@@ -282,7 +307,7 @@ void	fillit_move_along_left_rev(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along LEFT (REV)\n");
 	if (!v->move_engaged)
 	{
-		moving->y_offset = v->ymin - ft_tabmax(moving->y, 4);
+		moving->y_offset = v->ymin;
 		v->move_engaged = 1;
 	}
 	else
@@ -313,7 +338,7 @@ void	fillit_move_along_top_rev(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along TOP (REV)\n");
 	if (!v->move_engaged)
 	{
-		moving->x_offset = v->xmin - ft_tabmax(moving->x, 4);
+		moving->x_offset = v->xmin;
 		v->move_engaged = 1;
 	}
 	else
@@ -343,7 +368,7 @@ void	fillit_move_along_bottom_rev(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along BOTTOM (REV)\n");
 	if (!v->move_engaged)
 	{
-		moving->x_offset = v->xmin - ft_tabmax(moving->x, 4);
+		moving->x_offset = v->xmax;
 		v->move_engaged = 1;
 	}
 	else
@@ -373,7 +398,7 @@ void	fillit_move_along_right_rev(t_env *e, t_vars *v, t_tetri *moving)
 		printf("fillit_move_along RIGHT (REV)\n");
 	if (!v->move_engaged)
 	{
-		moving->y_offset = v->ymin - ft_tabmax(moving->y, 4);
+		moving->y_offset = v->ymin;
 		v->move_engaged = 1;
 	}
 	else
@@ -428,6 +453,7 @@ HINTS : utilisation de pointeurs sur fonction.
 
 void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 {
+	printf("Prev = %c, Current = %c\n", v->prev_letter, v->curr_letter);
 	if (v->curr_letter > v->prev_letter)
 	{
 		if (v->side == 0)
@@ -483,11 +509,11 @@ void	fillit_solve(t_env *e, char latest_letter)
 //	debug_inception_print(e);
 //	printf("%lu of %lu tetris are locked\n", e->tlocked, e->tcount);
 	sq_siz = fillit_square_size(e);
-	if (!e->smallest_size || sq_siz < e->smallest_size)
+	if (!e->smallest_size || sq_siz <= e->smallest_size)
 	{
 //		if (e->tlocked == e->tcount)
 		if (e->tlocked == e->tcount && (!e->smallest_size
-					|| sq_siz < e->smallest_size))
+					|| sq_siz <= e->smallest_size))
 		{
 
 			e->smallest_size = sq_siz;
@@ -503,7 +529,19 @@ void	fillit_solve(t_env *e, char latest_letter)
 //				printf("e->result @ %p contains %d bytes\n", e->result,
 //						e->smallest_size * (e->smallest_size + 1) + 1);
 			}
-			fillit_save_printable(e, &e->result);
+			if (e->copy)
+			{
+				printf("Deleting copied list...");
+				ft_lstdel(&e->copy, &ft_bzero);
+				printf(" Done\n");
+			}
+			if (e->first)
+				e->copy = fillit_copy_list(e->first);
+			if (!e->result[0] || fillit_new_is_better(e))
+			{
+				printf("New solution is better\n");
+				fillit_save_printable(e, &e->result);
+			}
 			if (DEBUG_MODE)
 			{
 				ft_putendl(e->result);

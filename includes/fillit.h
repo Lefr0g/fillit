@@ -18,8 +18,8 @@
 
 # include <stdio.h>
 
-# define DEBUG_MODE 0
-# define ANIMATION_DELAY 150000
+# define DEBUG_MODE 1
+# define ANIMATION_DELAY 100000
 
 typedef struct		s_tetri
 {
@@ -75,6 +75,7 @@ typedef struct		s_env
 {
 	t_tmp			*tmp;
 	t_list			*first;
+	t_list			*copy;
 	int				i;
 	int				j;
 	int				x;
@@ -157,6 +158,7 @@ void	fillit_check_solution(t_env *e, int *siz_square);
 void	fillit_get_fixed_range(t_env *e, t_vars *v);
 t_list	*fillit_copy_list(t_list *input);
 t_list	*fillit_lstcpy_joke(t_list *elem);
+int		fillit_new_is_better(t_env *e);
 
 /*
 ** fillit_debug.c

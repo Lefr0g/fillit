@@ -49,12 +49,7 @@ int		fillit_run(t_env *e)
 		v.tet_ptr->fixed = 1;
 		e->tlocked++;
 		e->letter = v.tet_ptr->letter;
-//		fillit_solve(e, v.tet_ptr->letter);
-		
-		printf("Original list, elem %c contains :\n", e->letter);
-		ft_print_memory(v.tet_ptr, sizeof(t_tetri));
-		ft_putchar('\n');
-
+		fillit_solve(e, v.tet_ptr->letter);	
 		v.tet_ptr->fixed = 0;
 		e->tlocked--;
 		v.lst_ptr = v.lst_ptr->next;
