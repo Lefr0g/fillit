@@ -155,6 +155,8 @@ void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
 void	fillit_check_solution(t_env *e, int *siz_square);
 
 void	fillit_get_fixed_range(t_env *e, t_vars *v);
+t_list	*fillit_copy_list(t_list *input);
+t_list	*fillit_lstcpy_joke(t_list *elem);
 
 /*
 ** fillit_debug.c

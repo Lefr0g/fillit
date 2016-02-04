@@ -12,6 +12,15 @@
 
 #include "fillit.h"
 
+t_list	*fillit_lstcpy_joke(t_list *elem)
+{
+	return (elem);
+}
+
+t_list	*fillit_copy_list(t_list *input)
+{
+	return (ft_lstmap(input, &fillit_lstcpy_joke));
+}
 
 int		fillit_can_be_smaller(t_env *e)
 {

@@ -32,12 +32,14 @@ int		fillit_run(t_env *e)
 	fillit_init_vars(&v);
 	v.lst_ptr = e->first;
 
+
 	if (DEBUG_MODE)
 	{
 		ft_putendl("\033[32mInput map is valid, running rest of the program");
 		printf("There are %lu tetriminos\033[0m\n", e->tcount);
 	}
 	e->inception = 0;
+
 	while (v.lst_ptr)
 	{
 		v.tet_ptr = (v.lst_ptr)->content;
@@ -47,11 +49,17 @@ int		fillit_run(t_env *e)
 		v.tet_ptr->fixed = 1;
 		e->tlocked++;
 		e->letter = v.tet_ptr->letter;
-		fillit_solve(e, v.tet_ptr->letter);
+//		fillit_solve(e, v.tet_ptr->letter);
+		
+		printf("Original list, elem %c contains :\n", e->letter);
+		ft_print_memory(v.tet_ptr, sizeof(t_tetri));
+		ft_putchar('\n');
+
 		v.tet_ptr->fixed = 0;
 		e->tlocked--;
 		v.lst_ptr = v.lst_ptr->next;
 	}
+
 	if (DEBUG_MODE)
 	{
 		ft_putstr("Square size : ");
