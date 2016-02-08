@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/08 15:24:48 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/08 18:46:24 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct		s_tetri
 	int				order[4];
 	int				x_offset;
 	int				y_offset;
+	int				x_max;
+	int				y_max;
 	int				fixed;
 	int				firstmove;
 }					t_tetri;
@@ -83,6 +85,7 @@ typedef struct		s_env
 	int				xmin;
 	int				ymin;
 	int				smallest_size; // cote du plus petit carre
+	int				square_size;
 	size_t			tcount; // nombre de tetris dans la liste
 	size_t			tlocked; // nombre de tetris verouilles en position
 	char			set[25]; // Stockage des lettres a ne pas deplacer
@@ -96,7 +99,15 @@ typedef struct		s_env
 }					t_env;
 
 /*
-** main.c
+** main.cint		fillit_solve(t_env *e, t_list *moving);
+void	fillit_move_around(t_env *e, t_vars *t);
+void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
+void	fillit_check_solution(t_env *e, int *siz_square);
+
+void	fillit_get_fixed_range(t_env *e, t_vars *v);
+t_list	*fillit_copy_list(t_list *input);
+t_list	*fillit_lstcpy_joke(t_list *elem);
+int		fillit_new_is_better(t_env *e);
 */
 void	fillit_free_all(t_env *e);
 void	fillit_reset_quickvars(t_env *e);
@@ -151,14 +162,8 @@ void	fillit_liveprint(t_env *e);
 ** fillit_solve.c
 */
 int		fillit_solve(t_env *e, t_list *moving);
-void	fillit_move_around(t_env *e, t_vars *t);
-void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
-void	fillit_check_solution(t_env *e, int *siz_square);
-
+void	fillit_get_width_height_all(t_list *first);
 void	fillit_get_fixed_range(t_env *e, t_vars *v);
-t_list	*fillit_copy_list(t_list *input);
-t_list	*fillit_lstcpy_joke(t_list *elem);
-int		fillit_new_is_better(t_env *e);
 
 /*
 ** fillit_debug.c

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/08 16:52:00 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/08 18:32:38 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ int		main(int ac, char **av)
 		if (!fillit_parse(e, av[ac - 1]))
 //			fillit_run(e);
 			{
-				((t_tetri*)(e->first)->content)->fixed = 1;
-				e->tlocked++;
-				fillit_solve(e, e->first->next);
+				fillit_get_width_height_all(e->first);
+				e->square_size = 2;
+				while (!fillit_solve(e, e->first))
+					e->square_size++;
 				ft_putendl(e->result);
-				fillit_print_raw(e);
 			}
 		else
 			fillit_error("parsing detected an error in the input", DEBUG_MODE);

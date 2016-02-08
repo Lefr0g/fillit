@@ -6,11 +6,61 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/08 17:47:43 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/08 18:51:18 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+/*
+** This function gets the values of the most extremes coordinates of the fixed
+** tetriminos assembly.
+*/
+
+void	fillit_get_fixed_range(t_env *e, t_vars *v)
+{
+	int		t;
+	t_list	*lst_ptr;
+	t_tetri	*tet_ptr;
+
+	lst_ptr = e->first;
+//	printf("Entering get_fixed_range\n");
+	while (lst_ptr)
+	{
+		tet_ptr = lst_ptr->content;
+		if (tet_ptr->fixed)
+		{
+			if ((t = ft_tabmax(tet_ptr->x, 4) + tet_ptr->x_offset) > v->xmax)
+				v->xmax = t;
+			if ((t = ft_tabmax(tet_ptr->y, 4) + tet_ptr->y_offset) > v->ymax)
+				v->ymax = t;
+			if ((t = ft_tabmin(tet_ptr->x, 4) + tet_ptr->x_offset) < v->xmin)
+				v->xmin = t;
+			if ((t = ft_tabmin(tet_ptr->y, 4) + tet_ptr->y_offset) < v->ymin)
+				v->ymin = t;
+		}
+		lst_ptr = lst_ptr->next;
+	}
+}
+
+/*
+** This function calculates and stores the width and height of all tetris
+** within the list
+*/
+void	fillit_get_width_height_all(t_list *first)
+{
+	t_list	*lst_ptr;
+	t_tetri	*tet_ptr;
+
+	lst_ptr = first;
+	while (lst_ptr)
+	{
+		tet_ptr = (t_tetri*)lst_ptr->content;
+		tet_ptr->x_max = ft_tabmax(tet_ptr->x, 4);
+		tet_ptr->y_max = ft_tabmax(tet_ptr->y, 4);
+		lst_ptr = lst_ptr->next;
+	}
+}
 
 /*
 ** Inversion de la logique de resolution :
@@ -20,3 +70,40 @@
 **    1.0/ Si tous les tetris rentrent : sauver le resultat
 **    1.1/ Sinon, augmenter le carre de 1 et retour en 1/
 */
+
+int 	fillit_solve(t_env *e, t_list *moving)
+{
+	t_list	*lst_ptr;
+	t_tetri	*tet_ptr;
+
+	lst_ptr = moving;
+	tet_ptr = (t_tetri*)moving->content;
+	printf("Entering fillit_solve(), tetri %c\n", tet_ptr->letter);
+	tet_ptr->x_offset = 0;
+	tet_ptr->y_offset = 0;
+	if (e->tcount == e->tlocked)
+	{
+		e->result = fillit_get_output_map(e);
+		return (1);
+	}
+	while (tet_ptr->y_offset + tet_ptr->y_max < e->square_size)
+	{
+		while (tet_ptr->x_offset + tet_ptr->x_max < e->square_size)
+		{
+			if (!fillit_check_collision(e, tet_ptr))
+			{
+				tet_ptr->fixed = 1;
+				e->tlocked++;
+				return (fillit_solve(e, lst_ptr->next));
+			}
+			tet_ptr->x_offset++;
+		}
+		tet_ptr->x_offset = 0;
+		tet_ptr->y_offset++;
+	}
+	tet_ptr->x_offset = 0;
+	tet_ptr->y_offset = 0;
+	tet_ptr->fixed = 0;
+	e->tlocked--;
+	return (0);
+}
