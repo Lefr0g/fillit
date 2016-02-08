@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/03 16:41:58 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/08 16:52:00 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int		fillit_run(t_env *e)
 		v.tet_ptr->fixed = 1;
 		e->tlocked++;
 		e->letter = v.tet_ptr->letter;
-		fillit_solve(e, v.tet_ptr->letter);	
+		if (fillit_solve(e, v.lst_ptr))
+			break;
 		v.tet_ptr->fixed = 0;
 		e->tlocked--;
 		v.lst_ptr = v.lst_ptr->next;
@@ -92,7 +93,14 @@ int		main(int ac, char **av)
 	if (ac >= 2)
 	{
 		if (!fillit_parse(e, av[ac - 1]))
-			fillit_run(e);
+//			fillit_run(e);
+			{
+				((t_tetri*)(e->first)->content)->fixed = 1;
+				e->tlocked++;
+				fillit_solve(e, e->first->next);
+				ft_putendl(e->result);
+				fillit_print_raw(e);
+			}
 		else
 			fillit_error("parsing detected an error in the input", DEBUG_MODE);
 	}

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/03 18:59:46 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/08 15:24:48 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	fillit_liveprint(t_env *e);
 /*
 ** fillit_solve.c
 */
-void	fillit_solve(t_env *e, char latest_letter);
+int		fillit_solve(t_env *e, t_list *moving);
 void	fillit_move_around(t_env *e, t_vars *t);
 void	fillit_move_and_try(t_env *e, t_tetri *moving, int x, int y);
 void	fillit_check_solution(t_env *e, int *siz_square);
