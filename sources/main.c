@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/09 17:06:36 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/09 17:41:41 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,11 @@ int		main(int ac, char **av)
 				{
 					printf("\033[32mmain : solve run %d, sq_size = %d\033[0m\n", i, e->square_size);
 				fillit_solve(e, e->first);
+				if (!e->result)
+				{
 					e->square_size++;
+					printf("main : unsolved, incrementing square size to %d\n", e->square_size);
+				}
 					i++;
 					fillit_print_all_tetri_status(e);
 //					if (e->result)

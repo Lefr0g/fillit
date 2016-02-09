@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/09 17:37:45 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/09 17:50:08 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,19 @@ int 	fillit_solve(t_env *e, t_list *moving)
 				printf("%lu / %lu locked\n", e->tlocked, e->tcount);
 				if (fillit_solve(e, moving->next))
 					return (1);
+				printf("Unlocking %c\n", tet_ptr->letter);
+				tet_ptr->fixed = 0;
+				e->tlocked--;
 			}
 			else
 				printf("COLLISION\n");
-//			printf(" DONE\n");
 			tet_ptr->x_offset++;
-//			printf("x_offset = %d\n", tet_ptr->x_offset);
+
+			printf("%c x_offset = %d\n", tet_ptr->letter, tet_ptr->x_offset);
 		}
 		tet_ptr->x_offset = 0;
 		tet_ptr->y_offset++;
-		printf("y_offset = %d\n", tet_ptr->y_offset);
+		printf("%c y_offset = %d\n", tet_ptr->letter, tet_ptr->y_offset);
 	}
 	tet_ptr->x_offset = 0;
 	tet_ptr->y_offset = 0;
