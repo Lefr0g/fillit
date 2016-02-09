@@ -490,12 +490,38 @@ void	fillit_set_position(t_env *e, t_vars *v, t_tetri *moving)
 
 
 /*
+** RESUME
+** 
 ** 0/ Se mettre en debut de liste
 **   1/ Positionner le tetri
 **   2/ Immobiliser le tetri
 **   3/ Lancer recursivement jusqu'a ce que tous les tetris soient fixes
 ** 4/ Deverrouiller le tetri
 ** 5/ Selectionner le tetri suivant, retour en 1/ jusqu'au dernier tetri
+**
+**
+** DETAIL
+** 
+** 0/ Square size refresh
+** 1/ If no solution yet || current square is the smallest
+** 
+** 	 1.0/ If all tetris are placed
+**			- save new smallest size
+**			- if first run, allocate output map memory
+**			- overwrite the output map record
+** 
+** 	 2.0/ else browse the tetri list
+**	  		- si le tetri est positionne, passer au suivant
+**	  		- sinon
+**				- calculer les x et y (min et max) de l'ensemble des tetris fixes
+**				- tant que toutes les positions autours des tetris fixes n'ont pas
+**																	ete testees
+**					- v.prev_letter = latest_letter (cf prototype) au premier run
+**					- rafraichir v.curr_letter
+**					- incrementer position du tetri, verouillage position
+**					- RECURSIVITE <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+**					- deverouillage
+**	
 */
 
 void	fillit_solve(t_env *e, char latest_letter)
@@ -511,9 +537,9 @@ void	fillit_solve(t_env *e, char latest_letter)
 	sq_siz = fillit_square_size(e);
 	if (!e->smallest_size || sq_siz <= e->smallest_size)
 	{
-//		if (e->tlocked == e->tcount)
-		if (e->tlocked == e->tcount && (!e->smallest_size
-					|| sq_siz <= e->smallest_size))
+		if (e->tlocked == e->tcount)
+//		if (e->tlocked == e->tcount && (!e->smallest_size
+//					|| sq_siz <= e->smallest_size))
 		{
 
 			e->smallest_size = sq_siz;
@@ -529,6 +555,9 @@ void	fillit_solve(t_env *e, char latest_letter)
 //				printf("e->result @ %p contains %d bytes\n", e->result,
 //						e->smallest_size * (e->smallest_size + 1) + 1);
 			}
+
+//--------------------------------------------------------------------------------
+//			A DEBUG
 			if (e->copy)
 			{
 				printf("Deleting copied list...");
@@ -542,6 +571,7 @@ void	fillit_solve(t_env *e, char latest_letter)
 				printf("New solution is better\n");
 				fillit_save_printable(e, &e->result);
 			}
+//--------------------------------------------------------------------------------
 			if (DEBUG_MODE)
 			{
 				ft_putendl(e->result);
