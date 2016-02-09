@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/08 18:51:18 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/09 17:37:45 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,26 @@ int 	fillit_solve(t_env *e, t_list *moving)
 {
 	t_list	*lst_ptr;
 	t_tetri	*tet_ptr;
-	int		engaged;
 
-	engaged = 0;
-	lst_ptr = moving;
-	tet_ptr = (t_tetri*)moving->content;
-	printf("Entering fillit_solve(), tetri %c\n", tet_ptr->letter);
-//	printf("%lu / %lu locked\n", e->tlocked, e->tcount);
-	tet_ptr->x_offset = 0;
-	tet_ptr->y_offset = 0;
-	if (e->tcount == e->tlocked)
+	if (!moving && e->tcount == e->tlocked)
 	{
-		printf("fillit_solve(), tetri %c, SOLUTION FOUND\n", tet_ptr->letter);
 		e->result = fillit_get_output_map(e);
 		return (1);
 	}
+	lst_ptr = moving;
+	tet_ptr = (t_tetri*)moving->content;
+
+	printf("Entering fillit_solve(), tetri %c\n", tet_ptr->letter);
+	
+	tet_ptr->x_offset = 0;
+	tet_ptr->y_offset = 0;
+	
+	if (e->tcount == e->tlocked)
+	{
+		printf("fillit_solve(), tetri %c, SOLUTION FOUND\n", tet_ptr->letter);
+		return (1);
+	}
+
 	while (tet_ptr->y_offset + tet_ptr->y_max < e->square_size)
 	{
 		while (tet_ptr->x_offset + tet_ptr->x_max < e->square_size)
@@ -97,21 +102,26 @@ int 	fillit_solve(t_env *e, t_list *moving)
 //			printf("solve() : pre-collision check...");
 			if (!fillit_check_collision(e, tet_ptr))
 			{
-				printf("solve() : locking tetri %c\n", tet_ptr->letter);
+				printf("solve() : no collision, locking tetri %c\n", tet_ptr->letter);
 				tet_ptr->fixed = 1;
 				e->tlocked++;
-				engaged = 1;
-				return (fillit_solve(e, lst_ptr->next));
+				printf("%lu / %lu locked\n", e->tlocked, e->tcount);
+				if (fillit_solve(e, moving->next))
+					return (1);
 			}
+			else
+				printf("COLLISION\n");
 //			printf(" DONE\n");
 			tet_ptr->x_offset++;
+//			printf("x_offset = %d\n", tet_ptr->x_offset);
 		}
 		tet_ptr->x_offset = 0;
 		tet_ptr->y_offset++;
+		printf("y_offset = %d\n", tet_ptr->y_offset);
 	}
 	tet_ptr->x_offset = 0;
 	tet_ptr->y_offset = 0;
-	if (engaged)
+	if (tet_ptr->fixed)
 	{
 		tet_ptr->fixed = 0;
 		e->tlocked--;
