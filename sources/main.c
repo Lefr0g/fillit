@@ -81,7 +81,9 @@ int		fillit_run(t_env *e)
 int		main(int ac, char **av)
 {
 	t_env	*e;
+	int		i;
 
+	i = 0;
 	if (DEBUG_MODE)
 		ft_putendl("============ Program Start ============");
 	if (fillit_init(&e))
@@ -98,7 +100,13 @@ int		main(int ac, char **av)
 				fillit_get_width_height_all(e->first);
 				e->square_size = 2;
 				while (!fillit_solve(e, e->first))
+				{
+					printf("main : solve run %d, sq_size = %d\n", i, e->square_size);
 					e->square_size++;
+					i++;
+					fillit_print_all_tetri_status(e);
+					usleep(10000);
+				}
 				ft_putendl(e->result);
 			}
 		else

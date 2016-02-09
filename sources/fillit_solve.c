@@ -80,13 +80,13 @@ int 	fillit_solve(t_env *e, t_list *moving)
 	engaged = 0;
 	lst_ptr = moving;
 	tet_ptr = (t_tetri*)moving->content;
-//	printf("Entering fillit_solve(), tetri %c\n", tet_ptr->letter);
+	printf("Entering fillit_solve(), tetri %c\n", tet_ptr->letter);
 //	printf("%lu / %lu locked\n", e->tlocked, e->tcount);
 	tet_ptr->x_offset = 0;
 	tet_ptr->y_offset = 0;
 	if (e->tcount == e->tlocked)
 	{
-//		printf("fillit_solve(), tetri %c, SOLUTION FOUND\n", tet_ptr->letter);
+		printf("fillit_solve(), tetri %c, SOLUTION FOUND\n", tet_ptr->letter);
 		e->result = fillit_get_output_map(e);
 		return (1);
 	}
@@ -97,7 +97,7 @@ int 	fillit_solve(t_env *e, t_list *moving)
 //			printf("solve() : pre-collision check...");
 			if (!fillit_check_collision(e, tet_ptr))
 			{
-//				printf("solve() : locking tetri %c\n", tet_ptr->letter);
+				printf("solve() : locking tetri %c\n", tet_ptr->letter);
 				tet_ptr->fixed = 1;
 				e->tlocked++;
 				engaged = 1;
