@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/02 17:01:16 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/09 17:56:38 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,12 @@ char	*fillit_get_output_map(t_env *e)
 	else
 		side = v.ymax - v.ymin + 1;
 
-	printf("get_output_map() : Allocating memory...");
+//	printf("get_output_map() : Allocating memory...");
 
 	out = ft_strnew((side + 1) * (side) + 1);
 	ft_memset(out, '.', (side + 1) * (side) + 1);
 	
-	printf(" DONE\n");
+//	printf(" DONE\n");
 
 //	out[(side + 1) * side + 1] = '\0';
 
