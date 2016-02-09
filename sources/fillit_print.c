@@ -110,8 +110,14 @@ char	*fillit_get_output_map(t_env *e)
 		side = v.xmax - v.xmin + 1;
 	else
 		side = v.ymax - v.ymin + 1;
+
+	printf("get_output_map() : Allocating memory...");
+
 	out = ft_strnew((side + 1) * (side) + 1);
 	ft_memset(out, '.', (side + 1) * (side) + 1);
+	
+	printf(" DONE\n");
+
 //	out[(side + 1) * side + 1] = '\0';
 
 //	printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
