@@ -6,42 +6,11 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/09 17:57:15 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 15:02:34 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-/*
-** This function gets the values of the most extremes coordinates of the fixed
-** tetriminos assembly.
-*/
-
-void	fillit_get_fixed_range(t_env *e, t_vars *v)
-{
-	int		t;
-	t_list	*lst_ptr;
-	t_tetri	*tet_ptr;
-
-	lst_ptr = e->first;
-//	printf("Entering get_fixed_range\n");
-	while (lst_ptr)
-	{
-		tet_ptr = lst_ptr->content;
-		if (tet_ptr->fixed)
-		{
-			if ((t = ft_tabmax(tet_ptr->x, 4) + tet_ptr->x_offset) > v->xmax)
-				v->xmax = t;
-			if ((t = ft_tabmax(tet_ptr->y, 4) + tet_ptr->y_offset) > v->ymax)
-				v->ymax = t;
-			if ((t = ft_tabmin(tet_ptr->x, 4) + tet_ptr->x_offset) < v->xmin)
-				v->xmin = t;
-			if ((t = ft_tabmin(tet_ptr->y, 4) + tet_ptr->y_offset) < v->ymin)
-				v->ymin = t;
-		}
-		lst_ptr = lst_ptr->next;
-	}
-}
 
 /*
 ** This function calculates and stores the width and height of all tetris
@@ -87,9 +56,6 @@ int 	fillit_solve(t_env *e, t_list *moving)
 	tet_ptr->x_offset = 0;
 	tet_ptr->y_offset = 0;
 	
-//	if (e->tcount == e->tlocked)
-//		return (1);
-
 	while (tet_ptr->y_offset + tet_ptr->y_max < e->square_size)
 	{
 		while (tet_ptr->x_offset + tet_ptr->x_max < e->square_size)

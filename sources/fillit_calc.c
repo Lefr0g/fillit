@@ -6,74 +6,11 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/02/01 13:13:44 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 14:50:18 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-/*
-** This is a subfunction for fillit_order_get, scanning tetri from the bottom
-** to the top and ordering the blocks consequently.
-*/
-
-void	fillit_order_get_bottom_up(t_vars *v, t_tetri *tet)
-{
-	while (v->height >= 0)
-	{
-		v->xmax = INT_MIN;
-		v->i = -1;
-		while (++(v->i) < 4)
-			if (tet->y[v->i] == v->height && tet->x[v->i] > v->xmax)
-				v->xmax = tet->x[v->i];
-		v->i = -1;
-		while (++(v->i) < 4)
-			if (tet->y[v->i] == v->height && tet->x[v->i]
-					== v->xmax - 1)
-			{
-				tet->order[v->pos] = v->i;
-				v->pos++;
-				v->xmax--;
-				v->i = -1;
-			}
-		v->height--;
-	}
-}
-
-/*
-** This function finds out the order of the blocks, so we can rotate
-** around the tetri clockwise, starting top-left of fixed tetri, according to
-** the rules defined in the subject.
-** The result will be stored in a int[4], within each t_tetri.
-** This data will be used in the high-level loop of the fillit_solve()
-** function instead of the simple i increment.
-*/
-
-void	fillit_order_get(t_tetri *tet)
-{
-	t_vars	v;
-
-	fillit_init_vars(&v);
-	v.ymax = ft_tabmax(tet->y, 4);
-	while (v.height++ <= v.ymax)
-	{
-		v.i = -1;
-		v.xmax = INT_MIN;
-		while (++(v.i) < 4)
-			if (tet->y[v.i] == v.height && tet->x[v.i] > v.xmax)
-			{
-				v.xmax = tet->x[v.i];
-				v.isaved = v.i;
-			}
-		if (v.isaved != -1)
-		{
-			tet->order[v.pos] = v.isaved;
-			(v.pos)++;
-			v.isaved = -1;
-		}
-	}
-	fillit_order_get_bottom_up(&v, tet);
-}
 
 /*
 ** This function ensures all the x coordinates are positive by changing the x
@@ -163,7 +100,6 @@ void	fillit_load_xy(t_env *e)
 		e->tcount++;
 		fillit_xy_get(t_ptr);
 		fillit_xy_correct(t_ptr);
-		fillit_order_get(t_ptr);
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri*)l_ptr->content;
 		e->letter++;

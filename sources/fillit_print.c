@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/09 17:56:38 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 15:03:56 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,37 @@ int		fillit_error(char *str, int mode)
 	return (-1);
 }
 
+/*
+** This function gets the values of the most extremes coordinates of the fixed
+** tetriminos assembly.
+*/
+
+void	fillit_get_fixed_range(t_env *e, t_vars *v)
+{
+	int		t;
+	t_list	*lst_ptr;
+	t_tetri	*tet_ptr;
+
+	lst_ptr = e->first;
+	while (lst_ptr)
+	{
+		tet_ptr = lst_ptr->content;
+		if (tet_ptr->fixed)
+		{
+			if ((t = ft_tabmax(tet_ptr->x, 4) + tet_ptr->x_offset) > v->xmax)
+				v->xmax = t;
+			if ((t = ft_tabmax(tet_ptr->y, 4) + tet_ptr->y_offset) > v->ymax)
+				v->ymax = t;
+			if ((t = ft_tabmin(tet_ptr->x, 4) + tet_ptr->x_offset) < v->xmin)
+				v->xmin = t;
+			if ((t = ft_tabmin(tet_ptr->y, 4) + tet_ptr->y_offset) < v->ymin)
+				v->ymin = t;
+		}
+		lst_ptr = lst_ptr->next;
+	}
+}
+
+
 char	*fillit_get_output_map(t_env *e)
 {
 	t_vars	v;
@@ -110,18 +141,8 @@ char	*fillit_get_output_map(t_env *e)
 		side = v.xmax - v.xmin + 1;
 	else
 		side = v.ymax - v.ymin + 1;
-
-//	printf("get_output_map() : Allocating memory...");
-
 	out = ft_strnew((side + 1) * (side) + 1);
 	ft_memset(out, '.', (side + 1) * (side) + 1);
-	
-//	printf(" DONE\n");
-
-//	out[(side + 1) * side + 1] = '\0';
-
-//	printf("ymin = %d, ymax = %d\n", v.ymin, v.ymax);
-	
 	i = side;
 	while (i < (side + 1) * side)
 	{
@@ -130,13 +151,10 @@ char	*fillit_get_output_map(t_env *e)
 	}
 	i -= side;
 	out[i] = '\0';
-
-
 	v.lst_ptr = e->first;
 	while (v.lst_ptr)
 	{
 		v.tet_ptr = (t_tetri*)v.lst_ptr->content;
-//		/*
 		i = 0;
 		while (i < 4 && v.tet_ptr->fixed)
 		{
@@ -145,9 +163,7 @@ char	*fillit_get_output_map(t_env *e)
 				= v.tet_ptr->letter;
 			i++;
 		}
-//		*/
 		v.lst_ptr = v.lst_ptr->next;
 	}
-//	printf("End of fillit_get_output_map()\n");
 	return (out);
 }

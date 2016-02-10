@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 15:29:05 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/03 15:56:45 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 14:58:00 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,12 @@ void	fillit_reset_tmp(t_tmp *tmp)
 
 void	fillit_init_vars(t_vars *v)
 {
-	v->i = 0;
-	v->isaved = -1;
-	v->height = -1;
-	v->pos = 0;
-	v->side = 0;
-	v->move_engaged = 0;
 	v->xmax = INT_MIN;
 	v->xmin = INT_MAX;
 	v->ymax = INT_MIN;
 	v->ymin = INT_MAX;
-	v->prev_letter = '\0';
-	v->curr_letter = '\0';
 	v->lst_ptr = NULL;
-	v->lst_mov = NULL;
-	v->lst_fix = NULL;
 	v->tet_ptr = NULL;
-	v->tet_mov = NULL;
-	v->tet_fix = NULL;
 }
 
 /*

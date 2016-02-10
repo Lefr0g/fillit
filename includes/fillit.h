@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/09 17:56:01 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 14:58:20 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ typedef struct		s_tetri
 	char			raw[17];
 	int				x[4];
 	int				y[4];
-	int				order[4];
 	int				x_offset;
 	int				y_offset;
 	int				x_max;
@@ -51,26 +50,12 @@ typedef struct		s_tmp
 
 typedef struct		s_vars
 {
-	int				height;
-	int				pos;
-	int				i;
-	int				isaved;
-	int				side;
-	int				move_engaged;
 	int				xmax;
 	int				xmin;
-	int				xref;
 	int				ymax;
 	int				ymin;
-	int				yref;
-	char			prev_letter;
-	char			curr_letter;
 	t_list			*lst_ptr;
-	t_list			*lst_mov;
-	t_list			*lst_fix;
 	t_tetri			*tet_ptr;
-	t_tetri			*tet_mov;
-	t_tetri			*tet_fix;
 }					t_vars;
 
 typedef struct		s_env
@@ -137,8 +122,6 @@ int		fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr);
 void	fillit_load_xy(t_env *e);
 void	fillit_xy_get(t_tetri *t_ptr);
 void	fillit_xy_correct(t_tetri *ptr);
-void	fillit_order_get(t_tetri *ptr);
-void	fillit_order_get_bottom_up(t_vars *v, t_tetri *ptr);
 
 /*
 ** fillit_print.c
@@ -153,8 +136,6 @@ char	*fillit_get_output_map(t_env *e);
 */
 int		fillit_check_collision(t_env *e, t_tetri *moving);
 int		fillit_check_contact(t_env *e, t_tetri *moving);
-int		fillit_square_size(t_env *e);
-void	fillit_square_get_range(t_vars *v);
 int		fillit_xy_collision(int x, int y, t_tetri *ptr);
 void	fillit_liveprint(t_env *e);
 

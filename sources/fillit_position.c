@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/01/26 14:53:29 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 14:53:20 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,55 +71,6 @@ int     fillit_check_contact(t_env *e, t_tetri *moving)
 			fixed = lst_ptr->content;
 	}
 	return (0);
-}
-
-/*
-** Sub-function for fillit_square_size(), cut for norme reasons.
-** It changes the values of the most extreme blocks in the square if a block
-** is found beyond these limits.
-*/
-
-void	fillit_square_get_range(t_vars *t)
-{
-	if ((t->i = t->tet_fix->x_offset + ft_tabmax(t->tet_fix->x, 4)) > t->xmax)
-		t->xmax = t->i;
-	if ((t->i = t->tet_fix->y_offset + ft_tabmax(t->tet_fix->y, 4)) > t->ymax)
-		t->ymax = t->i;
-	if ((t->i = t->tet_fix->x_offset + ft_tabmin(t->tet_fix->x, 4)) < t->xmin)
-		t->xmin = t->i;
-	if ((t->i = t->tet_fix->y_offset + ft_tabmin(t->tet_fix->y, 4)) < t->ymin)
-		t->ymin = t->i;
-}
-
-/*
-** Function to calc size of the square containing all fixed tretriminos
-** plus the one moving
-** OR
-** if no moving piece : calc the size of the map with all tetriminos
-*/
-
-int fillit_square_size(t_env *e)
-{
-	t_vars	t;
-
-	fillit_init_vars(&t);
-	t.lst_ptr = e->first;
-	t.tet_fix = (t_tetri *)t.lst_ptr->content;
-	while (t.lst_ptr)
-	{
-		if (t.tet_fix->fixed)
-		{
-			fillit_square_get_range(&t);
-		}
-		if ((t.lst_ptr = t.lst_ptr->next))
-			t.tet_fix = (t_tetri *)t.lst_ptr->content;
-	}
-	e->xmin = t.xmin;
-	e->ymin = t.ymin;
-	if (t.xmax - t.xmin > t.ymax - t.ymin)
-		return (t.xmax - t.xmin + 1);
-	else
-		return (t.ymax - t.ymin + 1);
 }
 
 /*
