@@ -6,68 +6,14 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 15:53:08 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 16:11:36 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 /*
-** This function is launched only if the input was validated and converted
-** by parsing.
-** The main job of this function is to launch the recursive solver by calling
-** fillit_solve() once, and then to print the resulting map on the
-** standard output (uncolorized by default).
-*/
-
-int		fillit_run(t_env *e)
-{
-	t_vars	v;
-
-	fillit_init_vars(&v);
-	v.lst_ptr = e->first;
-
-
-	if (DEBUG_MODE)
-	{
-		ft_putendl("\033[32mInput map is valid, running rest of the program");
-		printf("There are %lu tetriminos\033[0m\n", e->tcount);
-	}
-
-	while (v.lst_ptr)
-	{
-		v.tet_ptr = (v.lst_ptr)->content;
-		if (DEBUG_MODE)
-			printf("\tSolving now centered on tetri \033[31m%c\033[0m\n",
-				v.tet_ptr->letter);
-		v.tet_ptr->fixed = 1;
-		e->tlocked++;
-		if (fillit_solve(e, v.lst_ptr))
-			break;
-		v.tet_ptr->fixed = 0;
-		e->tlocked--;
-		v.lst_ptr = v.lst_ptr->next;
-	}
-
-	if (DEBUG_MODE)
-	{
-		ft_putstr("Square size : ");
-		ft_putnbr(e->square_size);
-		ft_putchar('\n');
-	}
-//	ft_putchar('\n');
-	if (e->color)
-		fillit_print_colored(e->result);
-	else
-		ft_putendl(e->result);
-	return (0);
-}
-
-/*
-** The program supports 2 options :
 **  -c for colorized output
-**  -s for printing intermediary solutions. Notice that this option greatly
-**  slows the program down.
 ** The logic below is quite self-explanatory.
 */
 
@@ -94,7 +40,7 @@ int		main(int ac, char **av)
 				if (!e->result)
 					e->square_size++;
 			}
-			ft_putstr(e->result);
+			(e->color) ? fillit_colorprint(e->result ) :ft_putstr(e->result);
 		}
 		else
 			fillit_error("parsing detected an error in the input", DEBUG_MODE);

@@ -6,13 +6,13 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 15:33:00 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 16:07:25 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	fillit_print_colored(char *map)
+void	fillit_colorprint(char *map)
 {
 	int		i;
 	int		color;
@@ -23,7 +23,7 @@ void	fillit_print_colored(char *map)
 		ft_putstr("\x1b[0m");
 		if (ft_isalpha(map[i]))
 		{
-			color = map[i] - 24;
+			color = map[i] - 34;
 			ft_putstr("\x1b[");
 			ft_putnbr(color);
 			ft_putchar('m');
