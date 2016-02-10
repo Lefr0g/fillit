@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 16:00:19 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 16:25:09 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	fillit_liveprint(t_env *e);
 ** fillit_solve.c
 */
 int		fillit_solve(t_env *e, t_list *moving);
-void	fillit_get_fixed_range(t_env *e, t_vars *v);
+int		fillit_browse_square(t_env *e, t_list *moving, t_tetri *tet_ptr);
 
 /*
 ** fillit_debug.c
