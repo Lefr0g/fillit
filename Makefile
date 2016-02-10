@@ -6,7 +6,7 @@
 #    By: amulin <amulin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/28 16:48:40 by amulin            #+#    #+#              #
-#    Updated: 2016/01/26 14:55:00 by amulin           ###   ########.fr        #
+#    Updated: 2016/02/10 14:28:43 by lpoujade         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = fillit
 
 CC = clang
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra
 
 SRCS = main.c fillit_parse.c fillit_print.c fillit_calc.c fillit_position.c \
 	   fillit_structs.c fillit_solve.c fillit_debug.c ft_basicfilecheck.c
