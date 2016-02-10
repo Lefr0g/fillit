@@ -6,30 +6,11 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:40:53 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 15:02:34 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 15:50:23 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-/*
-** This function calculates and stores the width and height of all tetris
-** within the list
-*/
-void	fillit_get_width_height_all(t_list *first)
-{
-	t_list	*lst_ptr;
-	t_tetri	*tet_ptr;
-
-	lst_ptr = first;
-	while (lst_ptr)
-	{
-		tet_ptr = (t_tetri*)lst_ptr->content;
-		tet_ptr->x_max = ft_tabmax(tet_ptr->x, 4);
-		tet_ptr->y_max = ft_tabmax(tet_ptr->y, 4);
-		lst_ptr = lst_ptr->next;
-	}
-}
 
 /*
 ** Inversion de la logique de resolution :

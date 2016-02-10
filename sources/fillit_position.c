@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 14:53:20 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 15:52:45 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,4 @@ int	fillit_xy_collision(int x, int y, t_tetri *ptr)
 		i++;
 	}
 	return (0);
-}
-
-void	fillit_liveprint(t_env *e)
-{
-	ft_putstr("\e[1;1H\e[2J");
-	ft_putendl(" ========== Status ========== ");
-	ft_putstr("\033[33m Current square\t:\033[0m\t");
-	ft_putnbr(e->smallest_size);
-	ft_putchar('\n');
-	ft_putstr("\033[33m Imbrication\t:\033[0m\t");
-	ft_putnbr(e->inception);
-	ft_putchar('\n');ft_putchar('\n');
-	//					if (e->color)
-	//						fillit_print_colored(fillit_save_printable(e));
-	//					else
-	//						ft_putendl(fillit_save_printable(e));
 }

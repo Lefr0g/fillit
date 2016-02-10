@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 15:29:05 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 14:58:00 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 15:53:54 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ int		fillit_init(t_env **e)
 	(*e)->tcount = 0;
 	(*e)->update = 0;
 	(*e)->color = 0;
-	(*e)->smallest_size = 0;
 	(*e)->result = NULL;
 	(*e)->copy = NULL;
-	ft_bzero((*e)->set, 25);
 	if (!((*e)->first = ft_lstnew(&tet_ptr, sizeof(t_tetri))))
 		return (-1);
 	return (0);
@@ -67,6 +65,8 @@ void	fillit_reset_tmp(t_tmp *tmp)
 
 void	fillit_init_vars(t_vars *v)
 {
+	v->i = 0;
+	v->side = 0;
 	v->xmax = INT_MIN;
 	v->xmin = INT_MAX;
 	v->ymax = INT_MIN;
@@ -82,7 +82,6 @@ void	fillit_init_vars(t_vars *v)
 
 void	fillit_reset_quickvars(t_env *e)
 {
-	e->block = 0;
 	e->i = 0;
 	e->j = 0;
 	e->x = 0;

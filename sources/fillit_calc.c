@@ -6,11 +6,30 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/02/10 14:50:18 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 15:50:25 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+/*
+** This function calculates and stores the width and height of all tetris
+** within the list
+*/
+void	fillit_get_width_height_all(t_list *first)
+{
+	t_list	*lst_ptr;
+	t_tetri	*tet_ptr;
+
+	lst_ptr = first;
+	while (lst_ptr)
+	{
+		tet_ptr = (t_tetri*)lst_ptr->content;
+		tet_ptr->x_max = ft_tabmax(tet_ptr->x, 4);
+		tet_ptr->y_max = ft_tabmax(tet_ptr->y, 4);
+		lst_ptr = lst_ptr->next;
+	}
+}
 
 /*
 ** This function ensures all the x coordinates are positive by changing the x
@@ -87,24 +106,26 @@ void	fillit_load_xy(t_env *e)
 {
 	t_tetri	*t_ptr;
 	t_list	*l_ptr;
+	char	letter;
 
-	e->letter = 'A';
+	letter = 'A';
 	e->tcount = 0;
 	e->tlocked = 0;
 	fillit_reset_quickvars(e);
 	l_ptr = e->first;
 	t_ptr = (t_tetri*)l_ptr->content;
-	while (l_ptr && e->letter <= 'Z')
+	while (l_ptr && letter <= 'Z')
 	{
-		t_ptr->letter = e->letter;
+		t_ptr->letter = letter;
 		e->tcount++;
 		fillit_xy_get(t_ptr);
 		fillit_xy_correct(t_ptr);
 		if ((l_ptr = l_ptr->next))
 			t_ptr = (t_tetri*)l_ptr->content;
-		e->letter++;
+		letter++;
 		fillit_reset_quickvars(e);
 	}
-	if (e->letter == 'Z')
-		fillit_error("too many tetriminos, 25 max.", DEBUG_MODE);
+	if (letter == 'Z')
+		fillit_error("too many tetriminos, 26 max.", DEBUG_MODE);
+	fillit_get_width_height_all(e->first);
 }

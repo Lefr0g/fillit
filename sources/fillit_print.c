@@ -6,50 +6,11 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 15:03:56 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 15:33:00 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-/*
-** save actual env (e) agencement ( fixed tetriminos ) to a printable str
-** Steps :
-**	- last char to '\0'
-**	- from (last char - 1), all ( map size + 1) chars, set a '\n'
-**	- then browse the tetrimino list and for each fixed tetriminos
-** !!! PARAMETER &MAP _MUST_ BE AT THE GOOD SIZE,
-** AND THIS SIZE MUST BE BASED ON E->SMALLEST_SIZE !!!
-*/
-
-void	fillit_save_printable(t_env *e, char **map)
-{
-	char	*ret;
-	int		sq_siz;
-	int		c;
-	t_list	*l_ptr;
-	t_tetri	*t_ptr;
-
-	l_ptr = e->first;
-	t_ptr = (t_tetri *)l_ptr->content;
-	ret = *map;
-	sq_siz = e->smallest_size;
-	ft_memset(ret, '.', sq_siz * (sq_siz + 1));
-	while (l_ptr)
-	{
-		c = 0;
-		while (c++ < 4)
-			ret[t_ptr->x_offset - e->xmin + t_ptr->x[c - 1] + \
-				((t_ptr->y[c - 1] + t_ptr->y_offset - e->ymin) * \
-				 (sq_siz + 1))] = t_ptr->letter;
-		if ((l_ptr = l_ptr->next))
-			t_ptr = (t_tetri *)l_ptr->content;
-	}
-	c = sq_siz * (sq_siz + 1) - 1;
-	while ((c -= sq_siz + 1) > 0)
-		ret[c] = '\n';
-	ret[e->smallest_size * (e->smallest_size + 1) - 1] = 0;
-}
 
 void	fillit_print_colored(char *map)
 {
@@ -127,43 +88,55 @@ void	fillit_get_fixed_range(t_env *e, t_vars *v)
 	}
 }
 
+/*
+** Subfunction of fillit_get_output_map()
+*/
+
+void	fillit_fill_output_map(t_vars *v, char *out)
+{
+	while (v->lst_ptr)
+	{
+		v->tet_ptr = (t_tetri*)v->lst_ptr->content;
+		v->i = 0;
+		while (v->i < 4 && v->tet_ptr->fixed)
+		{
+			out[(v->tet_ptr->x[v->i] + v->tet_ptr->x_offset - v->xmin)
+				+ ((v->tet_ptr->y[v->i] + (v->tet_ptr->y_offset) - v->ymin)
+						* (v->side + 1))]
+				= v->tet_ptr->letter;
+			v->i++;
+		}
+		v->lst_ptr = v->lst_ptr->next;
+	}
+}
+
+/*
+** Allocates memory and translates the tetri positions into a char*,
+** that can then be printed on stdout
+*/
 
 char	*fillit_get_output_map(t_env *e)
 {
 	t_vars	v;
-	int		i;
-	int		side;
 	char	*out;
 
 	fillit_init_vars(&v);
 	fillit_get_fixed_range(e, &v);
 	if (v.xmax - v.xmin > v.ymax - v.ymin)
-		side = v.xmax - v.xmin + 1;
+		v.side = v.xmax - v.xmin + 1;
 	else
-		side = v.ymax - v.ymin + 1;
-	out = ft_strnew((side + 1) * (side) + 1);
-	ft_memset(out, '.', (side + 1) * (side) + 1);
-	i = side;
-	while (i < (side + 1) * side)
+		v.side = v.ymax - v.ymin + 1;
+	out = ft_strnew((v.side + 1) * (v.side) + 1);
+	ft_memset(out, '.', (v.side + 1) * (v.side) + 1);
+	v.i = v.side;
+	while (v.i < (v.side + 1) * v.side)
 	{
-		out[i] = '\n';
-		i += side + 1;
+		out[v.i] = '\n';
+		v.i += v.side + 1;
 	}
-	i -= side;
-	out[i] = '\0';
+	v.i -= v.side;
+	out[v.i] = '\0';
 	v.lst_ptr = e->first;
-	while (v.lst_ptr)
-	{
-		v.tet_ptr = (t_tetri*)v.lst_ptr->content;
-		i = 0;
-		while (i < 4 && v.tet_ptr->fixed)
-		{
-			out[(v.tet_ptr->x[i] + v.tet_ptr->x_offset - v.xmin)
-				+ ((v.tet_ptr->y[i] + (v.tet_ptr->y_offset) - v.ymin) * (side + 1))]
-				= v.tet_ptr->letter;
-			i++;
-		}
-		v.lst_ptr = v.lst_ptr->next;
-	}
+	fillit_fill_output_map(&v, out);
 	return (out);
 }

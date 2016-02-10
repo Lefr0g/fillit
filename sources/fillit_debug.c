@@ -6,27 +6,11 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:51:24 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 14:51:12 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 15:38:43 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-/*
-** This function prints one '>' per level of deepness reached into recursivity.
-*/
-
-void	debug_inception_print(t_env *e)
-{
-	int	i;
-
-	i = 0;
-	while (i < e->inception)
-	{
-		ft_putstr("\033[33m> \033[0m");
-		i++;
-	}
-}
 
 /*
 ** This function prints the tetrimino passed as parameter on stdout, based on
