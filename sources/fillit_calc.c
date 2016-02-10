@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/02/10 15:50:25 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 16:29:53 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 /*
 ** This function calculates and stores the width and height of all tetris
-** within the list
+** within the list. The results are saved in each t_tetri as x_max and y_max
 */
+
 void	fillit_get_width_height_all(t_list *first)
 {
 	t_list	*lst_ptr;
