@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/01 13:43:24 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 18:30:39 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 			{	
 				if (!((i - 1 >= 0 && tetri_ptr->raw[i - 1] == '#')
 						|| (i + 1 < 17 && tetri_ptr->raw[i + 1] == '#')
-						|| (i - 4 > 0 && tetri_ptr->raw[i - 4] == '#')
+						|| (i - 4 >= 0 && tetri_ptr->raw[i - 4] == '#')
 						|| (i + 4 < 17 && tetri_ptr->raw[i + 4] == '#')))
 					return (fillit_error("invalid block placement in tetri",
 								DEBUG_MODE));	
@@ -157,15 +157,12 @@ int	fillit_input_check(t_env *e)
 
 	list_ptr = e->first;
 	tetri_ptr = (t_tetri*)(list_ptr->content);
-//	fillit_new_tetri(&e->first, &tetri_ptr);
 	tetri_ptr->firstmove = 1;
 
 	if (DEBUG_MODE)
 		printf("Pre-GNL check OK\n");
 	while ((e->tmp->gnl_ret = get_next_line(e->tmp->fd, &e->tmp->line)) != 0)
 	{
-//		if (DEBUG_MODE)
-//			printf("gnl_ret = %d\n", e->tmp->gnl_ret);
 		if (e->tmp->gnl_ret == -1)
 			return (fillit_error("gnl fail", DEBUG_MODE));
 		if (e->tmp->line[0])
@@ -184,13 +181,10 @@ int	fillit_input_check(t_env *e)
 		if (e->tmp->jump > 1)
 			return (fillit_error("more than one empty line", DEBUG_MODE));
 	}
-//	printf("layers = %d, jump = %d\n", e->tmp->layers, e->tmp->jump);
 	if (e->tmp->layers)
 	{
 		if (fillit_blocks_check(e, tetri_ptr) < 0)
 			return (-1);
-//		else
-//			e->tmp->layers = 0;
 	}
 	return (0);
 }
@@ -218,13 +212,6 @@ int	fillit_parse(t_env *e, char *filename)
 	if (DEBUG_MODE)
 		printf("OPEN SUCCESS, fd = %d\n", e->tmp->fd);
 	ret = fillit_input_check(e);
-//	if (ret == -1)
-//	{
-//		e->tmp->jump = 0;
-//		while (get_next_line(e->tmp->fd, &e->tmp->line))
-//			(void)ret;
-//		return (ret);
-//	}
 	if (e->tmp->jump > 1)
 		return (fillit_error("empty line at the end of the file", DEBUG_MODE));
 	if (ret != -1)
