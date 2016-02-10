@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 16:25:09 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/10 16:26:25 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	fillit_get_width_height_all(t_list *first);
 /*
 ** fillit_print.c
 */
-void	fillit_print_colored(char *map);
+void	fillit_colorprint(char *map);
 int		fillit_error(char *str, int mode);
 char	*fillit_get_output_map(t_env *e);
 void	fillit_fill_output_map(t_vars *v, char *out);
