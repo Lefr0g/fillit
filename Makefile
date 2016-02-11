@@ -6,7 +6,7 @@
 #    By: amulin <amulin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/28 16:48:40 by amulin            #+#    #+#              #
-#    Updated: 2016/02/10 14:28:43 by lpoujade         ###   ########.fr        #
+#    Updated: 2016/02/11 19:20:42 by amulin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,9 @@ LIBHEADIR = $(addprefix $(LIBDIR), $(LIBHDRS))
 
 LIBINCLUDES = -I $(LIBHEADIR)
 
-all : lib $(NAME)
+all : $(NAME)
 
-$(NAME) : $(SOURCES) $(HEADERS)
+$(NAME) : lib $(SOURCES) $(HEADERS)
 	$(CC) $(FLAGS) $(SOURCES) $(INCLUDES) $(LIBINCLUDES) $(LIBDIRFLAG) \
 		$(LIBFLAG) -o $(NAME)
 

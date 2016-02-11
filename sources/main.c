@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 16:30:16 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 19:39:20 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,34 @@ int		main(int ac, char **av)
 	if (ac > 2 && av[1][0] == '-' && ft_strchr(av[1], 'c'))
 		e->color = 1;
 	if (ac >= 2)
-	{
-		if (!fillit_parse(e, av[ac - 1]))
-		{
-			e->square_size = 2;
-			while (!e->result)
-			{
-				fillit_solve(e, e->first);
-				if (!e->result)
-					e->square_size++;
-			}
-			(e->color) ? fillit_colorprint(e->result ) :ft_putstr(e->result);
-		}
-		else
-			fillit_error("parsing detected an error in the input", DEBUG_MODE);
-	}
+		fillit_proceed(e, ac, av);
 	else
 		fillit_error("main error exit", DEBUG_MODE);
 	fillit_free_all(e);
 	if (DEBUG_MODE)
 		ft_putendl("\n============ End of program ===========");
 	return (0);
+}
+
+/*
+** This is the core of the program, put into a subfunction for norme compliance
+*/
+
+void	fillit_proceed(t_env *e, int ac, char **av)
+{
+	if (!fillit_parse(e, av[ac - 1]))
+	{
+		e->square_size = 2;
+		while (!e->result)
+		{
+			fillit_solve(e, e->first);
+			if (!e->result)
+				e->square_size++;
+		}
+		(e->color) ? fillit_colorprint(e->result) : ft_putstr(e->result);
+	}
+	else
+		fillit_error("parsing detected an error in the input", DEBUG_MODE);
 }
 
 /*

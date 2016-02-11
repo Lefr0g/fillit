@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 16:07:25 by lpoujade         ###   ########.fr       */
+/*   Updated: 2016/02/11 19:27:44 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ void	fillit_fill_output_map(t_vars *v, char *out)
 		{
 			out[(v->tet_ptr->x[v->i] + v->tet_ptr->x_offset - v->xmin)
 				+ ((v->tet_ptr->y[v->i] + (v->tet_ptr->y_offset) - v->ymin)
-						* (v->side + 1))]
-				= v->tet_ptr->letter;
+						* (v->side + 1))] = v->tet_ptr->letter;
 			v->i++;
 		}
 		v->lst_ptr = v->lst_ptr->next;

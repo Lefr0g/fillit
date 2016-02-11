@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 15:29:05 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 15:53:54 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 19:31:03 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	fillit_reset_tmp(t_tmp *tmp)
 	tmp->layercheck_ret = 0;
 	tmp->blocks = 0;
 	ft_bzero(tmp->line, sizeof(tmp->line));
-
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/06 15:15:19 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 15:52:45 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 19:29:27 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 		fillit_reset_quickvars(e);
 		while (fixed->fixed && e->i < 4)
 		{
-//			e->j = 0;
 			if (fillit_xy_collision(fixed->x[e->i] + fixed->x_offset,
 						fixed->y[e->i] + fixed->y_offset, moving))
 				return (1);
@@ -46,9 +45,9 @@ int	fillit_check_collision(t_env *e, t_tetri *moving)
 ** tetri which position has been set. In case of contact, 1 is returned.
 */
 
-int     fillit_check_contact(t_env *e, t_tetri *moving)
+int	fillit_check_contact(t_env *e, t_tetri *moving)
 {
-	t_list  *lst_ptr;
+	t_list	*lst_ptr;
 	t_tetri *fixed;
 
 	lst_ptr = e->first;

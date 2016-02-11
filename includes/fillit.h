@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 18:32:00 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 19:40:51 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ typedef struct		s_env
 ** main.c
 */
 void	fillit_free_all(t_env *e);
-void	fillit_reset_quickvars(t_env *e);
 void	fillit_reset_tmp(t_tmp *tmp);
+void	fillit_proceed(t_env *e, int ac, char **av);
 
 /*
 ** fillit_structs.c
