@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:51:24 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/10 15:38:43 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 20:27:40 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	fillit_print_single_tetri(t_tetri *ptr)
 		ft_putchar('\n');
 	}
 }
-	
+
 /*
 ** Printing debug subfunction.
 */
@@ -52,30 +52,26 @@ void	fillit_print_single_tetri(t_tetri *ptr)
 void	fillit_print_xy(t_tetri *ptr)
 {
 	int	i;
-	
-	i = 0;
+
+	i = -1;
 	ft_putstr("\t\t     x -> |");
-	while (i < 4)
+	while (++i < 4)
 	{
 		if (ptr->x[i] >= 0)
 			ft_putchar(' ');
 		ft_putnbr(ptr->x[i]);
 		ft_putchar('|');
-		i++;
 	}
-	ft_putchar('\n');
-	i = 0;
-	ft_putstr("\t\t     y -> |");
-	while (i < 4)
+	i = -1;
+	ft_putstr("\n\t\t     y -> |");
+	while (++i < 4)
 	{
 		if (ptr->y[i] >= 0)
 			ft_putchar(' ');
 		ft_putnbr(ptr->y[i]);
 		ft_putchar('|');
-		i++;
 	}
-	ft_putchar('\n');
-	ft_putstr("\n\t\t    x_offset = ");
+	ft_putstr("\n\n\t\t    x_offset = ");
 	ft_putnbr(ptr->x_offset);
 	ft_putstr("\n\t\t    y_offset = ");
 	ft_putnbr(ptr->y_offset);

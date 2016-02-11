@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/11 19:39:20 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 20:30:00 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	fillit_proceed(t_env *e, int ac, char **av)
 			if (!e->result)
 				e->square_size++;
 		}
+		if (DEBUG_MODE)
+			ft_putendl("\n================ Result ===============");
 		(e->color) ? fillit_colorprint(e->result) : ft_putstr(e->result);
 	}
 	else
