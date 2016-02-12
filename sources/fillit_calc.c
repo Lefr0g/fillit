@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/02/10 16:29:53 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/12 17:45:50 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,4 +129,34 @@ void	fillit_load_xy(t_env *e)
 	if (letter == 'Z')
 		fillit_error("too many tetriminos, 26 max.", DEBUG_MODE);
 	fillit_get_width_height_all(e->first);
+}
+
+/*
+** This function gets the values of the most extremes coordinates of the fixed
+** tetriminos assembly.
+*/
+
+void	fillit_get_fixed_range(t_env *e, t_vars *v)
+{
+	int		t;
+	t_list	*lst_ptr;
+	t_tetri	*tet_ptr;
+
+	lst_ptr = e->first;
+	while (lst_ptr)
+	{
+		tet_ptr = lst_ptr->content;
+		if (tet_ptr->fixed)
+		{
+			if ((t = ft_tabmax(tet_ptr->x, 4) + tet_ptr->x_offset) > v->xmax)
+				v->xmax = t;
+			if ((t = ft_tabmax(tet_ptr->y, 4) + tet_ptr->y_offset) > v->ymax)
+				v->ymax = t;
+			if ((t = ft_tabmin(tet_ptr->x, 4) + tet_ptr->x_offset) < v->xmin)
+				v->xmin = t;
+			if ((t = ft_tabmin(tet_ptr->y, 4) + tet_ptr->y_offset) < v->ymin)
+				v->ymin = t;
+		}
+		lst_ptr = lst_ptr->next;
+	}
 }

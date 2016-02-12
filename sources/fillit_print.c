@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 19:54:08 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/11 19:27:44 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/12 17:49:59 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	fillit_colorprint(char *map)
 }
 
 /*
-** This funtion printfs a standard or specified error message on the error
+** This funtion prints a standard or specified error message on the error
 ** output.
 ** -------------------------- To be added to libft ----------------------------
 */
@@ -56,36 +56,6 @@ int		fillit_error(char *str, int mode)
 	if (!DEBUG_MODE)
 		exit(0);
 	return (-1);
-}
-
-/*
-** This function gets the values of the most extremes coordinates of the fixed
-** tetriminos assembly.
-*/
-
-void	fillit_get_fixed_range(t_env *e, t_vars *v)
-{
-	int		t;
-	t_list	*lst_ptr;
-	t_tetri	*tet_ptr;
-
-	lst_ptr = e->first;
-	while (lst_ptr)
-	{
-		tet_ptr = lst_ptr->content;
-		if (tet_ptr->fixed)
-		{
-			if ((t = ft_tabmax(tet_ptr->x, 4) + tet_ptr->x_offset) > v->xmax)
-				v->xmax = t;
-			if ((t = ft_tabmax(tet_ptr->y, 4) + tet_ptr->y_offset) > v->ymax)
-				v->ymax = t;
-			if ((t = ft_tabmin(tet_ptr->x, 4) + tet_ptr->x_offset) < v->xmin)
-				v->xmin = t;
-			if ((t = ft_tabmin(tet_ptr->y, 4) + tet_ptr->y_offset) < v->ymin)
-				v->ymin = t;
-		}
-		lst_ptr = lst_ptr->next;
-	}
 }
 
 /*
@@ -138,4 +108,11 @@ char	*fillit_get_output_map(t_env *e)
 	v.lst_ptr = e->first;
 	fillit_fill_output_map(&v, out);
 	return (out);
+}
+
+void	fillit_print_usage(char *exec_name)
+{
+	ft_putstr("usage: ");
+	ft_putstr(exec_name);
+	ft_putendl(" [-c] filename");
 }

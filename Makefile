@@ -6,7 +6,7 @@
 #    By: amulin <amulin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/28 16:48:40 by amulin            #+#    #+#              #
-#    Updated: 2016/02/12 16:40:19 by amulin           ###   ########.fr        #
+#    Updated: 2016/02/12 17:02:05 by amulin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,6 @@ SRCS = main.c fillit_parse.c fillit_print.c fillit_calc.c fillit_position.c \
 SRCSDIR = sources/
 
 SOURCES = $(addprefix $(SRCSDIR), $(SRCS))
-
-OBJECTS = $(subst .c,.o, $(SRCS))
 
 HDRS = fillit.h
 
@@ -63,7 +61,6 @@ lib :
 
 clean :
 	make -C libft/ clean
-	-rm $(OBJECTS)
 
 fclean : clean
 	make -C libft/ fclean

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/11 20:40:46 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/12 17:45:44 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@
 # include "libft.h"
 # include <fcntl.h>
 
-# include <stdio.h>
-
 # define DEBUG_MODE 0
-# define ANIMATION_DELAY 100000
 
 typedef struct	s_tetri
 {
@@ -72,7 +69,6 @@ typedef struct	s_env
 	size_t		tcount;
 	size_t		tlocked;
 	char		*result;
-	int			update : 1;
 	int			color : 1;
 }				t_env;
 
@@ -117,10 +113,12 @@ void			fillit_load_xy(t_env *e);
 void			fillit_xy_get(t_tetri *t_ptr);
 void			fillit_xy_correct(t_tetri *ptr);
 void			fillit_get_width_height_all(t_list *first);
+void			fillit_get_fixed_range(t_env *e, t_vars *v);
 
 /*
 ** fillit_print.c
 */
+void			fillit_print_usage(char *exec_name);
 void			fillit_colorprint(char *map);
 int				fillit_error(char *str, int mode);
 char			*fillit_get_output_map(t_env *e);

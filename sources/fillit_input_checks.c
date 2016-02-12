@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/11 20:35:59 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 21:48:33 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,6 @@ int	fillit_input_check(t_env *e)
 
 	list_ptr = e->first;
 	tetri_ptr = (t_tetri*)(list_ptr->content);
-	if (DEBUG_MODE)
-		printf("Pre-GNL check OK\n");
 	while ((e->tmp->gnl_ret = get_next_line(e->tmp->fd, &e->tmp->line)) != 0)
 	{
 		if (fillit_input_check_sub(e, &list_ptr, &tetri_ptr) == -1)

@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/26 14:51:24 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/11 20:27:40 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 21:49:24 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,18 @@ void	fillit_print_all_tetri_status(t_env *e)
 	while (l_ptr)
 	{
 		t_ptr = (t_tetri*)l_ptr->content;
-		printf("Tetri %c is ", t_ptr->letter);
+		ft_putstr("Tetri ");
+		ft_putchar(t_ptr->letter);
+		ft_putstr(" is ");
 		if (t_ptr->fixed)
-			printf("fixed (%d)\n", t_ptr->fixed);
+			ft_putstr("fixed\n");
 		else
-			printf("moving\n");
-		printf("Its offsets are %d (x) and %d (y)\n", t_ptr->x_offset,
-				t_ptr->y_offset);
+			ft_putstr("moving\n");
+		ft_putstr("Its offsets are ");
+		ft_putnbr(t_ptr->x_offset);
+		ft_putstr(" (x) and ");
+		ft_putnbr(t_ptr->y_offset);
+		ft_putendl(" (y)");
 		l_ptr = l_ptr->next;
 	}
 }

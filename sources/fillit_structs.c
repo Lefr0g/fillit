@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 15:29:05 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/11 19:31:03 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 21:53:50 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int		fillit_init(t_env **e)
 		return (-1);
 	fillit_reset_tmp((*e)->tmp);
 	(*e)->tcount = 0;
-	(*e)->update = 0;
 	(*e)->color = 0;
 	(*e)->result = NULL;
 	(*e)->copy = NULL;

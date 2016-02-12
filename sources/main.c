@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/12 17:16:32 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/12 17:53:10 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,15 @@ int		main(int ac, char **av)
 		ft_putendl("============ Program Start ============");
 	if (fillit_init(&e))
 		return (fillit_error("init failed", DEBUG_MODE));
-	if (ac > 2 && av[1][0] == '-' && ft_strchr(av[1], 's'))
-		e->update = 1;
-	if (ac > 2 && av[1][0] == '-' && ft_strchr(av[1], 'c'))
+	if (ac == 3 && av[1][0] == '-' && ft_strchr(av[1], 'c'))
+	{
 		e->color = 1;
-	if (ac >= 2)
 		fillit_proceed(e, ac, av);
-	else
-		fillit_error("main error exit", DEBUG_MODE);
+	}
+	else if (ac == 2)
+		fillit_proceed(e, ac, av);
+	else if (ac != 2)
+		fillit_print_usage(av[0]);
 	fillit_free_all(e);
 	if (DEBUG_MODE)
 		ft_putendl("\n============ End of program ===========");
@@ -71,6 +72,7 @@ void	fillit_free_all(t_env *e)
 	ft_strdel(&(e->tmp->line));
 	free(e->tmp);
 	ft_lstdel(&e->first, &fillit_del_tetri);
-	ft_strdel(&(e->result));
+	if (e->result)
+		ft_strdel(&(e->result));
 	free(e);
 }

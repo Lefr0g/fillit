@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/11 20:35:58 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/11 21:48:05 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	fillit_parse(t_env *e, char *filename)
 	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
 		return (fillit_error("open() failed", DEBUG_MODE));
 	if (DEBUG_MODE)
-		printf("OPEN SUCCESS, fd = %d\n", e->tmp->fd);
+		ft_putendl("OPEN SUCCESS");
 	ret = fillit_input_check(e);
 	if (e->tmp->jump > 1)
 		return (fillit_error("empty line at the end of the file", DEBUG_MODE));
