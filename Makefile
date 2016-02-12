@@ -6,7 +6,7 @@
 #    By: amulin <amulin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/28 16:48:40 by amulin            #+#    #+#              #
-#    Updated: 2016/02/11 20:34:06 by amulin           ###   ########.fr        #
+#    Updated: 2016/02/12 16:40:19 by amulin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,11 +46,17 @@ LIBHEADIR = $(addprefix $(LIBDIR), $(LIBHDRS))
 
 LIBINCLUDES = -I $(LIBHEADIR)
 
-all : $(NAME)
+LIBNAME = libft.a
 
-$(NAME) : lib $(SOURCES) $(HEADERS)
+LIBFULL = $(addprefix $(LIBDIR), $(LIBNAME))
+
+all : lib $(NAME)
+
+$(NAME) : $(LIBFULL) $(SOURCES) $(HEADERS)
 	$(CC) $(FLAGS) $(SOURCES) $(INCLUDES) $(LIBINCLUDES) $(LIBDIRFLAG) \
 		$(LIBFLAG) -o $(NAME)
+
+$(LIBFULL) : lib
 
 lib :
 	make -C libft/
