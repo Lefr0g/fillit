@@ -6,7 +6,7 @@
 /*   By: lpoujade <lpoujade@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 18:38:28 by lpoujade          #+#    #+#             */
-/*   Updated: 2016/02/12 17:45:50 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/15 18:16:22 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	fillit_load_xy(t_env *e)
 	fillit_reset_quickvars(e);
 	l_ptr = e->first;
 	t_ptr = (t_tetri*)l_ptr->content;
-	while (l_ptr && letter <= 'Z')
+	while (l_ptr && letter <= ('Z' + 1))
 	{
 		t_ptr->letter = letter;
 		e->tcount++;
@@ -126,7 +126,7 @@ void	fillit_load_xy(t_env *e)
 		letter++;
 		fillit_reset_quickvars(e);
 	}
-	if (letter == 'Z')
+	if (letter > '[')
 		fillit_error("too many tetriminos, 26 max.", DEBUG_MODE);
 	fillit_get_width_height_all(e->first);
 }
