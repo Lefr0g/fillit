@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/11 21:48:33 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/17 18:54:29 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,15 @@
 
 int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 {
-	int	i;
-	int	blockid;
-
-	e->tmp->jump++;
+	if (e->tmp->layers != 4)
+		return (fillit_error("wrong tetri height", DEBUG_MODE));
 	if (e->tmp->blocks != 4 && e->tmp->jump == 1)
 		return (fillit_error("not enough / too many blocks in tetri",
 					DEBUG_MODE));
 	else
 	{
-		blockid = 0;
-		i = -1;
-		while (++i < 17)
-		{
-			if (fillit_blocks_check_sub(tetri_ptr, &blockid, &i) == -1)
-				return (-1);
-		}
+		if (fillit_blocks_check_sub(tetri_ptr))
+			return (-1);
 	}
 	e->tmp->blocks = 0;
 	return (0);
@@ -65,31 +58,29 @@ int	fillit_blocks_check(t_env *e, t_tetri *tetri_ptr)
 ** Subfunction of fillit_blocks_check for norme
 */
 
-int	fillit_blocks_check_sub(t_tetri *tetri_ptr, int *blockid, int *i)
+int	fillit_blocks_check_sub(t_tetri *tet_p)
 {
-	int	j;
+	int	i;
+	int	score;
 
-	if (tetri_ptr->raw[*i] == '#')
+	i = -1;
+	score = 0;
+	while (++i < 16)
 	{
-		if (!((*i - 1 >= 0 && tetri_ptr->raw[*i - 1] == '#')
-					|| (*i + 1 < 17 && tetri_ptr->raw[*i + 1] == '#')
-					|| (*i - 4 >= 0 && tetri_ptr->raw[*i - 4] == '#')
-					|| (*i + 4 < 17 && tetri_ptr->raw[*i + 4] == '#')))
+		if (tet_p->raw[i] == '#')
 		{
-			return (fillit_error("invalid block placement in tetri",
-						DEBUG_MODE));
+			if (i + 1 < 16 && tet_p->raw[i + 1] == '#')
+				(score)++;
+			if (i + 4 < 16 && tet_p->raw[i + 4] == '#')
+				(score)++;
+			if (i - 1 >= 0 && tet_p->raw[i - 1] == '#')
+				(score)++;
+			if (i - 4 >= 0 && tet_p->raw[i - 4] == '#')
+				(score)++;
 		}
-		if (*blockid > 0)
-		{
-			j = *i - 1;
-			while (tetri_ptr->raw[j] != '#')
-				j--;
-			if (j < *i - 4)
-				return (fillit_error("invalid block placement",
-							DEBUG_MODE));
-		}
-		(*blockid)++;
 	}
+	if (score < 6)
+		return (fillit_error("invalid block placement", DEBUG_MODE));
 	return (0);
 }
 
@@ -178,6 +169,7 @@ int	fillit_input_check_sub(t_env *e, t_list **list_ptr, t_tetri **tetri_ptr)
 	}
 	else
 	{
+		e->tmp->jump++;
 		if (fillit_blocks_check(e, *tetri_ptr) < 0)
 			return (-1);
 	}

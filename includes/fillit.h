@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/12 17:45:44 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/17 18:25:32 by amulin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ int				fillit_input_check_sub(t_env *e, t_list **lst_ptr,
 int				fillit_layer_check(t_tmp *tmp, t_list **list_ptr,
 		t_tetri **tetri_ptr);
 int				fillit_blocks_check(t_env *e, t_tetri *tetri_ptr);
-int				fillit_blocks_check_sub(t_tetri *tetri_ptr, int *blockid,
-		int *i);
+int				fillit_blocks_check_sub(t_tetri *tetri_ptr);
 
 /*
 ** fillit_calc.c
