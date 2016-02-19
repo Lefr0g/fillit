@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:16 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/12 17:53:10 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/19 17:56:16 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int		main(int ac, char **av)
 
 void	fillit_proceed(t_env *e, int ac, char **av)
 {
-	if (!fillit_parse(e, av[ac - 1]))
+	if (!fillit_parse(e, open(av[ac - 1], O_RDONLY)))
 	{
 		e->square_size = 2;
 		while (!e->result)

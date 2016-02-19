@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_parse.c                                     :+:      :+:    :+:   */
+/*   sources/fillit_parse.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:26 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/11 21:48:05 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/19 18:43:08 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,81 @@
 ** t_tetri structure of a tetrimino.
 */
 
-int	fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr)
+static int		fillit_new_tetri(t_list **list_ptr, char letter)
 {
 	t_tetri tmp;
 
+	ft_bzero(tmp.raw, 17);
+	tmp.x_offset = 0;
+	tmp.y_offset = 0;
+	tmp.fixed = 0;
+	tmp.letter = letter;
 	ft_lstappend(list_ptr, ft_lstnew(&tmp, sizeof(t_tetri)));
 	*list_ptr = (*list_ptr)->next;
-	*tetri_ptr = (t_tetri*)((*list_ptr)->content);
-	ft_bzero((*tetri_ptr)->raw, 17);
-	(*tetri_ptr)->x_offset = 0;
-	(*tetri_ptr)->y_offset = 0;
-	(*tetri_ptr)->fixed = 0;
 	return (0);
 }
 
-/*
-** This is the parsing function called by main.
-** It opens the file and then calls the fillit_input_check() function.
-** Notice that the get_next_line() loop call below is used to free the static
-** 'keep' string variable within gnl() in cases where an error is found in the
-** input file and fillit_input_check() stops prematurely.
-** The error detection for empty line at the end of the input file is done at
-** this stage. If an error is detected during fillit_input_check(), the 'jump'
-** variable is reset to avoid false positive / double errors.
-*/
-
-int	fillit_parse(t_env *e, char *filename)
+static int		cc(char *buff, int i)
 {
-	int	ret;
+	int	count;
 
-	if (ft_basicfilecheck(filename, '\n', 5) != 1)
-		return (-1);
-	e->tmp->fd = open(filename, O_RDONLY);
-	if ((e->tmp->fd = open(filename, O_RDONLY)) == -1)
-		return (fillit_error("open() failed", DEBUG_MODE));
-	if (DEBUG_MODE)
-		ft_putendl("OPEN SUCCESS");
-	ret = fillit_input_check(e);
-	if (e->tmp->jump > 1)
-		return (fillit_error("empty line at the end of the file", DEBUG_MODE));
-	if (ret != -1)
+	count = (buff[i - 1] == '#') ? 1 : 0;
+	count += (buff[i + 1] == '#') ? 1 : 0;
+	count += (buff[i - 5] == '#') ? 1 : 0;
+	count += (buff[i + 5] == '#') ? 1 : 0;
+	return (count);
+}
+
+static int		read_p(int fd, char *raw)
+{
+	int		ret;
+	int		bcount;
+	int		ccount;
+	int		i;
+	char	*buff;
+
+	buff = ft_strnew(20);
+	if (buff && read(fd, buff, 20) == 20)
 	{
-		fillit_load_xy(e);
-		if (DEBUG_MODE)
-			fillit_print_raw(e);
-		close(e->tmp->fd);
+		i = -1;
+		bcount = 0;
+		ccount = 0;
+		while (buff[++i] && (buff[i] == '.' || buff[i] == '#' ||
+					(buff[i] == '\n' && ((i + 1) / 5))))
+			if (buff[i] != '\n' && (*raw++ = buff[i]))
+				if (buff[i] == '#' && ++bcount)
+					ccount += cc(buff, i);
+		ret = (read(fd, buff, 1) == 0) ? 1 : 0;
+		if (bcount != 4 || ccount < 6 || i != 20 || (!ret && *buff != '\n'))
+			ret = 2;
 	}
+	else
+		ret = 2;
+	ft_memdel((void **)&buff);
+	return (ret);
+}
+
+int				fillit_parse(t_env *e, int fd)
+{
+	t_list	*lst;
+	int		ret;
+	int		read_ret;
+	char	letter;
+
+	if (fd < 3 || read(fd, NULL, 0) == -1)
+		return (-1);
+	letter = 'A';
+	lst = e->first;
+	ret = 0;
+	while (!(read_ret = read_p(fd, ((t_tetri*)lst->content)->raw)))
+	{
+		letter++;
+		fillit_new_tetri(&lst, letter);
+	}
+	if (read_ret != 1)
+		ret = 1;
+	if (!ret)
+		fillit_load_xy(e);
+	close(fd);
 	return (ret);
 }

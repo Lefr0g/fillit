@@ -1,9 +1,0 @@
-#!/bin/zsh
-
-time ./fillit maps/valid0 > out/v0  2>&1 &&
-time ./fillit maps/valid1 > out/v1  2>&1 &&
-time ./fillit maps/valid2 > out/v2  2>&1 &&
-time ./fillit maps/valid3 > out/v3  2>&1 &&
-time ./fillit maps/valid4 > out/v4  2>&1 &&
-time ./fillit maps/valid5 > out/v5  2>&1 &&
-time ./fillit maps/valid6 > out/v6  2>&1

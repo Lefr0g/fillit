@@ -6,7 +6,7 @@
 /*   By: amulin <amulin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/28 16:49:38 by amulin            #+#    #+#             */
-/*   Updated: 2016/02/17 18:25:32 by amulin           ###   ########.fr       */
+/*   Updated: 2016/02/19 18:14:12 by lpoujade         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,7 @@ void			fillit_del_tetri(void *content, size_t size);
 /*
 ** fillit_parse.c
 */
-int				fillit_parse(t_env *e, char *filename);
-int				fillit_new_tetri(t_list **list_ptr, t_tetri **tetri_ptr);
-
-/*
-** fillit_input_checks.c
-*/
-int				fillit_input_check(t_env *e);
-int				fillit_input_check_sub(t_env *e, t_list **lst_ptr,
-		t_tetri **tet_ptr);
-int				fillit_layer_check(t_tmp *tmp, t_list **list_ptr,
-		t_tetri **tetri_ptr);
-int				fillit_blocks_check(t_env *e, t_tetri *tetri_ptr);
-int				fillit_blocks_check_sub(t_tetri *tetri_ptr);
+int				fillit_parse(t_env *e, int fd);
 
 /*
 ** fillit_calc.c
@@ -144,10 +132,5 @@ void			fillit_print_raw(t_env *e);
 void			fillit_print_xy(t_tetri *ptr);
 void			fillit_print_single_tetri(t_tetri *ptr);
 void			fillit_print_all_tetri_status(t_env *e);
-
-/*
-** ft_basicfilecheck.c
-*/
-int				ft_basicfilecheck(char *filename, char trigger, int lenght);
 
 #endif
